@@ -1,21 +1,24 @@
 import pygame  # Importeren van pygame module
 import sys
 import importlib
-from Map import*
+from Map import *
 
-pygame.init()  # Oproepen van de init() functie
+pygame.init()  # Init of pygame
 
-
-
-width = 224*2
-height = 288*2
+width = 224 * 2
+height = 288 * 2
 resolution = (width, height)
 
 gameDisplay = pygame.display.set_mode(resolution)
 pygame.display.set_caption('Pac-Man');
 clock = pygame.time.Clock()
 
+
 class Game():
+
+    def __init__(self):
+        gameDisplay.fill((0, 0, 0))
+
     def run(self):
         running = True
         while running:
@@ -23,17 +26,15 @@ class Game():
                 if event.type == pygame.QUIT:
                     running = False
 
-
-
                 # print(event)
-                pygame.display.update()
+            map = Map(gameDisplay)
+            map.draw_grid()
+            pygame.display.update()
 
-            gameDisplay.fill((0, 0, 0))
-            pygame.draw.rect(gameDisplay, (200, 10, 20), pygame.Rect((100, 300), (20, 30)))
         pygame.quit()
         sys.exit()
 
 
-
 game = Game()
 game.run()
+
