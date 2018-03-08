@@ -5,8 +5,9 @@ from Map import *
 
 pygame.init()  # Init of pygame
 
-width = 224 * 2
-height = 288 * 2
+width = 224 * 3
+height = 288 * 3
+tile_size = 8*3
 resolution = (width, height)
 
 gameDisplay = pygame.display.set_mode(resolution)
@@ -17,7 +18,10 @@ clock = pygame.time.Clock()
 class Game():
 
     def __init__(self):
-        gameDisplay.fill((0, 0, 0))
+        gameDisplay.fill((255, 255, 255))
+        self.map = Map(gameDisplay, width, height, tile_size)
+        self.map.draw_map()
+        self.map.draw_grid()
 
     def run(self):
         running = True
@@ -27,8 +31,7 @@ class Game():
                     running = False
 
                 # print(event)
-            map = Map(gameDisplay)
-            map.draw_grid()
+
             pygame.display.update()
 
         pygame.quit()
