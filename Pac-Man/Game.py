@@ -14,6 +14,7 @@ gameDisplay = pygame.display.set_mode(resolution)
 pygame.display.set_caption('Pac-Man');
 clock = pygame.time.Clock()
 
+#Test
 
 class Game():
 
