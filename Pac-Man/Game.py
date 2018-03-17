@@ -5,22 +5,21 @@ from Map import *
 
 pygame.init()  # Init of pygame
 
-width = 224 * 3
-height = 288 * 3
-tile_size = 8*3
+width = 224 * 2
+height = 288 * 2
+tile_size = 8*2
 resolution = (width, height)
 
-gameDisplay = pygame.display.set_mode(resolution)
+game_display = pygame.display.set_mode(resolution)
 pygame.display.set_caption('Pac-Man');
 clock = pygame.time.Clock()
 
-#Test
 
 class Game():
 
     def __init__(self):
-        gameDisplay.fill((255, 255, 255))
-        self.map = Map(gameDisplay, width, height, tile_size)
+        game_display.fill((255, 255, 255))
+        self.map = Map(game_display, width, height, tile_size)
         self.map.draw_map()
         self.map.draw_grid()
 
