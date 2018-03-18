@@ -7,14 +7,13 @@ pygame.init()
 
 
 class Map():
-
-    def __init__(self, game_display, width, height, tile_size):
+    def __init__(self, gameDisplay, width, height, tile_size):
         # Deze twee zullen altijd constant blijven
         self.tiles_horiz_size = 28
         self.tiles_vert_size = 36
 
         # Resolutie die wordt meegegeven niet, moet later nog eventueel aanpasbaar zijn?
-        self.game_display = game_display  # The display of the game
+        self.gameDisplay = gameDisplay  # The display of the game
         self.width = width
         self.height = height
         self.tile_size = tile_size
