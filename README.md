@@ -2,22 +2,24 @@
 
 ##Mappen
 
--   <a href=https://github.ugent.be/projectpython18/team-9/tree/master/Algemene bestanden>Algemene bestanden</a> 
+-   <a href=https://github.ugent.be/projectpython18/team-9/tree/master/Algemene%20bestanden>Algemene bestanden</a> 
     -   wiki.txt, ...
 -   <a href=https://github.ugent.be/projectpython18/team-9/tree/master/Diagrammen>Diagrammen</a>
     - [x] Klassendiagram
     - [ ] UML-Diagram
     - [ ] ...
 -   <a href=https://github.ugent.be/projectpython18/team-9/tree/master/Pac-Man>Pac-Man</a>
-    | **Functionaliteit**   | **Werkend**           | 
-    | ------------- |:-------------:|
-    | Map maken     | [x]      |
+
+| **Functionaliteit**   | **Werkend**           | 
+| ------------- |:-------------:|
+| Map maken     | [x]      |
    
--   <a href=https://github.ugent.be/projectpython18/team-9/tree/master/Pac-Man_Test>Pac-Man_Test</a>--> Logboeken
-    | **Functionaliteit**   | **Werkend**   | 
-    | ------------- |:-------------:|
-    | Pac-Man laten bewegen     | [x]       |
-    | Pac-Man image animeren    | [x]       |
+-   <a href=https://github.ugent.be/projectpython18/team-9/tree/master/Pac-Man_Test>Pac-Man_Test</a>
+
+| **Functionaliteit**   | **Werkend**   | 
+| ------------- |:-------------:|
+| Pac-Man laten bewegen     | [x]       |
+| Pac-Man image animeren    | [x]       |
     
 ## Stappenplan
 
@@ -31,3 +33,7 @@
 ## Geïmplementeerde dingen:
 
 -   ...
+
+| **Functionaliteit**   | **Werkend**           | 
+    | ------------- |:-------------:|
+    | Map maken     | [x]      |
