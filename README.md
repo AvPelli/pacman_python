@@ -33,7 +33,3 @@
 ## Geïmplementeerde dingen:
 
 -   ...
-
-| **Functionaliteit**   | **Werkend**           | 
-    | ------------- |:-------------:|
-    | Map maken     | [x]      |
