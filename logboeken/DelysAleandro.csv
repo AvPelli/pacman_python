@@ -1,4 +1,4 @@
-Datum,Start,Einde,Plaats,Omschrijving
+﻿Datum,Start,Einde,Plaats,Omschrijving
 12/02/18,15:45,17:45,Campus,Python leren oef 1 tot 5
 15/02/18,19:00,22:00,Kot,Python leren oef 5 tot 13
 17/02/18,19:00,21:00,Thuis,Python leren oef 13 tot 15
@@ -6,6 +6,12 @@ Datum,Start,Einde,Plaats,Omschrijving
 26/02/18,15:45,17:45,Campus,Selectie algoritme
 28/02/18,18:00,20:00,Kot,Kijken naar verschillende Python GUI oplossingen + Tutorials
 05/03/18,12:30,17:00,Campus,Bedrijfsbezoek VASCO
-09/03/18,23:30,1:00,Thuis, PyGame tutorials bekijken + testen
-10/03/18,11:30:12:15,Thuis, PyGame testen
-10/03/18,13:00,15:00,Thuis, PyGame testen
+09/03/18,23:30,1:00,Thuis,PyGame tutorials bekijken + testen
+10/03/18,11:30:12:15,Thuis,PyGame testen
+10/03/18,13:00,15:00,Thuis,PyGame testen
+12/03/18,15:45,17:45,Campus,Bespreking klassen en diagrammen
+17/03/18,11:30,12:30,Thuis,PyGame pacman klassen ect maken
+17/03/18,13:30,15:30,Thuis,PyGame tutorials bekijken
+17/03/18,22:30,00:30,Thuis,Pacman laten bewegen ect
+18/03/18,11:15,12:30,Thuis,Debuggen van Pacman
+18/03/18,13:30,XX:XX,Thuis,Adden van functionaliteit
