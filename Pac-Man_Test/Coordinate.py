@@ -21,3 +21,4 @@ class Coordinate:
         if other == None or not isinstance(other, Coordinate):
             return False
         return self.x == other.getX() and self.y == other.getY()
+

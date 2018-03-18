@@ -1,6 +1,6 @@
 # Team-9: Pac-Man
 
-##Mappen
+## Mappen
 
 -   <a href=https://github.ugent.be/projectpython18/team-9/tree/master/Algemene%20bestanden>Algemene bestanden</a> 
     -   wiki.txt, ...
