@@ -12,14 +12,14 @@
 
 | **Functionaliteit**   | **Werkend**           | 
 | ------------- |:-------------:|
-| Map maken     | [x]      |
+| `Map maken`     | `✓`      |
    
 -   <a href=https://github.ugent.be/projectpython18/team-9/tree/master/Pac-Man_Test>Pac-Man_Test</a>
 
 | **Functionaliteit**   | **Werkend**   | 
 | ------------- |:-------------:|
-| Pac-Man laten bewegen     | [x]       |
-| Pac-Man image animeren    | [x]       |
+| `Pac-Man laten bewegen`     | `✓`       |
+| `Pac-Man image animeren`    | `✓`       |
     
 ## Stappenplan
 
