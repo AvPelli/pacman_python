@@ -1,19 +1,19 @@
-Datum;Start;Einde;Duur;Plaats;Omschrijving
-12/02/2018;15:45;17:45;2:00;Campus ;Python leren oef 1 tot 5
-15/02/2018;19:00;22:00;3:00;Kot;Python leren oef 5 tot 13
-17/02/2018;19:00;21:00;2:00;Thuis;Python leren oef 13 tot 15
-19/02/2018;15:45;17:45;2:00;Campus ;Python oefeningen (beter) herschrijven
-26/02/2018;15:45;17:45;2:00;Campus ;Selectie algoritme
-28/02/2018;18:00;20:00;2:00;Kot;Kijken naar verschillende Python GUI oplossingen + Tutorials
-5/03/2018;12:30;17:00;4:30;Campus ;Bedrijfsbezoek VASCO
-9/03/2018;23:30;1:00;1:30;Thuis; PyGame tutorials bekijken + testen
-10/03/2018;11:30;12:15;0:45;Thuis; PyGame testen
-10/03/2018;13:00;15:00;2:00;Thuis; PyGame testen
-12/03/2018;15:45;17:45;2:00;Campus ;Bespreking klassen en diagrammen
-17/03/2018;11:30;12:30;1:00;Thuis; PyGame pacman klassen ect maken
-17/03/2018;13:30;15:30;2:00;Thuis; PyGame tutorials bekijken
-17/03/2018;22:30;0:30;2:00;Thuis; Pacman laten bewegen ect
-18/03/2018;11:15;12:30;1:15;Thuis; Debuggen van Pacman
-18/03/2018;13:30;17:30;4:00;Thuis; Adden van functionaliteit
-;;;;;
-Totaal tijd;34:00:00;;;;
+Datum,Start,Einde,Duur,Plaats,Omschrijving
+12/02/2018,15:45,17:45,2:00,Campus ,Python leren oef 1 tot 5
+15/02/2018,19:00,22:00,3:00,Kot,Python leren oef 5 tot 13
+17/02/2018,19:00,21:00,2:00,Thuis,Python leren oef 13 tot 15
+19/02/2018,15:45,17:45,2:00,Campus ,Python oefeningen (beter) herschrijven
+26/02/2018,15:45,17:45,2:00,Campus ,Selectie algoritme
+28/02/2018,18:00,20:00,2:00,Kot,Kijken naar verschillende Python GUI oplossingen + Tutorials
+5/03/2018,12:30,17:00,4:30,Campus ,Bedrijfsbezoek VASCO
+9/03/2018,23:30,1:00,1:30,Thuis, PyGame tutorials bekijken + testen
+10/03/2018,11:30,12:15,0:45,Thuis, PyGame testen
+10/03/2018,13:00,15:00,2:00,Thuis, PyGame testen
+12/03/2018,15:45,17:45,2:00,Campus ,Bespreking klassen en diagrammen
+17/03/2018,11:30,12:30,1:00,Thuis, PyGame pacman klassen ect maken
+17/03/2018,13:30,15:30,2:00,Thuis, PyGame tutorials bekijken
+17/03/2018,22:30,0:30,2:00,Thuis, Pacman laten bewegen ect
+18/03/2018,11:15,12:30,1:15,Thuis, Debuggen van Pacman
+18/03/2018,13:30,17:30,4:00,Thuis, Adden van functionaliteit
+,,,,,
+Totaal tijd,34:00:00,,,,
