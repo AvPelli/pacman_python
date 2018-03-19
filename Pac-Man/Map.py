@@ -7,13 +7,14 @@ pygame.init()
 
 
 class Map():
-    def __init__(self, gameDisplay, width, height, tile_size):
+
+    def __init__(self, game_display, width, height, tile_size):
         # Deze twee zullen altijd constant blijven
         self.tiles_horiz_size = 28
         self.tiles_vert_size = 36
 
         # Resolutie die wordt meegegeven niet, moet later nog eventueel aanpasbaar zijn?
-        self.gameDisplay = gameDisplay  # The display of the game
+        self.game_display = game_display  # The display of the game
         self.width = width
         self.height = height
         self.tile_size = tile_size
@@ -33,7 +34,6 @@ class Map():
         # Overzichtelijk om te zien waar de tiles zich bevinden.
         # (200, 10, 20): is kleur rood
         # pygame.draw.line(self.gameDisplay, (200, 10, 20), (0, self.tile_size), (self.width, self.tile_size))
-
         pygame.display.update()
         for x in range(0, self.tiles_horiz_size):
             pygame.draw.line(self.game_display, (169, 169, 169), (self.tile_size * x, 0),
