@@ -17,7 +17,7 @@ Datum,Start,Einde,Duur,Plaats,Omschrijving
 19/03/2018 ,15:45   ,17:45,2:00,Campus,Bespreking klassen en diagrammen + gedeeltelijke verdeling
 18/03/2018,13:30,17:30,4:00,Thuis, Adden van functionaliteit
 20/03/2018 ,21:00   ,0:00 ,3:00,Kot   ,Map code en Pacman code samenvoegen + optimaliseren
-21/01/1900 ,22:00   ,2:00 ,4:00,Kot   ,Collision muren                                             ,food toevoegen op map rechtstreeks,nieuwe herteken methodes en wat nieuwe optimalisaties
+21/01/1900 ,22:00   ,2:00 ,4:00,Kot   ,Collision muren  en food toevoegen op map rechtstreeks   en nieuwe herteken methodes en wat nieuwe optimalisaties
 ,,,,,
            ,        ,     ,    ,      ,
            ,        ,     ,    ,      ,
