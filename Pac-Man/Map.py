@@ -1,59 +1,92 @@
-import pygame  # Importeren van pygame module
-import sys
-import importlib
-from Map import *
+from copy import deepcopy
 
-pygame.init()
+import pygame as pg  # Importeren van pg module
+from Candy import Candy
+from Coordinate import Coordinate
+
+pg.init()
 
 
 class Map():
-
     def __init__(self, game_display, width, height, tile_size):
-        # Deze twee zullen altijd constant blijven
-        self.tiles_horiz_size = 28
-        self.tiles_vert_size = 36
+        # Amount of rows en colums
+        self.__tiles_horiz_size = 28
+        self.__tiles_vert_size = 36
 
-        # Resolutie die wordt meegegeven niet, moet later nog eventueel aanpasbaar zijn?
-        self.game_display = game_display  # The display of the game
-        self.width = width
-        self.height = height
-        self.tile_size = tile_size
+        # Screen and Resolution variables
+        self.__game_display = game_display  # The display of the game
+        self.__width = width
+        self.__height = height
+        self.__tile_size = tile_size
 
-        # Map and tile info
-        self.map = []
-        # Aanmaken dictionarie met elk getal komt een bepaalde tegel overeen (ordelijker dan cases)
-        self.tiles = {}
-        self.init_tiles()
+        # Makes dictionary, maps  a Character on an specific image
+        self.__tiles = {}
+        self.__init_tiles()
 
         # Aanmaken tilemap
-        filename = "maze2.txt"
-        self.map = [line.split() for line in open(filename, 'r')]
+        filename = "res/files/maze2.txt"
+        self.__map = [line.split() for line in open(filename, 'r')]
 
-    def draw_grid(self):
-        """ Draws a grid to mark the tile borders """
-        # Overzichtelijk om te zien waar de tiles zich bevinden.
-        # (200, 10, 20): is kleur rood
-        # pygame.draw.line(self.gameDisplay, (200, 10, 20), (0, self.tile_size), (self.width, self.tile_size))
-        pygame.display.update()
-        for x in range(0, self.tiles_horiz_size):
-            pygame.draw.line(self.game_display, (169, 169, 169), (self.tile_size * x, 0),
-                             (self.tile_size * x, self.height))
-        for y in range(0, self.tiles_vert_size):
-            pygame.draw.line(self.game_display, (169, 169, 169), (0, self.tile_size * y),
-                             (self.width, self.tile_size * y))
+        # Item lists/ditcionaries
+        self.__wall_list = list()
+        self.__candy_dict = {}
+        self.__init_items()
 
     def draw_map(self):
         """ Draws the map based on the signs in the Map dictionary """
-        print(str(self.tiles_horiz_size - 1), " " + str(self.tiles_vert_size - 1))
-        for row in range(0, self.tiles_vert_size):
-            for col in range(0, self.tiles_horiz_size):  # = Amount of tiles in 1 row
-                tile_sign = self.map[row][col]
-                self.game_display.blit(self.tiles[tile_sign], (col * self.tile_size, row * self.tile_size))
+        #  print(str(self.tiles_horiz_size - 1), " " + str(self.tiles_vert_size - 1))
+        for row in range(0, self.__tiles_vert_size):
+            for col in range(0, self.__tiles_horiz_size):  # = Amount of tiles in 1 row
+                tile_sign = self.__map[row][col]
+                self.__game_display.blit(self.__tiles[tile_sign], (col * self.__tile_size, row * self.__tile_size))
 
-    def init_tiles(self):
+    def redraw_everything(self):
+        self.draw_map()
+        for candy in self.__candy_dict.values():
+            candy.draw(candy.getCoord())
+
+    def __init_items(self):
+        for y in range(3, self.__tiles_vert_size):
+            for x in range(0, self.__tiles_horiz_size):
+                if self.__map[y][x] == "f":
+                    coord = Coordinate(x - 1, y - 4)
+                    self.__candy_dict[coord] = (Candy(self.__game_display, coord))
+                elif self.__map[y][x] == "P":
+                    self.__pacman_coord = Coordinate(x - 1, y - 4)
+                elif self.__map[y][x] in "/=.-_\éè\()}{][abcd12345678uijo":
+                    self.__wall_list.append(Coordinate(x - 1, y - 4))
+
+    def __init_tiles(self):
         """ Initialization of a dictionary, every sign is equivalent to a tile image """
-        filename = "tile_codering.txt"
+        filename = "res/files/tile_codering.txt"
         for line in open(filename, 'r'):
             sign_tilename = line.strip().split(" : ")
-            tile_name = "Tileset/" + sign_tilename[1] + ".png"
-            self.tiles[sign_tilename[0]] = pygame.image.load(tile_name)
+            tile_name = "res/tileset/" + sign_tilename[1] + ".png"
+            self.__tiles[sign_tilename[0]] = pg.image.load(tile_name)
+
+    # Getters
+
+    def get_pacman_start(self):
+        return deepcopy(self.__pacman_coord)
+
+    def get_wall_list(self):
+        return deepcopy(self.__wall_list)
+
+    def get_game_display(self):
+        return self.__game_display
+
+    def get_candy_dict(self):
+        return self.__candy_dict
+
+    # Method for drawing a grid over the map, handy for debugging ect
+    def draw_grid(self):
+        """ Draws a grid to mark the tile borders """
+        # (200, 10, 20): is kleur rood
+        # pg.draw.line(self.gameDisplay, (200, 10, 20), (0, self.tile_size), (self.__width, self.tile_size))
+        pg.display.update()
+        for x in range(0, self.__tiles_horiz_size):
+            pg.draw.line(self.__game_display, (169, 169, 169), (self.__tile_size * x, 0),
+                         (self.__tile_size * x, self.__height))
+        for y in range(0, self.__tiles_vert_size):
+            pg.draw.line(self.__game_display, (169, 169, 169), (0, self.__tile_size * y),
+                         (self.__width, self.__tile_size * y))
