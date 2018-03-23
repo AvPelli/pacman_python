@@ -8,3 +8,9 @@ Datum,Start,Einde,Plaats,Omschrijving
 05/03/18,12:30,17:00,Campus,Bedrijfsbezoek
 11/03/18,17:00,19:40,Extern,Pygame tutorials bekijken
 12/03/18,15:45,17:30,Campus,Bespreken en overleg implementatie pacman + UML
+18/03/18,18:00,20:00,Thuis,De werking van pacman begrijpen
+19/03/18,15:45,17:30,Campus,Bespreken en overleg implementatie pacman + UML
+22/03/18,13:00,14:00,Campus,Huidige implementatie begrijpen/beheersen
+22/03/18,20:00,21:00,Thuis,nadenken over ghost algoritme + pacman op pixerlniveau laten werken
+23/03/18,13:00,17:00,Thuis,proberen implementeren pacman op pixelniveau zonder daarbij andere klassen veel te moeten wijzigen
+23/03/18,19:00,20:30,Thuis,nieuw pixelsysteem implementeren na brainstorm
