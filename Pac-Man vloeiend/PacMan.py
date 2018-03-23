@@ -37,6 +37,8 @@ class PacMan:
 
     # The move method will move Pacman
     def move(self):
+        # If pacman is moving between tiles, it will keep going that way until it reaches the next tile
+        # Once there, it's coordinate will be updated so it's ready to be checked in the next iteration (will perform else)
         if self.__moving:
             self.__moving_pos += self.__speed
             if self.__moving_pos >= 16:
@@ -44,7 +46,7 @@ class PacMan:
                 self.__moving = False
                 self.__coord.update_coord(self.__direction)
             self.__set_on_coord(self.__coord)
-
+        # If pacman is not moving, meaning it's on 1 tile
         # Checks if it needs to calculate a new coordinate
         # If Pacman is against a wall it will just redraw itself on the same coordinate, but there are not caluclations needed
         else:
@@ -53,12 +55,12 @@ class PacMan:
                 return
             # Checks if the direction what was not possible a while ago is possible now
             self.__direction_waiter()
-            # Caluclates a new coordinate
+            # Calculates the next coordinate
             check_next_coord, jump = self.__calculate_new_coord()
 
             # Checks if the new coordinate is a wall
             # If it is a wall, it will not move ( as long as the direction isn't changed)
-            # Else it will set the coordinate to the new one
+            # Else it can start moving there in the next iteration (will perform if self.__moving:)
             if check_next_coord in self.walls:
                 self.__moveable = False
             else:
@@ -70,6 +72,7 @@ class PacMan:
             # Checks if there is candy to eat on the new coordinate
             self.__eat_candy()
 
+    # When Pacman reaches the edge of the map, its coordinates must be updated to the opposite side
     def __set_on_opposite_side(self):
         (maxX, maxY) = self.__game.get_max()
         (x, y) = (self.__coord.get_coord_tuple())
@@ -80,7 +83,7 @@ class PacMan:
         elif x > maxX:
             self.__direction = Direction.RIGHT
             self.__change_direction = self.__direction
-            self.__coord = Coordinate(-1, y)
+            self.__coord = Coordinate(-2, y)
     """"Check/Calculate Methods"""
 
     # This method will change the direction to the change_direction variable if it is possible
@@ -102,18 +105,15 @@ class PacMan:
             del self.__game.get_candy_dict()[self.__coord]
             self.score += 1
 
-    # Calculates the new coordinate
-    # It adds the coordinate changes by the direction to the original coordinate
-    # Also this method checks if it is a "teleporter"
+    # Calculates the next coordinate
+    # Also this method checks if it is a "teleporter" which will perform __set_on_opposite_side() in move() method
     def __calculate_new_coord(self):
         (maxX, maxY) = self.__game.get_max()
         (x, y) = (self.__coord.get_coord_tuple())
         addX, addY = self.__direction.value
         newX, newY = x + addX, y + addY
         jump = False
-        if newX < -1:
-            jump = True
-        elif newX >= maxX+-1:
+        if newX < -2 or newX > maxX:
             jump = True
         return Coordinate(newX, newY), jump
 
