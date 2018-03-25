@@ -1,4 +1,5 @@
 import pygame as pg  # Importeren van pg module
+
 from Direction import Direction
 from Map import Map
 from PacMan import PacMan
@@ -33,7 +34,7 @@ class Game():
         self.map.redraw_everything()
         self.pacman.move()
         pg.display.update()
-        self.clock.tick(30)
+        self.clock.tick(50)
 
     """"Getters"""
 

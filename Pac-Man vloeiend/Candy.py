@@ -3,8 +3,8 @@ import pygame as pg
 
 class Candy:
     # Constructor for candy
-    def __init__(self, gameDisplay, coordinate):
-        self.__gameDisplay = gameDisplay
+    def __init__(self, game_Display, coordinate):
+        self.__game_Display = game_Display
         self.__coord = coordinate
         self.__image = pg.image.load("res/candy/candy {number}.gif".format(number=0))
         self.draw(coordinate)
@@ -12,7 +12,7 @@ class Candy:
     # Draws the candy on a give coordinate
     def draw(self, coordinate):
         (xPixels, yPixels) = (coordinate.get_pixel_tuple())
-        self.__gameDisplay.blit(self.__image, (xPixels, yPixels))
+        self.__game_Display.blit(self.__image, (xPixels, yPixels))
 
     """Getters"""
 

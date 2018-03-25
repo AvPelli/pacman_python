@@ -21,9 +21,10 @@ class PacMan:
         self.__nummer = 1
         self.dict = self.__image_dict()
         self.__gameDisplay = game_display
-        self.imageList = self.dict[self.__direction.getLetter()]
+        self.imageList = self.dict[self.__direction.get_letter()]
         self.__image = pg.image.load(
-            "res/pacman/pacman-{letter} {number}.png".format(letter=self.__direction.getLetter(), number=self.__nummer))
+            "res/pacman/pacman-{letter} {number}.png".format(letter=self.__direction.get_letter(),
+                                                             number=self.__nummer))
 
         # Initializes Pacman on give start coordinate
         self.__game = game
@@ -84,6 +85,7 @@ class PacMan:
             self.__direction = Direction.RIGHT
             self.__change_direction = self.__direction
             self.__coord = Coordinate(-2, y)
+
     """"Check/Calculate Methods"""
 
     # This method will change the direction to the change_direction variable if it is possible
@@ -92,9 +94,10 @@ class PacMan:
     # If so it will change the moving direction
     def __direction_waiter(self):
         if not self.__moving:
-            if self.__change_direction is not None and Coordinate(self.__coord.get_x() + self.__change_direction.value[0],
-                                                              self.__coord.get_y() + self.__change_direction.value[
-                                                                  1]) not in self.walls:
+            if self.__change_direction is not None and Coordinate(
+                            self.__coord.get_x() + self.__change_direction.value[0],
+                            self.__coord.get_y() + self.__change_direction.value[
+                        1]) not in self.walls:
                 self.__direction = self.__change_direction
 
     # Checks if there is a candy object on Pacmans coordinate
@@ -147,7 +150,7 @@ class PacMan:
     # Getter: Returns the image if needs to use for the give direction (And animation)
     def __get_image_direction(self, direction):
         self.__nummer = (self.__nummer + 1) % 8
-        return pg.image.load(self.dict[direction.getLetter()][self.__nummer])
+        return pg.image.load(self.dict[direction.get_letter()][self.__nummer])
 
     """"Initialize methods """
 

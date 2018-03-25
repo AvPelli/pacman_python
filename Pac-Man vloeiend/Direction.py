@@ -15,6 +15,6 @@ class Direction(Enum):
     """Getters"""
 
     # Getter: returns the first letter of the direction
-    def getLetter(self):
+    def get_letter(self):
         dicti = {Direction.LEFT: "l", Direction.RIGHT: "r", Direction.DOWN: "d", Direction.UP: "u"}
         return dicti[self]

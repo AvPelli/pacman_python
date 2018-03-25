@@ -118,7 +118,7 @@ class PacMan:
     # Getter: Returns the image if needs to use for the give direction (And animation)
     def __get_image_direction(self, direction):
         self.__nummer = (self.__nummer + 1) % 8
-        return pg.image.load(self.dict[direction.getLetter()][self.__nummer])
+        return pg.image.load(self.dict[direction.get_letter()][self.__nummer])
 
     """"Initialize methods """
 
