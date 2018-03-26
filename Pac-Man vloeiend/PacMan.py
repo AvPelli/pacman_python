@@ -80,11 +80,9 @@ class PacMan:
         (x, y) = (self.__coord.get_coord_tuple())
         if x < 0:
             self.__direction = Direction.LEFT
-            self.__change_direction = self.__direction
             self.__coord = Coordinate(maxX, y)
         elif x > maxX:
             self.__direction = Direction.RIGHT
-            self.__change_direction = self.__direction
             self.__coord = Coordinate(-2, y)
 
     """"Check/Calculate Methods"""

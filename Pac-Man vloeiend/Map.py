@@ -75,6 +75,17 @@ class Map():
                     self.__pacman_coord = Coordinate(x - 1, y - 4)
                 elif self.__map[y][x] in "/=.-_\éè\()}{][abcd12345678uijo":  # All the characters that are walls
                     self.__wall_list.append(Coordinate(x - 1, y - 4))
+                elif self.__map[y][x] == "t":
+                    # At a teleporter, add some "fake" walls to the list to make sure pacman doesn't go out of bounds
+                    self.__wall_list.append(Coordinate(x, y - 3))
+                    self.__wall_list.append(Coordinate(x - 2, y - 3))
+                    self.__wall_list.append(Coordinate(x, y - 5))
+                    self.__wall_list.append(Coordinate(x - 2, y - 5))
+                    self.__wall_list.append(Coordinate(x+1, y-3))
+                    self.__wall_list.append(Coordinate(x + 1, y - 5))
+                    self.__wall_list.append(Coordinate(x - 3, y - 3))
+                    self.__wall_list.append(Coordinate(x - 3, y - 5))
+
 
     # Initialization of a dictionary, every sign is equivalent to a tile image
     def __init_tiles(self):
