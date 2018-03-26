@@ -25,6 +25,7 @@ class Game():
         self.clock = pg.time.Clock()
         self.candies = self.map.get_candy_dict()
         self.pacman = PacMan(self.game_display, self.map.get_pacman_start(), self, self.map.get_wall_list())
+        self.map.set_pacman(self.pacman)
 
     """Draw methods"""
 

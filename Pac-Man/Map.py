@@ -32,6 +32,9 @@ class Map():
         self.__candy_dict = {}
         self.__init_items()
 
+        # Pacman himself
+        self.pacman = None
+
     """Draw methods"""
 
     # Draws the map based on the signs in the Map dictionary
@@ -40,6 +43,7 @@ class Map():
             for col in range(0, self.__tiles_horiz_size):  # = Amount of tiles in 1 row
                 tile_sign = self.__map[row][col]
                 self.__game_display.blit(self.__tiles[tile_sign], (col * self.__tile_size, row * self.__tile_size))
+        self.draw_grid()
 
     # Method for drawing a grid over the map, handy for debugging ect
     def draw_grid(self):
@@ -113,3 +117,9 @@ class Map():
     # Getter: returns the dictionary, Coordinates mapped on a Candy Object
     def get_candy_dict(self):
         return self.__candy_dict
+
+    """Setters"""
+
+    # Setter: sets the pacman object
+    def set_pacman(self,p):
+        self.pacman = p

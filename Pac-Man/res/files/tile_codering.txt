@@ -33,3 +33,5 @@ G : tile_gate
 f : tile_black
 P : tile_black
 t : tile_black
+s : pacman-l 6
+S : pacman-l 6
