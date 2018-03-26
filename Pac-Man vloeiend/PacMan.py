@@ -42,6 +42,7 @@ class PacMan:
         # Once there, it's coordinate will be updated so it's ready to be checked in the next iteration (will perform else)
         if self.__moving:
             self.__moving_pos += self.__speed
+            self.__image = self.__get_image_direction(self.__direction)
             if self.__moving_pos >= 16:
                 self.__moving_pos = 0
                 self.__moving = False
@@ -106,7 +107,7 @@ class PacMan:
         candies = self.__game.get_candy_dict()
         if self.__coord in candies.keys():
             del self.__game.get_candy_dict()[self.__coord]
-            self.score += 1
+            self.score += 1000
 
     # Calculates the next coordinate
     # Also this method checks if it is a "teleporter" which will perform __set_on_opposite_side() in move() method
@@ -142,7 +143,7 @@ class PacMan:
         (xPixels, yPixels) = (coordinate.get_pixel_tuple())
         xPixels += self.__direction.value[0] * self.__moving_pos
         yPixels += self.__direction.value[1] * self.__moving_pos
-        self.__image = self.__get_image_direction(self.__direction)
+
         self.__gameDisplay.blit(self.__image, (xPixels, yPixels))
 
     """"Getters"""
