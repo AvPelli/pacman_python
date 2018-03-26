@@ -1,6 +1,7 @@
 from copy import deepcopy
 
 import pygame as pg  # Importeren van pg module
+
 from Candy import Candy
 from Coordinate import Coordinate
 
