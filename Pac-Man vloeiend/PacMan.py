@@ -40,31 +40,11 @@ class PacMan:
     # The move method will move Pacman
     def move(self):
         # If pacman is moving between tiles, it will keep going that way until it reaches the next tile
-        # Once there, it's coordinate will be updated so it's ready to be checked in the next iteration
         if self.__moving_between_tiles:
             self.__check_turnaround()
-            if not self.__turnaround:
-                # Proceed to the next tile
-                self.__image = self.__get_image_direction(self.__direction)
-                self.__moving_pos += self.__speed
-                if self.__moving_pos >= 16:
-                    self.__moving_pos = 0
-                    self.__moving_between_tiles = False
-                    self.__coord.update_coord(self.__direction)
-            # However if turnaround has been set (see check_turnaround), pacman will have to move back to the beginning his original tile 1st
-            # Once there he'll set himself ready for the next iteration (and its coordinate will NOT be updated)
-            # To solve issues bug-wise, number will be set on 0 once it has moved back, so its beak is closed at the end, as usual
-            # Also note that, while the image will be reversed, pacman's direction will not be updated until he has finished moving so prevent extra issues that cause all sorts of headaches
-            else:
-                self.__image = self.__get_image_direction(self.__change_direction)
-                self.__moving_pos -= self.__speed
-                if self.__moving_pos <= 0:
-                    self.__moving_pos = 0
-                    self.__moving_between_tiles = False
-                    self.__turnaround = False
-                    self.__number = 0
-            self.__set_on_coord(self.__coord)
-        # If pacman is not moving, meaning it's on 1 tile exactly
+            self.__move_between_tiles()
+
+        # If pacman is not moving, meaning it's on 1 tile exactly, will perform this
         # If Pacman is against a wall it will just redraw itself on the same coordinate, but there are not caluclations needed
         # Else it checks if it needs to calculate a new coordinate, and if a different direction input has been given
         else:
@@ -89,6 +69,31 @@ class PacMan:
             # Moves to the new coordinate
             # Checks if there is candy to eat on the new coordinate
             self.__eat_candy()
+
+
+    def __move_between_tiles(self):
+        if not self.__turnaround:
+            # Proceed to the next tile
+            self.__image = self.__get_image_direction(self.__direction)
+            self.__moving_pos += self.__speed
+            if self.__moving_pos >= 16:
+                self.__moving_pos = 0
+                self.__moving_between_tiles = False
+                # Once there, it's coordinate will be updated so it's ready to be checked in the else: part of move
+                self.__coord.update_coord(self.__direction)
+        # However if turnaround has been set (see check_turnaround), pacman will have to move back to the beginning his original tile 1st
+        # Once there he'll set himself ready for the next iteration (and its coordinate will NOT be updated)
+        # To solve issues bug-wise, number will be set on 0 once it has moved back, so its beak is closed at the end, as usual
+        # Also note that, while the image will be reversed, pacman's direction will not be updated until he has finished moving so prevent extra issues that cause all sorts of headaches
+        else:
+            self.__image = self.__get_image_direction(self.__change_direction)
+            self.__moving_pos -= self.__speed
+            if self.__moving_pos <= 0:
+                self.__moving_pos = 0
+                self.__moving_between_tiles = False
+                self.__turnaround = False
+                self.__number = 0
+        self.__set_on_coord(self.__coord)
 
     # When Pacman reaches the edge of the map, its coordinates must be updated to the opposite side
     def __set_on_opposite_side(self):
