@@ -4,6 +4,7 @@ from Coordinate import Coordinate
 from Direction import Direction
 
 
+
 class PacMan:
     # Constructor of PacMan
     def __init__(self, game_display, coordinate, game, walls):

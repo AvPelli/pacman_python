@@ -57,6 +57,7 @@ class Map():
             pg.draw.line(self.__game_display, (169, 169, 169), (0, self.__tile_size * y),
                          (self.__width, self.__tile_size * y))
 
+
     # This method redraws some items like:
     # All the remaining candy and the map itself
     def redraw_everything(self):
