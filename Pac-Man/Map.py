@@ -43,7 +43,7 @@ class Map():
             for col in range(0, self.__tiles_horiz_size):  # = Amount of tiles in 1 row
                 tile_sign = self.__map[row][col]
                 self.__game_display.blit(self.__tiles[tile_sign], (col * self.__tile_size, row * self.__tile_size))
-        self.draw_grid()
+        # self.draw_grid()
 
     # Method for drawing a grid over the map, handy for debugging ect
     def draw_grid(self):

@@ -21,7 +21,7 @@ class Game():
         pg.init()  # Init of pg
         self.game_display = pg.display.set_mode(resolution)
         self.map = Map(self.game_display, width, height, tile_size)
-        self.map.draw_map()
+        #  self.map.draw_map()
         self.clock = pg.time.Clock()
         self.candies = self.map.get_candy_dict()
         self.pacman = PacMan(self.game_display, self.map.get_pacman_start(), self, self.map.get_wall_list())
