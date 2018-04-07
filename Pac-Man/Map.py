@@ -43,7 +43,20 @@ class Map():
             for col in range(0, self.__tiles_horiz_size):  # = Amount of tiles in 1 row
                 tile_sign = self.__map[row][col]
                 self.__game_display.blit(self.__tiles[tile_sign], (col * self.__tile_size, row * self.__tile_size))
+        self.draw_extra()
+
+    def draw_extra(self):
+        self.draw_lifes()
         self.draw_grid()
+
+    # Method for drawing the amount of lives pacman has left
+    def draw_lifes(self):
+        width = self.__tile_size * 2
+        height = self.__tile_size * (self.__tiles_vert_size - 2)
+        for i in range(0, self.pacman.getLifes()):
+            width = width * (i + 1)
+            lifesimg = pg.image.load("res/tileset/pacman_lifes.png")
+            self.__game_display.blit(lifesimg, (width, height))
 
     # Method for drawing a grid over the map, handy for debugging ect
     def draw_grid(self):
@@ -56,7 +69,6 @@ class Map():
         for y in range(0, self.__tiles_vert_size):
             pg.draw.line(self.__game_display, (169, 169, 169), (0, self.__tile_size * y),
                          (self.__width, self.__tile_size * y))
-
 
     # This method redraws some items like:
     # All the remaining candy and the map itself
@@ -87,11 +99,10 @@ class Map():
                     self.__wall_list.append(Coordinate(x - 2, y - 3))
                     self.__wall_list.append(Coordinate(x, y - 5))
                     self.__wall_list.append(Coordinate(x - 2, y - 5))
-                    self.__wall_list.append(Coordinate(x+1, y-3))
+                    self.__wall_list.append(Coordinate(x + 1, y - 3))
                     self.__wall_list.append(Coordinate(x + 1, y - 5))
                     self.__wall_list.append(Coordinate(x - 3, y - 3))
                     self.__wall_list.append(Coordinate(x - 3, y - 5))
-
 
     # Initialization of a dictionary, every sign is equivalent to a tile image
     def __init_tiles(self):
@@ -122,5 +133,5 @@ class Map():
     """Setters"""
 
     # Setter: sets the pacman object
-    def set_pacman(self,p):
+    def set_pacman(self, p):
         self.pacman = p
