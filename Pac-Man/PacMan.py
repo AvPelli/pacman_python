@@ -10,6 +10,7 @@ class PacMan:
     def __init__(self, game_display, coordinate, game, walls):
         # Start variables
         self.score = 0
+        self.lifes = 2
         self.__moveable = True
         self.__coord = coordinate
         self.__direction = Direction.RIGHT
@@ -192,3 +193,7 @@ class PacMan:
             for i in range(1, 10):
                 dict[letter].append("res/pacman/pacman-{letter} {number}.png".format(letter=letter, number=i))
         return dict
+
+    # Returns the amount of lifes left
+    def getLifes(self):
+        return self.lifes
