@@ -126,8 +126,3 @@ class Game():
 
         pg.quit()
         quit()
-
-
-# Let the game start
-game = Game()
-game.run()
