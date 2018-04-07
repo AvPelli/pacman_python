@@ -55,8 +55,10 @@ class Game():
             pg.mixer.music.play()
             self.intro_played = True
 
-        # Event check
+        # Event check, quit event check first
         self.check_quit_events()
+        self.check_beginningmusic_events()
+
 
     # Gaming
     def gamemode3(self):
@@ -66,9 +68,11 @@ class Game():
         self.pacman.move()
         pg.display.update()
         self.clock.tick(50)
-        # Event check
-        self.check_quit_events()
+        # Event check, quit event check first
         self.check_key_events()
+        self.check_quit_events()
+
+
 
     def gamemode_handler(self):
         if self.gamemode == 2:
@@ -89,13 +93,13 @@ class Game():
     """"Events"""
 
     def check_quit_events(self):
-        for event in pg.event.get():
-            if event.type == pg.QUIT:
+        for event in pg.event.get(pg.QUIT):
+                print("hier")
                 self.gameExit = True
 
     def check_key_events(self):
-        for event in pg.event.get():
-            if event.type == pg.KEYDOWN:
+        print("hier")
+        for event in pg.event.get(pg.KEYDOWN):
                 # Pauze button: p
                 if event.key == pg.K_p:
                     self.pauze = True if self.pauze == False else False
@@ -110,8 +114,7 @@ class Game():
                     self.pacman.set_direction(Direction.DOWN)
 
     def check_beginningmusic_events(self):
-        for event in pg.event.get():
-            if event.type == self.SONG_END:
+        for event in pg.event.get(self.SONG_END):
                 self.gamemode = 3
 
     """"Main method"""
@@ -121,7 +124,7 @@ class Game():
     # Also it functions as a kind of timeline everything in the while loop will be exectued as long as the game hasn't stopped
     def run(self):
         while not self.gameExit:
-            # If the game is not paused, it will redraw the whole game
+            # If the game is not paused, the game wil continue
             if not (self.pauze):
                 self.gamemode_handler()
 
