@@ -50,6 +50,7 @@ class Map():
         self.draw_hsletters()
         self.draw_grid()
         self.draw_score()
+        self.draw_readytext()
 
     # Method for drawing the amount of lives pacman has left
     def draw_lifes(self):
@@ -66,13 +67,20 @@ class Map():
         fontoffset = 3
         self.__game_display.blit(text_surface_obj, (9 * self.__tile_size, 0 - fontoffset))
 
+    # Draw Ready! text, displayed at the start of the game
+    def draw_readytext(self):
+        text_surface_obj = self.font_obj.render('READY!', False, (255, 238, 0))
+        fontoffset = 3
+        self.__game_display.blit(text_surface_obj, (11 * self.__tile_size, 20 * self.__tile_size-fontoffset))
+
     # Method for drawing the score
     def draw_score(self):
         score = self.pacman.getScore()
-        text_surface_obj = self.font_obj.render(str(score), False, (255,255,255))
-        scoreSize = len(str(score))
+        text_surface_obj = self.font_obj.render(str(score), False, (255, 255, 255))
+        score_size = len(str(score))
         fontoffset = 3
-        self.__game_display.blit(text_surface_obj, (7 * self.__tile_size-scoreSize*16, self.__tile_size-fontoffset))
+        self.__game_display.blit(text_surface_obj,
+                                 (7 * self.__tile_size - score_size * 16, self.__tile_size - fontoffset))
 
     # Method for drawing a grid over the map, handy for debugging ect
     def draw_grid(self):

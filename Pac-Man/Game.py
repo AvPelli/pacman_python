@@ -59,7 +59,6 @@ class Game():
         self.check_quit_events()
         self.check_beginningmusic_events()
 
-
     # Gaming
     def gamemode3(self):
         self.game_display.fill(black)
@@ -71,8 +70,6 @@ class Game():
         # Event check, quit event check first
         self.check_key_events()
         self.check_quit_events()
-
-
 
     def gamemode_handler(self):
         if self.gamemode == 2:
@@ -94,28 +91,27 @@ class Game():
 
     def check_quit_events(self):
         for event in pg.event.get(pg.QUIT):
-                print("hier")
-                self.gameExit = True
+            print("hier")
+            self.gameExit = True
 
     def check_key_events(self):
-        print("hier")
         for event in pg.event.get(pg.KEYDOWN):
-                # Pauze button: p
-                if event.key == pg.K_p:
-                    self.pauze = True if self.pauze == False else False
-                # Sends the direction input to Pacman
-                elif event.key == pg.K_LEFT:
-                    self.pacman.set_direction(Direction.LEFT)
-                elif event.key == pg.K_RIGHT:
-                    self.pacman.set_direction(Direction.RIGHT)
-                elif event.key == pg.K_UP:
-                    self.pacman.set_direction(Direction.UP)
-                elif event.key == pg.K_DOWN:
-                    self.pacman.set_direction(Direction.DOWN)
+            # Pauze button: p
+            if event.key == pg.K_p:
+                self.pauze = True if self.pauze == False else False
+            # Sends the direction input to Pacman
+            elif event.key == pg.K_LEFT:
+                self.pacman.set_direction(Direction.LEFT)
+            elif event.key == pg.K_RIGHT:
+                self.pacman.set_direction(Direction.RIGHT)
+            elif event.key == pg.K_UP:
+                self.pacman.set_direction(Direction.UP)
+            elif event.key == pg.K_DOWN:
+                self.pacman.set_direction(Direction.DOWN)
 
     def check_beginningmusic_events(self):
         for event in pg.event.get(self.SONG_END):
-                self.gamemode = 3
+            self.gamemode = 3
 
     """"Main method"""
 
