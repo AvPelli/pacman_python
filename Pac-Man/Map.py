@@ -37,6 +37,7 @@ class Map():
 
         # Font settings
         self.font_obj = pg.font.Font("res/files/fonts/emulogic.ttf", 16)
+        self.oneup = True
 
     def draw_map(self):
         for row in range(0, self.__tiles_vert_size):
@@ -50,7 +51,6 @@ class Map():
         self.draw_hsletters()
         self.draw_grid()
         self.draw_score()
-        self.draw_readytext()
 
     # Method for drawing the amount of lives pacman has left
     def draw_lifes(self):
@@ -71,13 +71,31 @@ class Map():
     def draw_readytext(self):
         text_surface_obj = self.font_obj.render('READY!', False, (255, 238, 0))
         fontoffset = 3
-        self.__game_display.blit(text_surface_obj, (11 * self.__tile_size, 20 * self.__tile_size-fontoffset))
+        self.__game_display.blit(text_surface_obj, (11 * self.__tile_size, 20 * self.__tile_size - fontoffset))
+
+    def remove_readytext(self):
+        text_surface_obj = self.font_obj.render('      ', False, (0, 0, 0))
+        fontoffset = 3
+        self.__game_display.blit(text_surface_obj, (11 * self.__tile_size, 20 * self.__tile_size - fontoffset))
+
+    def draw_oneup(self):
+        if self.oneup:
+            self.oneup = False
+            text_surface_obj = self.font_obj.render('1UP', False, (255, 255, 255))
+        else :
+            self.oneup = True
+            text_surface_obj = self.font_obj.render('      ', False, (255, 255, 255))
+        fontoffset = 3
+        self.__game_display.blit(text_surface_obj, (3 * self.__tile_size, -fontoffset))
 
     # Method for drawing the score
     def draw_score(self):
         score = self.pacman.getScore()
-        text_surface_obj = self.font_obj.render(str(score), False, (255, 255, 255))
-        score_size = len(str(score))
+        scorestr = str(self.pacman.getScore())
+        if score < 10:
+            scorestr = str(0) + scorestr
+        score_size = len(scorestr)
+        text_surface_obj = self.font_obj.render(scorestr, False, (255, 255, 255))
         fontoffset = 3
         self.__game_display.blit(text_surface_obj,
                                  (7 * self.__tile_size - score_size * 16, self.__tile_size - fontoffset))
@@ -94,9 +112,9 @@ class Map():
             pg.draw.line(self.__game_display, (169, 169, 169), (0, self.__tile_size * y),
                          (self.__width, self.__tile_size * y))
 
-    def draw_pacman(self):
+    def draw_startpacman(self):
         # Moet een bolletje worden na een bepaalde tijd
-        self.pacman.draw_pacman()
+        self.pacman.draw_startpacman()
 
     # This method redraws some items like:
     # All the remaining candy and the map itself

@@ -41,11 +41,14 @@ class Game():
 
     # Setting up the game - press a  KEY to start
     def gamemode2(self):
-        # Draw methods
+        # Draw methods, be aware of the sequence!
         self.map.draw_map()
         self.map.draw_candy()
-        self.map.draw_pacman()
+        self.map.draw_startpacman()
+        self.map.draw_readytext()
+        self.map.draw_oneup()
         pg.display.update()
+        self.clock.tick(50)
 
         # Music methods
         if not (self.intro_played):
@@ -65,6 +68,7 @@ class Game():
         self.map.draw_map()
         self.map.draw_candy()
         self.pacman.move()
+        self.map.draw_oneup()
         pg.display.update()
         self.clock.tick(50)
         # Event check, quit event check first
@@ -112,6 +116,7 @@ class Game():
     def check_beginningmusic_events(self):
         for event in pg.event.get(self.SONG_END):
             self.gamemode = 3
+            self.map.remove_readytext()
 
     """"Main method"""
 

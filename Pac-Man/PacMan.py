@@ -33,9 +33,14 @@ class PacMan:
         self.walls = walls
         self.__change_direction = None
 
-    # Initializes Pacman on give start coordinate
+    # draw pacman on that coordinate
     def draw_pacman(self):
         self.__gameDisplay.blit(self.__image, self.__coord.get_pixel_tuple())
+
+    # Initializes Pacman on give start coordinate
+    def draw_startpacman(self):
+        co = self.__coord.get_pixel_tuple()
+        self.__gameDisplay.blit(self.__image, (co[0]-8, co[1]))
 
     """"Move method"""
 
