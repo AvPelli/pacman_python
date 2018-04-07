@@ -35,9 +35,9 @@ class Map():
         # Pacman himself
         self.pacman = None
 
-    """Draw methods"""
+        # Font settings
+        self.font_obj = pg.font.Font("res/files/fonts/emulogic.ttf", 16)
 
-    # Draws the map based on the signs in the Map dictionary
     def draw_map(self):
         for row in range(0, self.__tiles_vert_size):
             for col in range(0, self.__tiles_horiz_size):  # = Amount of tiles in 1 row
@@ -47,7 +47,9 @@ class Map():
 
     def draw_extra(self):
         self.draw_lifes()
+        self.draw_hsletters()
         self.draw_grid()
+        self.draw_score()
 
     # Method for drawing the amount of lives pacman has left
     def draw_lifes(self):
@@ -57,6 +59,20 @@ class Map():
             width = width * (i + 1)
             lifesimg = pg.image.load("res/tileset/pacman_lifes.png")
             self.__game_display.blit(lifesimg, (width, height))
+
+    # Method for drawing the high score letters
+    def draw_hsletters(self):
+        text_surface_obj = self.font_obj.render('HIGH SCORE', False, (255, 255, 255))
+        fontoffset = 3
+        self.__game_display.blit(text_surface_obj, (9 * self.__tile_size, 0 - fontoffset))
+
+    # Method for drawing the score
+    def draw_score(self):
+        score = self.pacman.getScore()
+        text_surface_obj = self.font_obj.render(str(score), False, (255,255,255))
+        scoreSize = len(str(score))
+        fontoffset = 3
+        self.__game_display.blit(text_surface_obj, (7 * self.__tile_size-scoreSize*16, self.__tile_size-fontoffset))
 
     # Method for drawing a grid over the map, handy for debugging ect
     def draw_grid(self):
@@ -70,9 +86,13 @@ class Map():
             pg.draw.line(self.__game_display, (169, 169, 169), (0, self.__tile_size * y),
                          (self.__width, self.__tile_size * y))
 
+    def draw_pacman(self):
+        # Moet een bolletje worden na een bepaalde tijd
+        self.pacman.draw_pacman()
+
     # This method redraws some items like:
     # All the remaining candy and the map itself
-    def redraw_everything(self):
+    def draw_candy(self):
         self.draw_map()
         for candy in self.__candy_dict.values():
             candy.draw(candy.getCoord())

@@ -18,25 +18,63 @@ clock = pg.time.Clock()
 class Game():
     # Constructor of Game
     def __init__(self):
-        pg.init()  # Init of pg
+        # Init of pg
+        pg.init()
+
+        # Game variables
+        self.gamemode = 2
+        self.pauze = False
         self.game_display = pg.display.set_mode(resolution)
+        self.gameExit = False
+
+        # Music settings
+        self.intro_played = False
+
+        # Game objects
         self.map = Map(self.game_display, width, height, tile_size)
         self.clock = pg.time.Clock()
         self.candies = self.map.get_candy_dict()
         self.pacman = PacMan(self.game_display, self.map.get_pacman_start(), self, self.map.get_wall_list())
+
+        # Link objects
         self.map.set_pacman(self.pacman)
+
+    # Setting up the game - press a  KEY to start
+    def gamemode2(self):
+        # Draw methods
         self.map.draw_map()
+        self.map.draw_candy()
+        self.map.draw_pacman()
+        pg.display.update()
 
+        # Music methods
+        if not (self.intro_played):
+            self.SONG_END = pg.USEREVENT + 1
+            pg.mixer.music.set_endevent(self.SONG_END)
+            pg.mixer.music.load("res/files/music/pacman-beginning/pacman_beginning.wav")
+            pg.mixer.music.play()
+            self.intro_played = True
 
-    """Draw methods"""
+        # Event check
+        self.check_quit_events()
 
-    # Redraws the whole game
-    def redraw(self):
+    # Gaming
+    def gamemode3(self):
         self.game_display.fill(black)
-        self.map.redraw_everything()
+        self.map.draw_map()
+        self.map.draw_candy()
         self.pacman.move()
         pg.display.update()
         self.clock.tick(50)
+        # Event check
+        self.check_quit_events()
+        self.check_key_events()
+
+    def gamemode_handler(self):
+        if self.gamemode == 2:
+            self.gamemode2()
+        elif self.gamemode == 3:
+            self.gamemode3()
 
     """"Getters"""
 
@@ -48,34 +86,45 @@ class Game():
     def get_max(self):
         return width / tile_size, height / tile_size
 
+    """"Events"""
+
+    def check_quit_events(self):
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
+                self.gameExit = True
+
+    def check_key_events(self):
+        for event in pg.event.get():
+            if event.type == pg.KEYDOWN:
+                # Pauze button: p
+                if event.key == pg.K_p:
+                    self.pauze = True if self.pauze == False else False
+                # Sends the direction input to Pacman
+                elif event.key == pg.K_LEFT:
+                    self.pacman.set_direction(Direction.LEFT)
+                elif event.key == pg.K_RIGHT:
+                    self.pacman.set_direction(Direction.RIGHT)
+                elif event.key == pg.K_UP:
+                    self.pacman.set_direction(Direction.UP)
+                elif event.key == pg.K_DOWN:
+                    self.pacman.set_direction(Direction.DOWN)
+
+    def check_beginningmusic_events(self):
+        for event in pg.event.get():
+            if event.type == self.SONG_END:
+                self.gamemode = 3
+
     """"Main method"""
 
     # This is the main method
     # It catches every input from the keyboard
     # Also it functions as a kind of timeline everything in the while loop will be exectued as long as the game hasn't stopped
     def run(self):
-        gameExit = False
-        self.pauze = False
-        while not gameExit:
-            for event in pg.event.get():
-                if event.type == pg.QUIT:
-                    gameExit = True
-                if event.type == pg.KEYDOWN:
-                    # Pauze button: p
-                    if event.key == pg.K_p:
-                        self.pauze = True if self.pauze == False else False
-                    # Sends the direction input to Pacman
-                    elif event.key == pg.K_LEFT:
-                        self.pacman.set_direction(Direction.LEFT)
-                    elif event.key == pg.K_RIGHT:
-                        self.pacman.set_direction(Direction.RIGHT)
-                    elif event.key == pg.K_UP:
-                        self.pacman.set_direction(Direction.UP)
-                    elif event.key == pg.K_DOWN:
-                        self.pacman.set_direction(Direction.DOWN)
+        while not self.gameExit:
             # If the game is not paused, it will redraw the whole game
-            if not self.pauze:
-                self.redraw()
+            if not (self.pauze):
+                self.gamemode_handler()
+
         pg.quit()
         quit()
 

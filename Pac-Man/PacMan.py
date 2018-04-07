@@ -4,7 +4,6 @@ from Coordinate import Coordinate
 from Direction import Direction
 
 
-
 class PacMan:
     # Constructor of PacMan
     def __init__(self, game_display, coordinate, game, walls):
@@ -24,18 +23,19 @@ class PacMan:
         self.__number = 1
         self.dict = self.__image_dict()
         self.__gameDisplay = game_display
+        self.__game = game
         self.imageList = self.dict[self.__direction.get_letter()]
         self.__image = pg.image.load(
             "res/pacman/pacman-{letter} {number}.png".format(letter=self.__direction.get_letter(),
                                                              number=self.__number))
 
-        # Initializes Pacman on give start coordinate
-        self.__game = game
-        self.__gameDisplay.blit(self.__image, self.__coord.get_pixel_tuple())
-
         # Collision and direction control check variables
         self.walls = walls
         self.__change_direction = None
+
+    # Initializes Pacman on give start coordinate
+    def draw_pacman(self):
+        self.__gameDisplay.blit(self.__image, self.__coord.get_pixel_tuple())
 
     """"Move method"""
 
@@ -71,7 +71,6 @@ class PacMan:
             # Moves to the new coordinate
             # Checks if there is candy to eat on the new coordinate
             self.__eat_candy()
-
 
     def __move_between_tiles(self):
         if not self.__turnaround:
@@ -117,8 +116,8 @@ class PacMan:
     def __direction_waiter(self):
         if not self.__moving_between_tiles:
             if self.__change_direction is not None and Coordinate(
-                            self.__coord.get_x() + self.__change_direction.value[0],
-                            self.__coord.get_y() + self.__change_direction.value[
+                    self.__coord.get_x() + self.__change_direction.value[0],
+                    self.__coord.get_y() + self.__change_direction.value[
                         1]) not in self.walls:
                 self.__direction = self.__change_direction
 
@@ -128,7 +127,7 @@ class PacMan:
         candies = self.__game.get_candy_dict()
         if self.__coord in candies.keys():
             del self.__game.get_candy_dict()[self.__coord]
-            self.score += 1000
+            self.score += 10
 
     # Calculates the next coordinate
     # Also this method checks if it is a "teleporter" which will perform __set_on_opposite_side() in move() method
@@ -197,3 +196,7 @@ class PacMan:
     # Returns the amount of lifes left
     def getLifes(self):
         return self.lifes
+
+    # Returns the score
+    def getScore(self):
+        return self.score
