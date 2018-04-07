@@ -61,6 +61,7 @@ class Map():
             pg.draw.line(self.__game_display, (169, 169, 169), (0, self.__tile_size * y),
                          (self.__width, self.__tile_size * y))
 
+    # Method for drawing the amount of lives pacman has left
     def draw_lifes(self):
         width = self.__tile_size * 2
         height = self.__tile_size * (self.__tiles_vert_size - 2)
