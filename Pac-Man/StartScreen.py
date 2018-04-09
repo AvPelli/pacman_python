@@ -1,16 +1,9 @@
 import pygame as pg
-
+import Game
 from Map import Map
-from Game import Game
 from os import path
 
-width = 224 * 2
-height = 288 * 2
-tile_size = 8 * 2
-black = (0, 0, 0)
-resolution = (width, height)
-
-game_display = pg.display.set_mode(resolution)
+game_display = pg.display.set_mode(Game.resolution)
 pg.display.set_caption('Pac-Man')
 clock = pg.time.Clock()
 
@@ -19,14 +12,14 @@ class StartScreen():
 
     def __init__(self):
         self.game_display = game_display  # The display of the game
-        self.__width = width
-        self.__height = height
+        self.__width = Game.width
+        self.__height = Game.height
         self.clock = pg.time.Clock()
         filename = "res/files/hiscores.txt"
         imagefile = "res/startscreen/startscreen.jpg"
 
         self.startscreen_image = pg.image.load(imagefile)
-        self.game_display.fill(black)
+        self.game_display.fill(Game.black)
 
     # Redraw Startscreen for animation:
     def redraw(self):
@@ -53,9 +46,9 @@ class StartScreen():
 
         #Free resources used by mainmenu screen:
         pg.quit()
-        # Let the game start
-        game = Game()
-        game.run()
-
+        # Let the game start if the player don't press Quit
+        if not gameExit:
+            game = Game.Game()
+            game.run()
 startscreen = StartScreen()
 startscreen.run()

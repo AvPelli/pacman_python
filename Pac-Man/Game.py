@@ -10,8 +10,6 @@ tile_size = 8 * 2
 black = (0, 0, 0)
 resolution = (width, height)
 
-game_display = pg.display.set_mode(resolution)
-pg.display.set_caption('Pac-Man')
 clock = pg.time.Clock()
 
 
@@ -20,7 +18,7 @@ class Game():
     def __init__(self):
         # Init of pg
         pg.init()
-
+        pg.display.set_caption('Pac-Man')
         # Game variables
         self.gamemode = 2
         self.pauze = False
@@ -57,7 +55,6 @@ class Game():
             pg.mixer.music.load("res/files/music/pacman-beginning/pacman_beginning.wav")
             pg.mixer.music.play()
             self.intro_played = True
-
         # Event check, quit event check first
         self.check_quit_events()
         self.check_beginningmusic_events()
