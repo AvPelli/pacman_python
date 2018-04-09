@@ -125,6 +125,11 @@ class Game():
             # If the game is not paused, the game wil continue
             if not (self.pauze):
                 self.gamemode_handler()
+            else:
+                for event in pg.event.get(pg.KEYDOWN):
+                    # Pauze button: p
+                    if event.key == pg.K_p:
+                        self.pauze = False
 
         pg.quit()
         quit()
