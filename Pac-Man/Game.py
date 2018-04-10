@@ -130,6 +130,8 @@ class Game():
                     # Pauze button: p
                     if event.key == pg.K_p:
                         self.pauze = False
+                self.check_quit_events()
 
         pg.quit()
         quit()
+
