@@ -31,6 +31,7 @@ class Map():
         self.__wall_list = list()
         self.__candy_dict = {}
         self.__init_items()
+        self.__transp_list = list()
 
         # Pacman himself
         self.pacman = None
@@ -82,7 +83,7 @@ class Map():
         if self.oneup:
             self.oneup = False
             text_surface_obj = self.font_obj.render('1UP', False, (255, 255, 255))
-        else :
+        else:
             self.oneup = True
             text_surface_obj = self.font_obj.render('      ', False, (255, 255, 255))
         fontoffset = 3
@@ -112,8 +113,8 @@ class Map():
             pg.draw.line(self.__game_display, (169, 169, 169), (0, self.__tile_size * y),
                          (self.__width, self.__tile_size * y))
 
+    # Draws start Pacman
     def draw_startpacman(self):
-        # Moet een bolletje worden na een bepaalde tijd
         self.pacman.draw_startpacman()
 
     # This method redraws some items like:
@@ -149,6 +150,7 @@ class Map():
                     self.__wall_list.append(Coordinate(x + 1, y - 5))
                     self.__wall_list.append(Coordinate(x - 3, y - 3))
                     self.__wall_list.append(Coordinate(x - 3, y - 5))
+                    #self.__transp_list.append(Coordinate(x - 1, y - 4))
 
     # Initialization of a dictionary, every sign is equivalent to a tile image
     def __init_tiles(self):
@@ -175,6 +177,10 @@ class Map():
     # Getter: returns the dictionary, Coordinates mapped on a Candy Object
     def get_candy_dict(self):
         return self.__candy_dict
+
+    # Getter: returns list of transporters
+    def get_transporters(self):
+        return self.__transp_list
 
     """Setters"""
 

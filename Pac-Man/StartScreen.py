@@ -1,7 +1,6 @@
 import pygame as pg
+
 import Game
-from Map import Map
-from os import path
 
 game_display = pg.display.set_mode(Game.resolution)
 pg.display.set_caption('Pac-Man')
@@ -23,7 +22,7 @@ class StartScreen():
 
     # Redraw Startscreen for animation:
     def redraw(self):
-        self.game_display.blit(self.startscreen_image, (0,125))
+        self.game_display.blit(self.startscreen_image, (0, 125))
         pg.display.flip()
 
         self.clock.tick(10)
@@ -44,11 +43,13 @@ class StartScreen():
 
             self.redraw()
 
-        #Free resources used by mainmenu screen:
+        # Free resources used by mainmenu screen:
         pg.quit()
         # Let the game start if the player don't press Quit
         if not gameExit:
             game = Game.Game()
             game.run()
+
+
 startscreen = StartScreen()
 startscreen.run()

@@ -1,20 +1,20 @@
 import pygame as pg
 
+from Character import Character
 from Coordinate import Coordinate
 from Direction import Direction
-from Character import Character
 
 
 class PacMan(Character):
     # Constructor of PacMan
     def __init__(self, game_display, coordinate, game, walls):
         # Start variables
-        super().__init__(PIXELSIZE=16,speed=2,moving_pos=0,
-                         direction=Direction.RIGHT,movable=True,
-                         moving_between_tiles=False,game_display=game_display,
-                         game=game,coordinate=coordinate)
+        super().__init__(PIXELSIZE=16, speed=2, moving_pos=0,
+                         direction=Direction.RIGHT, movable=True,
+                         moving_between_tiles=False, game_display=game_display,
+                         game=game, coordinate=coordinate)
         self.score = 0
-        self.lifes = 2
+        self.lifes = 3
         self.__turnaround = False
 
         # Variables for cosmetics
@@ -36,7 +36,7 @@ class PacMan(Character):
     # Initializes Pacman on give start coordinate
     def draw_startpacman(self):
         co = self._coord.get_pixel_tuple()
-        self._game_display.blit(self.__image, (co[0]-8, co[1]))
+        self._game_display.blit(self.__image, (co[0] - 8, co[1]))
 
     """"Move method"""
 
@@ -52,7 +52,7 @@ class PacMan(Character):
         # Else it checks if it needs to calculate a new coordinate, and if a different direction input has been given
         else:
             if not self._movable:
-                self._set_on_coord(self._coord,self.__image)
+                self._set_on_coord(self._coord, self.__image)
                 return
             # Checks if the direction what was not possible a while ago is possible now
             self.__direction_waiter()
@@ -68,7 +68,7 @@ class PacMan(Character):
                 if jump:
                     self.set_on_opposite_side()
                 self._moving_between_tiles = True
-            self._set_on_coord(self._coord,self.__image)
+            self._set_on_coord(self._coord, self.__image)
             # Moves to the new coordinate
             # Checks if there is candy to eat on the new coordinate
             self.__eat_candy()
@@ -95,7 +95,7 @@ class PacMan(Character):
                 self._moving_between_tiles = False
                 self.__turnaround = False
                 self.__number = 0
-        self._set_on_coord(self._coord,self.__image)
+        self._set_on_coord(self._coord, self.__image)
 
     # When Pacman reaches the edge of the map, its coordinates must be updated to the opposite side
     def set_on_opposite_side(self):
@@ -167,8 +167,6 @@ class PacMan(Character):
             self.__change_direction = None
             self._direction = direction
             self._moveable = True
-
-
 
     """"Getters"""
 

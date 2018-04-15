@@ -22,9 +22,10 @@ class Coordinate:
     # Getter: returns a tuple (Pixel X, Pixel Y)
     def get_pixel_tuple(self):
         # Formule voor van coord systeem --> naar pixels
-        return int((self.__x * self.__PIXELSIZE) + 1 * self.__PIXELSIZE), int((self.__y * self.__PIXELSIZE) + 4 * self.__PIXELSIZE)
+        return int((self.__x * self.__PIXELSIZE) + 1 * self.__PIXELSIZE), int(
+            (self.__y * self.__PIXELSIZE) + 4 * self.__PIXELSIZE)
 
-    # Getter: returns a tuple ( X, Y)
+    # Getter: returns a tuple (X, Y)
     def get_coord_tuple(self):
         return self.__x, self.__y
 
