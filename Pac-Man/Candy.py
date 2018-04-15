@@ -17,7 +17,7 @@ class Candy:
     """Getters"""
 
     # Getter, it returns the coordinate of this candy-object
-    def getCoord(self):
+    def get_coord(self):
         return self.__coord
 
     """Overwritten methods"""
@@ -27,4 +27,4 @@ class Candy:
     def __eq__(self, other):
         if other == None or not isinstance(other, Candy):
             return False
-        return self.__coord.get_x() == other.getCoord().get_x() and self.__coord.get_y() == other.getCoord().get_y()
+        return self.__coord.get_x() == other.get_coord().get_x() and self.__coord.get_y() == other.get_coord().get_y()

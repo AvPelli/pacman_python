@@ -7,11 +7,13 @@ from Coordinate import Coordinate
 
 
 class Map():
+
     # Constructor of Map
+
     def __init__(self, game_display, width, height, tile_size):
         # Amount of rows en colums
-        self.__tiles_horiz_size = 28
-        self.__tiles_vert_size = 36
+        self.tiles_horiz_size = 28
+        self.tiles_vert_size = 36
 
         # Screen and Resolution variables
         self.__game_display = game_display  # The display of the game
@@ -39,10 +41,11 @@ class Map():
         # Font settings
         self.font_obj = pg.font.Font("res/files/fonts/emulogic.ttf", 16)
         self.oneup = True
+        self.fontoffset = 3
 
     def draw_map(self):
-        for row in range(0, self.__tiles_vert_size):
-            for col in range(0, self.__tiles_horiz_size):  # = Amount of tiles in 1 row
+        for row in range(0, self.tiles_vert_size):
+            for col in range(0, self.tiles_horiz_size):  # = Amount of tiles in 1 row
                 tile_sign = self.__map[row][col]
                 self.__game_display.blit(self.__tiles[tile_sign], (col * self.__tile_size, row * self.__tile_size))
         self.draw_extra()
@@ -56,7 +59,7 @@ class Map():
     # Method for drawing the amount of lives pacman has left
     def draw_lifes(self):
         width = self.__tile_size * 2
-        height = self.__tile_size * (self.__tiles_vert_size - 2)
+        height = self.__tile_size * (self.tiles_vert_size - 2)
         for i in range(0, self.pacman.getLifes()):
             width = width * (i + 1)
             lifesimg = pg.image.load("res/tileset/pacman_lifes.png")
@@ -65,19 +68,16 @@ class Map():
     # Method for drawing the high score letters
     def draw_hsletters(self):
         text_surface_obj = self.font_obj.render('HIGH SCORE', False, (255, 255, 255))
-        fontoffset = 3
-        self.__game_display.blit(text_surface_obj, (9 * self.__tile_size, 0 - fontoffset))
+        self.__game_display.blit(text_surface_obj, (9 * self.__tile_size, 0 - self.fontoffset))
 
     # Draw Ready! text, displayed at the start of the game
     def draw_readytext(self):
         text_surface_obj = self.font_obj.render('READY!', False, (255, 238, 0))
-        fontoffset = 3
-        self.__game_display.blit(text_surface_obj, (11 * self.__tile_size, 20 * self.__tile_size - fontoffset))
+        self.__game_display.blit(text_surface_obj, (11 * self.__tile_size, 20 * self.__tile_size - self.fontoffset))
 
     def remove_readytext(self):
         text_surface_obj = self.font_obj.render('      ', False, (0, 0, 0))
-        fontoffset = 3
-        self.__game_display.blit(text_surface_obj, (11 * self.__tile_size, 20 * self.__tile_size - fontoffset))
+        self.__game_display.blit(text_surface_obj, (11 * self.__tile_size, 20 * self.__tile_size - self.fontoffset))
 
     def draw_oneup(self):
         if self.oneup:
@@ -86,8 +86,7 @@ class Map():
         else:
             self.oneup = True
             text_surface_obj = self.font_obj.render('      ', False, (255, 255, 255))
-        fontoffset = 3
-        self.__game_display.blit(text_surface_obj, (3 * self.__tile_size, -fontoffset))
+        self.__game_display.blit(text_surface_obj, (3 * self.__tile_size, -self.fontoffset))
 
     # Method for drawing the score
     def draw_score(self):
@@ -97,19 +96,18 @@ class Map():
             scorestr = str(0) + scorestr
         score_size = len(scorestr)
         text_surface_obj = self.font_obj.render(scorestr, False, (255, 255, 255))
-        fontoffset = 3
         self.__game_display.blit(text_surface_obj,
-                                 (7 * self.__tile_size - score_size * 16, self.__tile_size - fontoffset))
+                                 (7 * self.__tile_size - score_size * 16, self.__tile_size - self.fontoffset))
 
     # Method for drawing a grid over the map, handy for debugging ect
     def draw_grid(self):
         """ Draws a grid to mark the tile borders """
         # (200, 10, 20): is kleur rood
         # pg.draw.line(self.gameDisplay, (200, 10, 20), (0, self.tile_size), (self.__width, self.tile_size))
-        for x in range(0, self.__tiles_horiz_size):
+        for x in range(0, self.tiles_horiz_size):
             pg.draw.line(self.__game_display, (169, 169, 169), (self.__tile_size * x, 0),
                          (self.__tile_size * x, self.__height))
-        for y in range(0, self.__tiles_vert_size):
+        for y in range(0, self.tiles_vert_size):
             pg.draw.line(self.__game_display, (169, 169, 169), (0, self.__tile_size * y),
                          (self.__width, self.__tile_size * y))
 
@@ -122,7 +120,7 @@ class Map():
     def draw_candy(self):
         self.draw_map()
         for candy in self.__candy_dict.values():
-            candy.draw(candy.getCoord())
+            candy.draw(candy.get_coord())
 
     """Initialize methods"""
 
@@ -131,26 +129,23 @@ class Map():
     # *   Initialise PacMan start coordinate
     # *   Makes a list of coordinates where there are walls
     def __init_items(self):
-        for y in range(3, self.__tiles_vert_size):
-            for x in range(0, self.__tiles_horiz_size):
-                if self.__map[y][x] == "f":  # Place where candy show be drawn
-                    coord = Coordinate(x - 1, y - 4)
+        map_noborders = self.__map[3:]
+        for y in range(0, len(map_noborders)):
+            for x in range(0, len(map_noborders[0])):
+                if map_noborders[y][x] == "f":  # Place where candy show be drawn
+                    coord = Coordinate(x, y)
                     self.__candy_dict[coord] = (Candy(self.__game_display, coord))
-                elif self.__map[y][x] == "P":  # Place where PacMan needs to be located
-                    self.__pacman_coord = Coordinate(x - 1, y - 4)
-                elif self.__map[y][x] in "/=.-_\éè\()}{][abcd12345678uijo":  # All the characters that are walls
-                    self.__wall_list.append(Coordinate(x - 1, y - 4))
-                elif self.__map[y][x] == "t":
+                elif map_noborders[y][x] == "P":  # Place where PacMan needs to be located
+                    self.__pacman_coord = Coordinate(x, y)
+                elif map_noborders[y][x] in "/=.-_\éè\()}{][abcd12345678uijo":  # All the characters that are walls
+                    self.__wall_list.append(Coordinate(x, y))
+                elif map_noborders[y][x] == "t":
                     # At a teleporter, add some "fake" walls to the list to make sure pacman doesn't go out of bounds
-                    self.__wall_list.append(Coordinate(x, y - 3))
-                    self.__wall_list.append(Coordinate(x - 2, y - 3))
-                    self.__wall_list.append(Coordinate(x, y - 5))
-                    self.__wall_list.append(Coordinate(x - 2, y - 5))
-                    self.__wall_list.append(Coordinate(x + 1, y - 3))
-                    self.__wall_list.append(Coordinate(x + 1, y - 5))
-                    self.__wall_list.append(Coordinate(x - 3, y - 3))
-                    self.__wall_list.append(Coordinate(x - 3, y - 5))
-                    #self.__transp_list.append(Coordinate(x - 1, y - 4))
+                    self.__wall_list.append(Coordinate(x - 1, y - 1))
+                    self.__wall_list.append(Coordinate(x - 1, y + 1))
+                    self.__wall_list.append(Coordinate(x + 1, y - 1))
+                    self.__wall_list.append(Coordinate(x + 1, y + 1))
+                    # self.__transp_list.append(Coordinate(x - 1, y - 4))
 
     # Initialization of a dictionary, every sign is equivalent to a tile image
     def __init_tiles(self):

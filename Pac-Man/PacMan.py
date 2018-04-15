@@ -138,7 +138,7 @@ class PacMan(Character):
         addX, addY = self._direction.value
         newX, newY = x + addX, y + addY
         jump = False
-        if newX < -2 or newX > maxX:
+        if newX < -1 or newX > maxX:
             jump = True
         return Coordinate(newX, newY), jump
 

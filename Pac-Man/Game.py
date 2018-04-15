@@ -4,11 +4,9 @@ from Direction import Direction
 from Map import Map
 from PacMan import PacMan
 
-width = 224 * 2
-height = 288 * 2
-tile_size = 8 * 2
 black = (0, 0, 0)
-resolution = (width, height)
+tile_size = 16
+resolution = (448, 576)
 
 clock = pg.time.Clock()
 
@@ -16,20 +14,21 @@ clock = pg.time.Clock()
 class Game():
     # Constructor of Game
     def __init__(self):
-        # Init of pg
+        # Init of pygame
         pg.init()
         pg.display.set_caption('Pac-Man')
+
         # Game variables
         self.gamemode = 2
         self.pauze = False
-        self.game_display = pg.display.set_mode(resolution)
         self.gameExit = False
+        self.game_display = pg.display.set_mode(resolution)
 
         # Music settings
         self.intro_played = False
 
         # Game objects
-        self.map = Map(self.game_display, width, height, tile_size)
+        self.map = Map(self.game_display, resolution[0], resolution[1], tile_size)
         self.clock = pg.time.Clock()
         self.candies = self.map.get_candy_dict()
         self.pacman = PacMan(self.game_display, self.map.get_pacman_start(), self, self.map.get_wall_list())
@@ -86,7 +85,7 @@ class Game():
 
     # Getter: returns max amount of colums and rows
     def get_max(self):
-        return width / tile_size, height / tile_size
+        return self.map.tiles_horiz_size-1, self.map.tiles_vert_size-1
 
     """"Events"""
 
@@ -134,4 +133,3 @@ class Game():
 
         pg.quit()
         quit()
-

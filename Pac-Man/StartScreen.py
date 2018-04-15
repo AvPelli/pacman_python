@@ -11,8 +11,8 @@ class StartScreen():
 
     def __init__(self):
         self.game_display = game_display  # The display of the game
-        self.__width = Game.width
-        self.__height = Game.height
+        self.__width = Game.resolution[0]
+        self.__height = Game.resolution[1]
         self.clock = pg.time.Clock()
         filename = "res/files/hiscores.txt"
         imagefile = "res/startscreen/startscreen.jpg"
