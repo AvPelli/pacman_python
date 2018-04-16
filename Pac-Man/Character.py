@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
-import Direction
-import Coordinate
+from Direction import Direction
+from Coordinate import Coordinate
 
 class Character(ABC):
     def __init__(self,PIXELSIZE,speed,moving_pos, direction,movable,moving_between_tiles,game_display,game,coordinate):
@@ -39,6 +39,8 @@ class Character(ABC):
             self._direction = Direction.RIGHT
             self._coord = Coordinate(-2, y)
 
+    # Calculates the next coordinate
+    # Also this method checks if it is a "teleporter" which will perform __set_on_opposite_side() in move() method
     def _calculate_new_coord(self):
         (maxX, maxY) = self._game.get_max()
         (x, y) = (self._coord.get_coord_tuple())

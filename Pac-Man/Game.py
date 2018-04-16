@@ -135,6 +135,9 @@ class Game():
     def get_max(self):
         return self.map.tiles_horiz_size - 1, self.map.tiles_vert_size - 1
 
+    def get_pacman_coord(self):
+        return self.pacman.getCoord()
+
     """"Events"""
 
     def check_quit_events(self):

@@ -57,7 +57,7 @@ class PacMan(Character):
             # Checks if the direction what was not possible a while ago is possible now
             self.__direction_waiter()
             # Calculates the next coordinate
-            check_next_coord, jump = self.__calculate_new_coord()
+            check_next_coord, jump = self._calculate_new_coord()
 
             # Checks if the new coordinate is a wall
             # If it is a wall, it will not move ( as long as the direction isn't changed)
@@ -131,18 +131,6 @@ class PacMan(Character):
             del self._game.get_candy_dict()[self._coord]
             self.score += 10
 
-    # Calculates the next coordinate
-    # Also this method checks if it is a "teleporter" which will perform __set_on_opposite_side() in move() method
-    def __calculate_new_coord(self):
-        (maxX, maxY) = self._game.get_max()
-        (x, y) = (self._coord.get_coord_tuple())
-        addX, addY = self._direction.value
-        newX, newY = x + addX, y + addY
-        jump = False
-        if newX < -1 or newX > maxX:
-            jump = True
-        return Coordinate(newX, newY), jump
-
     # When pacman is moving between tiles, he should still be able to immediately turn around instead of finishing moving to the next tile 1st,
     # This method will check if an opposite key has been pressed and sets the variable __turnaround
     def __check_turnaround(self):
@@ -194,3 +182,6 @@ class PacMan(Character):
     # Returns the score
     def getScore(self):
         return self.score
+
+    def getCoord(self):
+        return self._coord
