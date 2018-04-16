@@ -1,10 +1,9 @@
 import pygame as pg  # Importeren van pg module
 
 from Direction import Direction
+from Ghost import Ghost
 from Map import Map
 from PacMan import PacMan
-from Ghost import Ghost
-from Coordinate import Coordinate
 
 black = (0, 0, 0)
 tile_size = 16
@@ -104,20 +103,19 @@ class Game():
         pg.display.update()
         gamemode4_exit = False
         while not gamemode4_exit:
-            #check for QUIT or "X" to play another game
+            # check for QUIT or "X" to play another game
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     gamemode4_exit = True
                     pg.quit()
 
-                #Restart startscreen:
+                # Restart startscreen:
                 if event.type == pg.KEYDOWN:
                     if event.key == pg.K_x:
                         pg.quit()
                         gamemode4_exit = True
-                        #Startscreen = gamemode 1
+                        # Startscreen = gamemode 1
                         self.gamemode = 1
-
 
     def gamemode_handler(self):
         if self.gamemode == 1:

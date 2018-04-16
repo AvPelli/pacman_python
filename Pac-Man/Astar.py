@@ -1,13 +1,17 @@
 from heapq import heappop, heappush
+
+from Coordinate import Coordinate
 from Direction import Direction
 
-class GraphMaker():
 
-    def __init__(self, path, transporters):
-        self.__bestand = path
+class Astar():
+
+    def __init__(self):
+        self.__bestand = "res/files/maze2.txt"
         self.maze = list()
-        self.transporters = transporters
+        self.transporters = ((0, 14), (27, 14))
         self.makeMaze()
+        self.map = {"S": Direction.DOWN, "W": Direction.LEFT, "E": Direction.RIGHT, "N": Direction.UP}
 
     def makeMaze(self):
         input = [line.split() for line in open(self.__bestand, 'r')]
@@ -64,20 +68,18 @@ class GraphMaker():
     def heuristic(self, cell, goal):
         waarde1 = self.manhattan_distance(cell, goal)
 
-        #Moet nog gefixt worden
+        # Moet nog gefixt worden
 
         waarde2 = self.manhattan_distance(cell, (0, 14)) + self.manhattan_distance((27, 14), goal)
         waarde3 = self.manhattan_distance(cell, (27, 14)) + self.manhattan_distance((0, 14), goal)
-        return min(waarde1, waarde2,waarde3)
+        return min(waarde1, waarde2, waarde3)
 
-    def find_path_astar(self):
-        start, goal = (21, 20), (1, 14)
+    def find_path_astar(self, start_coord, goal_coord):
         pr_queue = []
+        start,  goal = start_coord.get_coord_tuple(), goal_coord.get_coord_tuple()
         heappush(pr_queue, (0 + self.heuristic(start, goal), 0, "", start))
         visited = set()
         graph = self.maze2graph()
-        for dir in Direction:
-            print(dir.value)
         while pr_queue:
             _, cost, path, current = heappop(pr_queue)
             if current == goal:
@@ -90,9 +92,9 @@ class GraphMaker():
 
         return "NO WAY!"
 
+    def get_direction(self, start, goal):
+        direction = self.find_path_astar(start, goal)[0]
+        return self.map[direction]
 
-lijst = ((0, 14), (27, 14))
-graph = GraphMaker("res/files/maze2.txt", lijst)
-graph.test_maze()
-# graph.maze2graph()
-print(graph.find_path_astar())
+astar = Astar()
+print(astar.get_direction(Coordinate(21, 20), Coordinate(1, 14)))
