@@ -60,10 +60,11 @@ class Map():
     def draw_lifes(self):
         width = self.__tile_size * 2
         height = self.__tile_size * (self.tiles_vert_size - 2)
+        lifesimg = pg.image.load("res/tileset/pacman_lifes.png")
+        img_width = lifesimg.get_width()
         for i in range(0, self.pacman.getLifes()):
-            width = width * (i + 1)
-            lifesimg = pg.image.load("res/tileset/pacman_lifes.png")
             self.__game_display.blit(lifesimg, (width, height))
+            width += img_width
 
     # Method for drawing the high score letters
     def draw_hsletters(self):
