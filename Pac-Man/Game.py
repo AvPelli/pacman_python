@@ -19,13 +19,16 @@ class Game():
         pg.display.set_caption('Pac-Man')
 
         # Game variables
-        self.gamemode = 2
+        self.gamemode = 1
         self.pauze = False
         self.gameExit = False
         self.game_display = pg.display.set_mode(resolution)
 
         # Music settings
         self.intro_played = False
+
+        # Startscreen settings
+        self.mainmenuExit = False
 
         # Game objects
         self.map = Map(self.game_display, resolution[0], resolution[1], tile_size)
@@ -36,7 +39,21 @@ class Game():
         # Link objects
         self.map.set_pacman(self.pacman)
 
+    # Startscreen gamemode
+    def gamemode1(self):
+        # self.game_display.fill(Game.black)
+        startscreen_image = pg.image.load("res/startscreen/startscreen.jpg")
+        self.game_display.blit(startscreen_image, (0, 125))
+        pg.display.flip()
+
+        self.clock.tick(10)
+
+        # Event check, quit event check first
+        self.check_x_event()
+        self.check_quit_events()
+
     # Setting up the game - press a  KEY to start
+
     def gamemode2(self):
         # Draw methods, be aware of the sequence!
         self.map.draw_map()
@@ -68,7 +85,7 @@ class Game():
         pg.display.update()
         self.clock.tick(60)
         # Event check, quit event check first
-        self.check_key_events()
+        self.check_move_events()
         self.check_quit_events()
 
     def gamemode4(self):
@@ -96,7 +113,9 @@ class Game():
 
 
     def gamemode_handler(self):
-        if self.gamemode == 2:
+        if self.gamemode == 1:
+            self.gamemode1()
+        elif self.gamemode == 2:
             self.gamemode2()
         elif self.gamemode == 3:
             self.gamemode3()
@@ -109,16 +128,15 @@ class Game():
 
     # Getter: returns max amount of colums and rows
     def get_max(self):
-        return self.map.tiles_horiz_size-1, self.map.tiles_vert_size-1
+        return self.map.tiles_horiz_size - 1, self.map.tiles_vert_size - 1
 
     """"Events"""
 
     def check_quit_events(self):
         for event in pg.event.get(pg.QUIT):
-            print("hier")
             self.gameExit = True
 
-    def check_key_events(self):
+    def check_move_events(self):
         for event in pg.event.get(pg.KEYDOWN):
             # Pauze button: p
             if event.key == pg.K_p:
@@ -137,6 +155,11 @@ class Game():
         for event in pg.event.get(self.SONG_END):
             self.gamemode = 3
             self.map.remove_readytext()
+
+    def check_x_event(self):
+        for event in pg.event.get(pg.KEYDOWN):
+            if event.key == pg.K_x:
+                self.gamemode = 2
 
     """"Main method"""
 
@@ -157,3 +180,7 @@ class Game():
 
         pg.quit()
         quit()
+
+
+game = Game()
+game.run()

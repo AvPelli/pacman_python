@@ -7,7 +7,7 @@ class Candy:
         self.__game_Display = game_Display
         self.__coord = coordinate
         self.__image = pg.image.load("res/candy/candy {number}.gif".format(number=0))
-        self.draw(coordinate)
+
 
     # Draws the candy on a give coordinate
     def draw(self, coordinate):
