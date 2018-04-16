@@ -102,7 +102,6 @@ class Map():
                 self.upcounter = 0
             self.__game_display.blit(text_surface_obj, (3 * self.__tile_size, -self.fontoffset))
 
-
     # Method for drawing the score
     def draw_score(self):
         score = self.pacman.getScore()
@@ -147,23 +146,22 @@ class Map():
         map_noborders = self.__map[3:]
         for y in range(0, len(map_noborders)):
             for x in range(0, len(map_noborders[0])):
-                pass
-            if map_noborders[y][x] == "f":  # Place where candy show be drawn
-                coord = Coordinate(x, y)
-                self.__candy_dict[coord] = (Candy(self.__game_display, coord))
-            elif map_noborders[y][x] == "P":  # Place where PacMan needs to be located
-                self.__pacman_coord = Coordinate(x, y)
-            elif map_noborders[y][x] in "/=.-_\éè\()}{][abcd12345678uijo":  # All the characters that are walls
-                self.__wall_list.append(Coordinate(x, y))
-            elif map_noborders[y][x] =='g':
-                self.__ghosts_coord.append(Coordinate(x, y))
-            elif "t" in map_noborders[y][x] :
-                # At a teleporter, add some "fake" walls to the list to make sure pacman doesn't go out of bounds
-                self.__wall_list.append(Coordinate(x - 1, y - 1))
-                self.__wall_list.append(Coordinate(x - 1, y + 1))
-                self.__wall_list.append(Coordinate(x + 1, y - 1))
-                self.__wall_list.append(Coordinate(x + 1, y + 1))
 
+                if map_noborders[y][x] == "f":  # Place where candy show be drawn
+                    coord = Coordinate(x, y)
+                    self.__candy_dict[coord] = (Candy(self.__game_display, coord))
+                elif map_noborders[y][x] == "P":  # Place where PacMan needs to be located
+                    self.__pacman_coord = Coordinate(x, y)
+                elif map_noborders[y][x] in "/=.-_\éè\()}{][abcd12345678uijo":  # All the characters that are walls
+                    self.__wall_list.append(Coordinate(x, y))
+                elif map_noborders[y][x] == 'g':
+                    self.__ghosts_coord.append(Coordinate(x, y))
+                elif "t" in map_noborders[y][x]:
+                    # At a teleporter, add some "fake" walls to the list to make sure pacman doesn't go out of bounds
+                    self.__wall_list.append(Coordinate(x - 1, y - 1))
+                    self.__wall_list.append(Coordinate(x - 1, y + 1))
+                    self.__wall_list.append(Coordinate(x + 1, y - 1))
+                    self.__wall_list.append(Coordinate(x + 1, y + 1))
 
     # Initialization of a dictionary, every sign is equivalent to a tile image
     def __init_tiles(self):
@@ -177,7 +175,7 @@ class Map():
 
     # Getter: returns a copy of pacman his start coordinate
     def get_pacman_start(self):
-        return deepcopy(self.__pacman_coord)
+        return self.__pacman_coord
 
     def get_ghosts_start(self):
         return self.__ghosts_coord
