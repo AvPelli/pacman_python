@@ -78,7 +78,7 @@ class Astar():
 
     def find_path_astar(self, start_coord, goal_coord):
         pr_queue = []
-        start,  goal = start_coord.get_coord_tuple(), goal_coord.get_coord_tuple()
+        start, goal = start_coord.get_coord_tuple(), goal_coord.get_coord_tuple()
         heappush(pr_queue, (0 + self.heuristic(start, goal), 0, "", start))
         visited = set()
         graph = self.maze2graph()
@@ -96,10 +96,11 @@ class Astar():
 
     def get_direction(self, old_direction, start, goal):
         direction = self.find_path_astar(start, goal)
-        if len(direction) >0:
+        if len(direction) > 0:
             return self.map[direction[0]]
         else:
             return old_direction
+
 
 astar = Astar()
 astar.test_maze()
