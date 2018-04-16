@@ -179,14 +179,14 @@ class Game():
             # If the game is not paused, the game wil continue
             if not (self.pauze):
                 self.gamemode_handler()
+                # The event queue will block due to too much keyboard input(pygame issue). This code prevents the event queue from blocking
+                pg.event.set_allowed(pg.KEYDOWN)
+                pg.event.set_allowed(pg.QUIT)
             else:
                 for event in pg.event.get(pg.KEYDOWN):
                     # Pauze button: p
                     if event.key == pg.K_p:
                         self.pauze = False
-            #The event queue will block due to too much keyboard input(pygame issue). This code prevents the event queue from blocking
-            pg.event.set_allowed(pg.KEYDOWN)
-            pg.event.set_allowed(pg.QUIT)
             self.check_quit_events()
 
         pg.quit()
