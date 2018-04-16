@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+import Direction
+import Coordinate
 
 class Character(ABC):
     def __init__(self,PIXELSIZE,speed,moving_pos, direction,movable,moving_between_tiles,game_display,game,coordinate):
@@ -27,7 +29,22 @@ class Character(ABC):
     def move(self):
         pass
 
-    @abstractmethod
-    def set_on_opposite_side(self):
-        pass
+    def _set_on_opposite_side(self):
+        (maxX, maxY) = self._game.get_max()
+        (x, y) = (self._coord.get_coord_tuple())
+        if x < 0:
+            self._direction = Direction.LEFT
+            self._coord = Coordinate(maxX, y)
+        elif x > maxX:
+            self._direction = Direction.RIGHT
+            self._coord = Coordinate(-2, y)
 
+    def _calculate_new_coord(self):
+        (maxX, maxY) = self._game.get_max()
+        (x, y) = (self._coord.get_coord_tuple())
+        addX, addY = self._direction.value
+        newX, newY = x + addX, y + addY
+        jump = False
+        if newX < -1 or newX > maxX:
+            jump = True
+        return Coordinate(newX, newY), jump

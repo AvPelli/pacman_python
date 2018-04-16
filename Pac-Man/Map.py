@@ -32,8 +32,10 @@ class Map():
         # Item lists/ditcionaries
         self.__wall_list = list()
         self.__candy_dict = {}
+        self.__ghosts_coord = list()
         self.__init_items()
         self.__transp_list = list()
+
 
         # Pacman himself
         self.pacman = None
@@ -150,6 +152,8 @@ class Map():
                     self.__pacman_coord = Coordinate(x, y)
                 elif map_noborders[y][x] in "/=.-_\éè\()}{][abcd12345678uijo":  # All the characters that are walls
                     self.__wall_list.append(Coordinate(x, y))
+                elif map_noborders[y][x] =='g':
+                    self.__ghosts_coord.append(Coordinate(x, y))
                 elif map_noborders[y][x] == "t":
                     # At a teleporter, add some "fake" walls to the list to make sure pacman doesn't go out of bounds
                     self.__wall_list.append(Coordinate(x - 1, y - 1))
@@ -171,6 +175,9 @@ class Map():
     # Getter: returns a copy of pacman his start coordinate
     def get_pacman_start(self):
         return deepcopy(self.__pacman_coord)
+
+    def get_ghosts_start(self):
+        return self.__ghosts_coord
 
     # Getter: returns a copy of the list of walls (coordinates inside of the list)
     def get_wall_list(self):

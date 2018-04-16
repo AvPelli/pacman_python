@@ -80,6 +80,7 @@ class PacMan(Character):
             self._moving_pos += self._speed
             if self._moving_pos >= 16:
                 self._moving_pos = 0
+                self.__number = 0
                 self._moving_between_tiles = False
                 # Once there, it's coordinate will be updated so it's ready to be checked in the else: part of move
                 self._coord.update_coord(self._direction)

@@ -3,6 +3,8 @@ import pygame as pg  # Importeren van pg module
 from Direction import Direction
 from Map import Map
 from PacMan import PacMan
+from Ghost import Ghost
+from Coordinate import Coordinate
 
 black = (0, 0, 0)
 tile_size = 16
@@ -35,7 +37,10 @@ class Game():
         self.clock = pg.time.Clock()
         self.candies = self.map.get_candy_dict()
         self.pacman = PacMan(self.game_display, self.map.get_pacman_start(), self, self.map.get_wall_list())
-
+        self.ghosts = []
+        starting_positions = self.map.get_ghosts_start()
+        for i in starting_positions:
+            self.ghosts.append(Ghost(self.game_display, i, self, self.map.get_wall_list()))
         # Link objects
         self.map.set_pacman(self.pacman)
 
@@ -81,6 +86,8 @@ class Game():
         self.map.draw_map()
         self.map.draw_candy()
         self.pacman.move()
+        for ghost in self.ghosts:
+            ghost.move()
         self.map.draw_oneup()
         pg.display.update()
         self.clock.tick(60)
