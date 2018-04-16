@@ -71,6 +71,30 @@ class Game():
         self.check_key_events()
         self.check_quit_events()
 
+    def gamemode4(self):
+        imagefile = "res/startscreen/gameoverscreen.jpg"
+        gameoverscreen_image = pg.image.load(imagefile)
+        self.game_display.blit(gameoverscreen_image, (0, 125))
+        pg.display.flip()
+        self.clock.tick(10)
+        pg.display.update()
+        gamemode4_exit = False
+        while not gamemode4_exit:
+            #check for QUIT or "X" to play another game
+            for event in pg.event.get():
+                if event.type == pg.QUIT:
+                    gamemode4_exit = True
+                    pg.quit()
+
+                #Restart startscreen:
+                if event.type == pg.KEYDOWN:
+                    if event.key == pg.K_x:
+                        pg.quit()
+                        gamemode4_exit = True
+                        #Startscreen = gamemode 1
+                        self.gamemode = 1
+
+
     def gamemode_handler(self):
         if self.gamemode == 2:
             self.gamemode2()
