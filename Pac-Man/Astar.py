@@ -22,7 +22,9 @@ class Astar():
             check = zebra.replace("0", "")
             if len(check) > 0:
                 for letter in line:
-                    if letter in "f0t":
+                    if letter in "f0gG":
+                        hulp.append(0)
+                    elif "t" in letter:
                         hulp.append(0)
                     else:
                         hulp.append(1)
@@ -92,9 +94,13 @@ class Astar():
 
         return "NO WAY!"
 
-    def get_direction(self, start, goal):
-        direction = self.find_path_astar(start, goal)[0]
-        return self.map[direction]
+    def get_direction(self, old_direction, start, goal):
+        direction = self.find_path_astar(start, goal)
+        if len(direction) >0:
+            return self.map[direction[0]]
+        else:
+            return old_direction
 
 astar = Astar()
-print(astar.get_direction(Coordinate(21, 20), Coordinate(1, 14)))
+astar.test_maze()
+print(astar.get_direction(Direction.LEFT, Coordinate(21, 20), Coordinate(1, 14)))
