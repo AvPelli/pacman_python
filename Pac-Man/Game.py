@@ -66,7 +66,7 @@ class Game():
         self.pacman.move()
         self.map.draw_oneup()
         pg.display.update()
-        self.clock.tick(50)
+        self.clock.tick(60)
         # Event check, quit event check first
         self.check_key_events()
         self.check_quit_events()

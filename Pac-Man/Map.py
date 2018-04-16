@@ -43,6 +43,9 @@ class Map():
         self.oneup = True
         self.fontoffset = 3
 
+        # Map settings
+        self.upcounter = 0
+
     def draw_map(self):
         for row in range(0, self.tiles_vert_size):
             for col in range(0, self.tiles_horiz_size):  # = Amount of tiles in 1 row
@@ -81,13 +84,20 @@ class Map():
         self.__game_display.blit(text_surface_obj, (11 * self.__tile_size, 20 * self.__tile_size - self.fontoffset))
 
     def draw_oneup(self):
-        if self.oneup:
+        duration = 60
+        if self.upcounter < duration:
             self.oneup = False
             text_surface_obj = self.font_obj.render('1UP', False, (255, 255, 255))
-        else:
+            self.upcounter += 1
+            self.__game_display.blit(text_surface_obj, (3 * self.__tile_size, -self.fontoffset))
+        elif self.upcounter >= duration and self.upcounter < duration * 2:
             self.oneup = True
             text_surface_obj = self.font_obj.render('      ', False, (255, 255, 255))
-        self.__game_display.blit(text_surface_obj, (3 * self.__tile_size, -self.fontoffset))
+            self.upcounter += 1
+            if self.upcounter == duration * 2:
+                self.upcounter = 0
+            self.__game_display.blit(text_surface_obj, (3 * self.__tile_size, -self.fontoffset))
+
 
     # Method for drawing the score
     def draw_score(self):

@@ -9,7 +9,7 @@ class PacMan(Character):
     # Constructor of PacMan
     def __init__(self, game_display, coordinate, game, walls):
         # Start variables
-        super().__init__(PIXELSIZE=16, speed=2, moving_pos=0,
+        super().__init__(PIXELSIZE=16, speed=2, moving_pos=-8,
                          direction=Direction.RIGHT, movable=True,
                          moving_between_tiles=False, game_display=game_display,
                          game=game, coordinate=coordinate)
