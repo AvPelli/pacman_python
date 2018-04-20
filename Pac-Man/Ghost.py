@@ -1,13 +1,13 @@
 import pygame as pg
 
+from Astar import Astar
 from Character import Character
 from Coordinate import Coordinate
 from Direction import Direction
-from Astar import Astar
+
 
 class Ghost(Character):
     ghost_id = 0
-    astar = Astar()
 
     def __init__(self, game_display, coordinate, game, walls):
         # Start variables
@@ -15,30 +15,39 @@ class Ghost(Character):
                          direction=Direction.UP, movable=True,
                          moving_between_tiles=False, game_display=game_display,
                          game=game, coordinate=coordinate)
+        self.__startcoord = coordinate
         self.__image = pg.image.load("res/vijand.png")
         self.walls = walls
+
         self.__id = Ghost.ghost_id
         Ghost.ghost_id += 1
         Ghost.ghost_id %= 4
-        self._speed = (16 - self.__id)/8.0
-
+        self._speed = (16 - self.__id) / 8.0
+        self.astar = Astar(game.get_gates())
+        self._direction = self.astar.get_direction(self._coord, self.__calculate_target_tile())
 
     def move(self):
         if self._moving_between_tiles:
             self.__move_between_tiles()
         else:
-
             check_next_coord, jump = self._calculate_new_coord()
             if check_next_coord in self.walls:
-                self._direction = Ghost.astar.get_direction(self._direction, self._coord,
-                                                            self.__calculate_target_tile())
+                self._direction = self.astar.get_direction(self._coord,
+                                                           self.__calculate_target_tile())
+                self.check_direction()
             if self.__check_neighbours() == True:
-                self._direction = Ghost.astar.get_direction(self._direction, self._coord, self.__calculate_target_tile())
+                self._direction = self.astar.get_direction(self._coord,
+                                                           self.__calculate_target_tile())
+                self.check_direction()
             if jump:
                 self._set_on_opposite_side()
             self._moving_between_tiles = True
+            self.check_direction()
             self._set_on_coord(self._coord, self.__image)
 
+    def check_direction(self):
+        if self._direction is None:
+            self._game.reset_chars()
 
     def __move_between_tiles(self):
         # Proceed to the next tile
@@ -54,16 +63,27 @@ class Ghost(Character):
         return self._game.get_pacman_coord()
 
     def __check_neighbours(self):
-        horizontal = False
-        vertical = False
-        x = self._coord.get_x()
-        y = self._coord.get_y()
-        if Coordinate(x -1, y) not in self.walls:
-            horizontal = True
-        if Coordinate(x +1, y) not in self.walls:
-            horizontal = True
-        if Coordinate(x, y+1) not in self.walls:
-            vertical = True
-        if Coordinate(x, y-1) not in self.walls:
-            vertical = True
-        return horizontal and vertical
+        # horizontal = False
+        # vertical = False
+        # x = self._coord.get_x()
+        # y = self._coord.get_y()
+        # if Coordinate(x - 1, y) not in self.walls:
+        #    horizontal = True
+        # if Coordinate(x + 1, y) not in self.walls:
+        #    horizontal = True
+        # if Coordinate(x, y + 1) not in self.walls:
+        #    vertical = True
+        # if Coordinate(x, y - 1) not in self.walls:
+        #    vertical = True
+        # return horizontal and vertical
+        amount = 0
+        x, y = self._coord.get_coord_tuple()
+        for dir in Direction:
+            if Coordinate(x + dir.value[0], y + dir.value[1]) not in self.walls:
+                amount += 1
+        return amount >= 2
+
+    def reset_character(self):
+        super().reset_character()
+        self._direction = Direction.UP
+        self._set_on_coord(self._coord, self.__image)

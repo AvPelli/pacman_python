@@ -5,8 +5,8 @@
 - : tile_rechtdoor_boven_zonderbovenstreep
 _ : tile_rechtdoor_onder_zonderbovenstreep
 \ : tile_hoek_rechts
-é : tile_hoek_links_onder_dubbel
-è : tile_hoek_rechts_onder_dubbel
+n : tile_hoek_links_onder_dubbel
+q : tile_hoek_rechts_onder_dubbel
 ( : tile_naaronder_links
 ) : tile_naaronder_rechts
 } : tile_rechtdoor_midden_rechts
@@ -35,3 +35,4 @@ P : tile_black
 t : tile_black
 g : tile_black
 t1 : tile_black
+x : tile_black
