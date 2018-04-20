@@ -24,6 +24,6 @@
 - [x]   Zoeken naar goede Python GUI oplossing : PyGame
 - [x]   Uitproberen PyGame
 - [X]   Analyse
-- []   Programmeren van Pac-Man
+- [ ]   Programmeren van Pac-Man
 - [ ]   Grondig testen van de Game
 - [ ]   ...
