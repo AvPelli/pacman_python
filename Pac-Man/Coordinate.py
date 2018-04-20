@@ -34,7 +34,7 @@ class Coordinate:
     # Override the equal methode
     # 2 Coordinate objects are the same if x and y of both objects are the same
     def __eq__(self, other):
-        if other == None or not isinstance(other, Coordinate):
+        if not isinstance(other, Coordinate):
             return False
         return self.__x == other.get_x() and self.__y == other.get_y()
 

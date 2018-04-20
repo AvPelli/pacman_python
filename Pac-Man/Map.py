@@ -4,6 +4,7 @@ import pygame as pg  # Importeren van pg module
 
 from Candy import Candy
 from Coordinate import Coordinate
+from Gate import Gate
 
 
 class Map():
@@ -36,9 +37,6 @@ class Map():
         self.__init_items()
         self.__transp_list = list()
 
-        # Gate dicitionary
-        self.gates_dict = {}
-
         # Pacman himself
         self.pacman = None
 
@@ -49,6 +47,7 @@ class Map():
 
         # Map settings
         self.upcounter = 0
+
 
     def draw_map(self):
         for row in range(0, self.tiles_vert_size):
@@ -144,24 +143,27 @@ class Map():
     # *   Makes a list of coordinates where there are walls
     def __init_items(self):
         map_noborders = self.__map[3:]
+        self.__gates_dict = {}
+        self.gate_list = list()
         for y in range(0, len(map_noborders)):
             for x in range(0, len(map_noborders[0])):
-
                 if map_noborders[y][x] == "f":  # Place where candy show be drawn
                     coord = Coordinate(x, y)
                     self.__candy_dict[coord] = (Candy(self.__game_display, coord))
                 elif map_noborders[y][x] == "P":  # Place where PacMan needs to be located
                     self.__pacman_coord = Coordinate(x, y)
-                elif map_noborders[y][x] in "/=.-_\éè\()}{][abcd12345678uijo":  # All the characters that are walls
+                elif map_noborders[y][x] in "/=.-_\éè\()}{][abcd12345678uijonq":  # All the characters that are walls
                     self.__wall_list.append(Coordinate(x, y))
                 elif map_noborders[y][x] == 'g':
                     self.__ghosts_coord.append(Coordinate(x, y))
                 elif "t" in map_noborders[y][x]:
                     # At a teleporter, add some "fake" walls to the list to make sure pacman doesn't go out of bounds
+                    self.add_gate(map_noborders[y][x], Coordinate(x, y))
                     self.__wall_list.append(Coordinate(x - 1, y - 1))
                     self.__wall_list.append(Coordinate(x - 1, y + 1))
                     self.__wall_list.append(Coordinate(x + 1, y - 1))
                     self.__wall_list.append(Coordinate(x + 1, y + 1))
+        self.make_gate_list()
 
     # Initialization of a dictionary, every sign is equivalent to a tile image
     def __init_tiles(self):
@@ -196,8 +198,21 @@ class Map():
     def get_transporters(self):
         return self.__transp_list
 
+    def get_gates(self):
+        return self.gate_list
+
     """Setters"""
 
     # Setter: sets the pacman object
+
     def set_pacman(self, p):
         self.pacman = p
+
+    def add_gate(self, gate_number, coordinate):
+        if len(self.__gates_dict.keys()) == 0 or gate_number not in self.__gates_dict.keys():
+            self.__gates_dict[gate_number] = list()
+        self.__gates_dict[gate_number].append(coordinate)
+
+    def make_gate_list(self):
+        for gate_number in self.__gates_dict:
+            self.gate_list.append(Gate(self.__gates_dict[gate_number][0], self.__gates_dict[gate_number][1]))

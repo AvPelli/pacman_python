@@ -14,13 +14,23 @@ Datum,Start,Einde,Duur,Plaats,Omschrijving
 17/03/2018,13:30,15:30,2:00,Thuis, PyGame tutorials bekijken
 17/03/2018,22:30,0:30,2:00,Thuis, Pacman laten bewegen ect
 18/03/2018,11:15,12:30,1:15,Thuis, Debuggen van Pacman
-19/03/2018 ,15:45   ,17:45,2:00,Campus,Bespreking klassen en diagrammen + gedeeltelijke verdeling
+19/03/2018,15:45,17:45,2:00       ,Campus,Bespreking klassen en diagrammen + gedeeltelijke verdeling
 18/03/2018,13:30,17:30,4:00,Thuis, Adden van functionaliteit
-20/03/2018 ,21:00   ,0:00 ,3:00,Kot   ,Map code en Pacman code samenvoegen + optimaliseren
-21/03/2018 ,22:00   ,2:00 ,4:00,Kot   ,Collision muren  en food toevoegen op map rechtstreeks   en nieuwe herteken methodes en wat nieuwe optimalisaties
-22/03/2018 ,19:00   ,20:30,1:30,Kot   ,Kijken voor pixel niveau oplossing en netter schrijven van alle code + commentaar bij de code schrijven
-24/03/2018 ,15:45   ,16:00,0:15,Thuis ,Kijken naar nieuwe code + verder denken voor volgende klassen
-25/03/2018 ,13:15   ,14:30,1:15,Thuis ,Aanpassen van klassendiagram + logboek updaten
-28/03/2018 ,22:00   ,1:00 ,3:00,Kot   ,Aanpassen wiki + Schrijven deel Analyse
-           ,        ,     ,    ,      ,
-Totaal tijd,49:00:00,     ,    ,      ,
+20/03/2018,21:00,0:00 ,3:00       ,Kot   ,Map code en Pacman code samenvoegen + optimaliseren
+21/03/2018,22:00,2:00 ,4:00       ,Kot   ,Collision muren  en food toevoegen op map rechtstreeks   en nieuwe herteken methodes en wat nieuwe optimalisaties
+22/03/2018,19:00,20:30,1:30       ,Kot   ,Kijken voor pixel niveau oplossing en netter schrijven van alle code + commentaar bij de code schrijven
+24/03/2018,15:45,16:00,0:15       ,Thuis ,Kijken naar nieuwe code + verder denken voor volgende klassen
+25/03/2018,13:15,14:30,1:15       ,Thuis ,Aanpassen van klassendiagram + logboek updaten
+26/03/2018,13:30,17:45,4:15       ,Campus,Klassendiagram + code verduidelijken
+28/03/2018,22:00,1:00 ,3:00       ,Kot   ,Aanpassen wiki + Schrijven deel Analyse
+31/03/2018,15:00,17:00,2:00       ,Thuis ,Tutorials bekijken voor een algoritmes (A* path finding algoritme)
+6/04/2018 ,16:00,17:00,1:00       ,Thuis ,Brainstormen over hoe ik het A* algoritme ga implementeren + kleine bassis leggen
+15/04/2018,20:00,23:00,3:00       ,Kot   ,Aanpassen van top (0                                                                                                         ,0) coordinaten systeem + eerste versie van algoritme
+16/04/2018,13:30,17:45,4:15       ,Campus,"Aanpassen A* algoritme, zodat het voorlopig kan gebruikt worden voor de Ghosts + zoeken naar oplossing ""freeze event"" bug"
+17/04/2018,20:00,22:00,2:00       ,Kot   ,Bug fixen van Ghost  dat het door muren ect loopt + dynamischer maken van A* algoritme
+20/04/2018,1:00 ,2:00 ,1:00       ,Kot   ,Kleine code aanpassingen                                                                                                     ,updaten van logboek en peerreviews
+          ,     ,     ,           ,      ,
+          ,     ,     ,           ,      ,
+          ,     ,     ,           ,      ,
+          ,     ,     ,Totaal tijd,      ,
+          ,     ,     ,66:30:00   ,      ,

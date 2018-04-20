@@ -38,8 +38,8 @@ class Game():
         self.pacman = PacMan(self.game_display, self.map.get_pacman_start(), self, self.map.get_wall_list())
         self.ghosts = []
         starting_positions = self.map.get_ghosts_start()
-        for i in starting_positions:
-            self.ghosts.append(Ghost(self.game_display, i, self, self.map.get_wall_list()))
+        # for i in starting_positions[0]:
+        self.ghosts.append(Ghost(self.game_display, starting_positions[0], self, self.map.get_wall_list()))
         # Link objects
         self.map.set_pacman(self.pacman)
 
@@ -125,6 +125,11 @@ class Game():
         elif self.gamemode == 3:
             self.gamemode3()
 
+    def reset_chars(self):
+        for ghost in self.ghosts:
+            ghost.reset_character()
+        self.pacman.reset_character()
+
     """"Getters"""
 
     # Getter: returns dictionary, Coordinate mapped on a Candy object
@@ -137,6 +142,9 @@ class Game():
 
     def get_pacman_coord(self):
         return self.pacman.getCoord()
+
+    def get_gates(self):
+        return self.map.get_gates()
 
     """"Events"""
 
