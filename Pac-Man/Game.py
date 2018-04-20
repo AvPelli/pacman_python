@@ -36,6 +36,7 @@ class Game():
         self.clock = pg.time.Clock()
         self.candies = self.map.get_candy_dict()
         self.pacman = PacMan(self.game_display, self.map.get_pacman_start(), self, self.map.get_wall_list())
+
         self.ghosts = []
         starting_positions = self.map.get_ghosts_start()
         # for i in starting_positions[0]:
@@ -43,7 +44,7 @@ class Game():
         # Link objects
         self.map.set_pacman(self.pacman)
 
-    # Startscreen gamemode
+    # Startscreen mode - game displays startscreen
     def gamemode1(self):
         # self.game_display.fill(Game.black)
         startscreen_image = pg.image.load("res/startscreen/startscreen.jpg")
