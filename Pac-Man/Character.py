@@ -64,3 +64,5 @@ class Character(ABC):
 
     def reset_character(self):
         self._coord = self.start_coord
+
+

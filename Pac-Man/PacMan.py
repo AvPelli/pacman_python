@@ -157,6 +157,13 @@ class PacMan(Character):
             self._direction = direction
             self._moveable = True
 
+    #setter for pacman lifes, to access the pacmanlifes in the Game class
+    def set_lifes(self, lifes):
+        self.lifes = lifes
+
+    def set_coord(self,coordinate):
+        self._coord = coordinate
+
     """"Getters"""
 
     # Getter: Returns the image if needs to use for the give direction (And animation)

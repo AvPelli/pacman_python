@@ -34,7 +34,6 @@ class Ghost(Character):
         elif self.__id == 3:
             self.__image = pg.image.load("res/ghost/pinky/start.png")
 
-
     def move(self):
         if self._moving_between_tiles:
             self.__move_between_tiles()
@@ -79,3 +78,9 @@ class Ghost(Character):
         if Coordinate(x, y-1) not in self.walls:
             vertical = True
         return horizontal and vertical
+
+    def get_coord(self):
+        return self._coord
+
+    def set_coord(self, coord):
+        self.__coord = coord

@@ -8,9 +8,7 @@ from PacMan import PacMan
 black = (0, 0, 0)
 tile_size = 16
 resolution = (448, 576)
-
 clock = pg.time.Clock()
-
 
 class Game():
     # Constructor of Game
@@ -24,6 +22,7 @@ class Game():
         self.pauze = False
         self.gameExit = False
         self.game_display = pg.display.set_mode(resolution)
+        self.pacmanCaught = False
 
         # Music settings
         self.intro_played = False
@@ -43,6 +42,16 @@ class Game():
         self.ghosts.append(Ghost(self.game_display, starting_positions[0], self, self.map.get_wall_list()))
         # Link objects
         self.map.set_pacman(self.pacman)
+
+    def gamemode_handler(self):
+        if self.gamemode == 1:
+            self.gamemode1()
+        elif self.gamemode == 2:
+            self.gamemode2()
+        elif self.gamemode == 3:
+            self.gamemode3()
+        elif self.gamemode == 4:
+            self.gamemode4()
 
     # Startscreen mode - game displays startscreen
     def gamemode1(self):
@@ -94,14 +103,43 @@ class Game():
         # Event check, quit event check first
         self.check_move_events()
         self.check_quit_events()
+        self.check_pacman_caught()
+
+        if(self.pacmanCaught):
+            lifes = self.pacman.getLifes()-1
+            self.pacman.set_lifes(lifes)
+            self.pacmanCaught = False
+            self.gamemode = 4 #reset the game: ghosts in center and pacman in middle
+
+
+        if not(self.pacman.getLifes()):
+            self.gamemode = 5 #no more lifes left: game over
 
     def gamemode4(self):
+        pg.time.delay(1000)  # wait 1 second
+
+        #pacman back to the starting position
+        coord = self.map.get_pacman_start()
+        self.pacman.set_coord(coord)
+        self.map.draw_startpacman()
+
+        #ghosts back to starting position
+        list = self.map.get_ghosts_start()
+        iteratie = 0
+        for ghost in self.ghosts:
+            ghost.set_coord(list[iteratie])
+            iteratie+=1
+        self.map.draw_map()
+        self.gamemode = 3
+
+    def gamemode5(self):
         imagefile = "res/startscreen/gameoverscreen.jpg"
         gameoverscreen_image = pg.image.load(imagefile)
         self.game_display.blit(gameoverscreen_image, (0, 125))
         pg.display.flip()
         self.clock.tick(10)
         pg.display.update()
+
         gamemode4_exit = False
         while not gamemode4_exit:
             # check for QUIT or "X" to play another game
@@ -118,13 +156,10 @@ class Game():
                         # Startscreen = gamemode 1
                         self.gamemode = 1
 
-    def gamemode_handler(self):
-        if self.gamemode == 1:
-            self.gamemode1()
-        elif self.gamemode == 2:
-            self.gamemode2()
-        elif self.gamemode == 3:
-            self.gamemode3()
+    def check_pacman_caught(self):
+        for ghost in self.ghosts:
+           if(self.pacman.getCoord() == ghost.get_coord()):
+               self.pacmanCaught = True
 
     def reset_chars(self):
         for ghost in self.ghosts:
