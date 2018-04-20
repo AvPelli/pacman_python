@@ -25,12 +25,10 @@ Datum,Start,Einde,Duur,Plaats,Omschrijving,
 28/03/2018,22:00,1:00,3:00,Kot   ,Aanpassen wiki + Schrijven deel Analyse,
 31/03/2018,15:00,17:00,2:00,Thuis ,Tutorials bekijken voor een algoritmes (A* path finding algoritme),
 6/04/2018,16:00,17:00,1:00,Thuis ,Brainstormen over hoe ik het A* algoritme ga implementeren + kleine bassis leggen,
-15/04/2018,20:00,23:00,3:00,Kot   ,Aanpassen van top (0                                                                                                         ,0) coordinaten systeem + eerste versie van algoritme
-16/04/2018,13:30,17:45,4:15,Campus,"Aanpassen A* algoritme, zodat het voorlopig kan gebruikt worden voor de Ghosts + zoeken naar oplossing ""freeze event"" bug",
+15/04/2018,20:00,23:00,3:00,Kot   ,Aanpassen van top (0;0) coordinaten systeem + eerste versie van algoritme
+16/04/2018,13:30,17:45,4:15,Campus,"Aanpassen A* algoritme. zodat het voorlopig kan gebruikt worden voor de Ghosts + zoeken naar oplossing ""freeze event"" bug",
 17/04/2018,20:00,22:00,2:00,Kot   ,Bug fixen van Ghost  dat het door muren ect loopt + dynamischer maken van A* algoritme,
-20/04/2018,1:00,2:00,1:00,Kot   ,Kleine code aanpassingen                                                                                                     ,updaten van logboek en peerreviews
+20/04/2018,1:00,2:00,1:00,Kot   ,Kleine code aanpassingen ;updaten van logboek en peerreviews
           ,     ,     ,           ,      ,,
           ,     ,     ,           ,      ,,
 Totaal tijd,66:30:00,     ,           ,      ,,
-          ,     ,     ,,      ,,
-          ,     ,     ,,      ,,
