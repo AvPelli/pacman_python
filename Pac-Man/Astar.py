@@ -1,4 +1,5 @@
 import math
+import time
 from heapq import heappop, heappush
 
 from Coordinate import Coordinate
@@ -12,7 +13,9 @@ class Astar():
         self.gates = gates
         self.transporters = self.get_gates_coords_list(gates)
         self.maze = self.make_maze()
+        start_time = time.time()
         self.graph = self.make_graph()
+        print("Astar--- %s seconds ---" % (time.time() - start_time))
         self.dictionary = {"S": Direction.DOWN, "W": Direction.LEFT, "E": Direction.RIGHT, "N": Direction.UP}
         self.reverse_dict = {v: k for k, v in self.dictionary.items()}
 
@@ -113,7 +116,6 @@ class Astar():
         for dir in Direction:
             new_x, new_y = (x + dir.value[0], y + dir.value[1])
             # TODO Fix index out of bound error
-
             if not self.maze[new_y][new_x]:
                 dis = self.manhattan_distance((new_x, new_y), goal)
                 if dis < distance:

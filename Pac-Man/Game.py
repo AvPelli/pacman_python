@@ -10,6 +10,7 @@ tile_size = 16
 resolution = (448, 576)
 clock = pg.time.Clock()
 
+
 class Game():
     # Constructor of Game
     def __init__(self):
@@ -38,8 +39,8 @@ class Game():
 
         self.ghosts = []
         starting_positions = self.map.get_ghosts_start()
-        # for i in starting_positions[0]:
-        self.ghosts.append(Ghost(self.game_display, starting_positions[0], self, self.map.get_wall_list()))
+        for i in starting_positions:
+            self.ghosts.append(Ghost(self.game_display, i, self, self.map.get_wall_list()))
         # Link objects
         self.map.set_pacman(self.pacman)
 
@@ -105,30 +106,29 @@ class Game():
         self.check_quit_events()
         self.check_pacman_caught()
 
-        if(self.pacmanCaught):
-            lifes = self.pacman.getLifes()-1
+        if (self.pacmanCaught):
+            lifes = self.pacman.getLifes() - 1
             self.pacman.set_lifes(lifes)
             self.pacmanCaught = False
-            self.gamemode = 4 #reset the game: ghosts in center and pacman in middle
+            self.gamemode = 4  # reset the game: ghosts in center and pacman in middle
 
-
-        if not(self.pacman.getLifes()):
-            self.gamemode = 5 #no more lifes left: game over
+        if not (self.pacman.getLifes()):
+            self.gamemode = 5  # no more lifes left: game over
 
     def gamemode4(self):
         pg.time.delay(1000)  # wait 1 second
 
-        #pacman back to the starting position
+        # pacman back to the starting position
         coord = self.map.get_pacman_start()
         self.pacman.set_coord(coord)
         self.map.draw_startpacman()
 
-        #ghosts back to starting position
+        # ghosts back to starting position
         list = self.map.get_ghosts_start()
         iteratie = 0
         for ghost in self.ghosts:
             ghost.set_coord(list[iteratie])
-            iteratie+=1
+            iteratie += 1
         self.map.draw_map()
         self.gamemode = 3
 
@@ -158,8 +158,8 @@ class Game():
 
     def check_pacman_caught(self):
         for ghost in self.ghosts:
-           if(self.pacman.getCoord() == ghost.get_coord()):
-               self.pacmanCaught = True
+            if (self.pacman.getCoord() == ghost.get_coord()):
+                self.pacmanCaught = True
 
     def reset_chars(self):
         for ghost in self.ghosts:
