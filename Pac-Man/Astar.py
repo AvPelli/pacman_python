@@ -1,5 +1,4 @@
 import math
-import time
 from heapq import heappop, heappush
 
 from Coordinate import Coordinate
@@ -8,27 +7,35 @@ from Direction import Direction
 
 class Astar():
 
-    def __init__(self, gates, bestand="res/files/maze2.txt"):
-        self.__bestand = bestand
+    # Constructor for Astar algorithm
+    def __init__(self, gates, file="res/files/maze2.txt"):
+        self.__file = file
         self.gates = gates
         self.transporters = self.get_gates_coords_list(gates)
         self.maze = self.make_maze()
-        start_time = time.time()
         self.graph = self.make_graph()
-        print("Astar--- %s seconds ---" % (time.time() - start_time))
         self.dictionary = {"S": Direction.DOWN, "W": Direction.LEFT, "E": Direction.RIGHT, "N": Direction.UP}
         self.reverse_dict = {v: k for k, v in self.dictionary.items()}
 
+    # Makes a maze of the given file
+    # A 1 stands for a wall or something pacman can't move through
+    # A 0 stands for a place where pacman can walk/move to
     def make_maze(self):
         maze = list()
-        input = [line.split() for line in open(self.__bestand, 'r')]
+        input = [line.split() for line in open(self.__file, 'r')]
         for line in input:
             line_string = "".join(line).replace(" ", "").replace("\n", "")
             check = line_string.replace("0", "")
+            # Filters whole lines of 0's, so only the real map (walls and walkable places) are into the maze
             if len(check) > 0:
                 maze.append([0 if letter in "f0gG" or "t" in letter else 1 for letter in line])
         return maze
 
+    # Makes a graph of the maze that was made in the method above
+    # It is stored in a dictionary, it maps a tuple of coordinates on an array.
+    # In this array there are tuples, first element is a direction like S(outh), W(est) ect, second element is the  a tuple of a coordinate in that specific direction
+    # The items in the array are only items that Pac-Man can move to, so walls ect are not included in this graph
+    # Example {(1,1) : [('S', (1, 2)), ('E', (2, 1))]}
     def make_graph(self):
         maze = self.maze
         height, width = len(maze), len(maze[0])
@@ -52,11 +59,18 @@ class Astar():
                 else:
                     graph[(x, y)].append(("W", (x - 1, y)))
                     graph[(x, y)].append(("E", (0, y)))
-
         return graph
 
+    # Function that returns the manhattan distance between cell and goal
+    # Cell and goal are both tuples like (1,1), NOT objects of the class Coordinate
+    def manhattan_distance(self, cell, goal):
+        return abs(cell[0] - goal[0]) + abs(cell[1] - goal[1])
+
+    # This is an heuristic function this returns the minimal cost between cell and goal
+    # It also takes the Gates into account, so if it is shoter to take a gate is will check it and return the smallest cost possible to go from cell to goal
     def heuristic(self, cell, goal):
         minimum = self.manhattan_distance(cell, goal)
+        # Checks if it isn't shoter if a gate is used
         for gate in self.gates:
             coord1, coord2 = gate.get_coordinates()
             waarde1 = self.manhattan_distance(cell, coord1.get_coord_tuple()) + \
@@ -67,9 +81,8 @@ class Astar():
 
         return minimum
 
-    def manhattan_distance(self, cell, goal):
-        return abs(cell[0] - goal[0]) + abs(cell[1] - goal[1])
-
+    # Searches for the shortest (smallest cost path) path possible from start_coord to goal_coord
+    # Both, start_coord and goal_coord, are objects of the class Coordinate
     def find_path(self, start_coord, goal_coord):
         pr_queue = []
         start, goal = start_coord.get_coord_tuple(), goal_coord.get_coord_tuple()
@@ -89,19 +102,23 @@ class Astar():
                     return self.failsafe(start, goal)
         return "No WAY"
 
+    # Gives the first direction from the calculated path
     def get_direction(self, start, goal):
         path = self.find_path(start, goal)
         return self.dictionary[path[0]] if len(path) > 0 else None
 
+    """Getters"""
+
+    # Getter: gives a list of coordinates that are gates
     def get_gates_coords_list(self, gates):
         list_gates = list()
         for gate in gates:
             coord1, coord2 = gate.get_coordinates()
             list_gates.append(coord1)
             list_gates.append(coord2)
-
         return list_gates
 
+    # Test fucntion, it prints the maze
     def print_maze(self):
         for x in range(len(self.maze)):
             out = ""

@@ -73,17 +73,13 @@ class PacMan(Character):
             # Checks if there is candy to eat on the new coordinate
             self.__eat_candy()
 
+    # Function that is used while pacman is moving form one coordinate to another
     def __move_between_tiles(self):
         if not self.__turnaround:
             # Proceed to the next tile
             self.__image = self.__get_image_direction(self._direction)
-            self._moving_pos += self._speed
-            if self._moving_pos >= 16:
-                self._moving_pos = 0
-                self.__number = 0
-                self._moving_between_tiles = False
-                # Once there, it's coordinate will be updated so it's ready to be checked in the else: part of move
-                self._coord.update_coord(self._direction)
+            super()._move_between_tiles()
+            self.__number = 0
         # However if turnaround has been set (see check_turnaround), pacman will have to move back to the beginning his original tile 1st
         # Once there he'll set himself ready for the next iteration (and its coordinate will NOT be updated)
         # To solve issues bug-wise, number will be set on 0 once it has moved back, so its beak is closed at the end, as usual
@@ -140,6 +136,20 @@ class PacMan(Character):
             self.__turnaround = x_direction == 0 and y_direction == 0
         return None
 
+    """"Getters"""
+
+    # Returns the amount of lifes left
+    def getLifes(self):
+        return self.lifes
+
+    # Returns the score
+    def getScore(self):
+        return self.score
+
+    # Return
+    def getCoord(self):
+        return self._coord
+
     """"Setters"""
 
     # Setter: this method sets the given direction
@@ -157,11 +167,11 @@ class PacMan(Character):
             self._direction = direction
             self._moveable = True
 
-    #setter for pacman lifes, to access the pacmanlifes in the Game class
+    # setter for pacman lifes, to access the pacmanlifes in the Game class
     def set_lifes(self, lifes):
         self.lifes = lifes
 
-    def set_coord(self,coordinate):
+    def set_coord(self, coordinate):
         self._coord = coordinate
 
     """"Getters"""
@@ -182,18 +192,11 @@ class PacMan(Character):
                 dict[letter].append("res/pacman/pacman-{letter} {number}.png".format(letter=letter, number=i))
         return dict
 
-    # Returns the amount of lifes left
-    def getLifes(self):
-        return self.lifes
+    """"Reset Method"""""
 
-    # Returns the score
-    def getScore(self):
-        return self.score
-
-    def getCoord(self):
-        return self._coord
-
+    # Does move Pac-Man to original start coordinate and sets the direction  LEFT
     def reset_character(self):
         super().reset_character()
-        self._direction = Direction.RIGHT
-        self._set_on_coord(self.start_coord, self.__image)
+        self._direction = Direction.LEFT
+        self.__change_direction = None
+        self.draw_startpacman()

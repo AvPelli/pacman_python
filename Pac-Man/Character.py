@@ -25,21 +25,29 @@ class Character(ABC):
     # Protected method: It can and only will be used in subclasses. Prohibited to be used outside these subclasses
     def _set_on_coord(self, coordinate, image):
         # self.check_reset()
+        if self._direction is None:
+            return
         (xPixels, yPixels) = (coordinate.get_pixel_tuple())
         xPixels += self._direction.value[0] * self._moving_pos
         yPixels += self._direction.value[1] * self._moving_pos
 
         self._game_display.blit(image, (xPixels, yPixels))
 
-    def check_reset(self):
-        if self._direction is None:
-            self._game.reset_chars()
-            return
-
     @abstractmethod
     def move(self):
         pass
 
+    # Method used for character while they move between tiles (Base model of the method)
+    # Each subclass expands this method
+    def _move_between_tiles(self):
+        self._moving_pos += self._speed
+        if self._moving_pos >= 16:
+            self._moving_pos = 0
+            self._moving_between_tiles = False
+            # Once there, it's coordinate will be updated so it's ready to be checked in the else: part of move
+            self._coord.update_coord(self._direction)
+
+    # Set the character on the other side
     def _set_on_opposite_side(self):
         (maxX, maxY) = self._game.get_max()
         (x, y) = (self._coord.get_coord_tuple())
@@ -62,7 +70,6 @@ class Character(ABC):
             jump = True
         return Coordinate(newX, newY), jump
 
+    # Base model of a method that reset the character to the begin status
     def reset_character(self):
         self._coord = self.start_coord
-
-
