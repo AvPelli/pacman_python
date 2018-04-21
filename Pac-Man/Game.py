@@ -128,13 +128,21 @@ class Game():
         self.gamemode = 3
 
     def gamemode5(self):
-        imagefile = "res/startscreen/gameoverscreen.jpg"
-        gameoverscreen_image = pg.image.load(imagefile)
-        self.game_display.blit(gameoverscreen_image, (0, 125))
-        pg.display.flip()
-        self.clock.tick(10)
+        pg.time.delay(1000)
+        self.game_display.fill(black)
+        self.map.draw_map()
+        self.map.draw_candy()
+        self.map.draw_oneup()
+        pg.display.update()
+        deathco = self.pacman.getCoord()
+        self.map.draw_pacmandeathani(deathco)
         pg.display.update()
 
+        # Event check, quit event check first
+        self.check_quit_events()
+        pg.quit()
+
+        """"
         gamemode4_exit = False
         while not gamemode4_exit:
             # check for QUIT or "X" to play another game
@@ -150,17 +158,17 @@ class Game():
                         gamemode4_exit = True
                         # Startscreen = gamemode 1
                         self.gamemode = 1
+        """
 
     def check_pacman_caught(self):
         for ghost in self.ghosts:
             if (self.pacman.getCoord() == ghost.get_coord()):
                 self.pacmanCaught = True
-                return
 
     def reset_ghosts(self):
         for ghost in self.ghosts:
             ghost.reset_character()
-        self.pacman.reset_character()
+        # self.pacman.reset_character()
 
     """"Getters"""
 

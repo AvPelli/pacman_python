@@ -14,7 +14,7 @@ class PacMan(Character):
                          moving_between_tiles=False, game_display=game_display,
                          game=game, coordinate=coordinate)
         self.score = 0
-        self.lifes = 3
+        self.lifes = 1
         self.__turnaround = False
 
         # Variables for cosmetics
