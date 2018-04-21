@@ -16,3 +16,4 @@ Datum,Start,Einde,Plaats,Omschrijving
 18/04/18,9:00,10:30,Kot,Beginnen aan documentatie
 18/04/18,11:00,12:30,Kot,documentatie Map
 20/04/18,10:00,14:00,Kot,implementatie eventhandling wanneer pacman gevangen wordt door spook
+21/04/18,13:00,15:30,Thuis,Zoeken naar bug chars_reset()
