@@ -24,3 +24,7 @@ Datum,Start,Einde,Uren,Plaats,Omschrijving
 7/04/2018,15:45,18:45,3:00,Thuis,Vervolg vorige
 16/04/2018,13:30,17:45,4:15,Campus,Implementeren startscreen in hoofdpgrogramma/  aanpassen oneup
 20/04/2018,12:30,13:30,1:00,Campus,Peerevaluatie + logboek updaten
+21/04/2018,18:15,19:45,0:30,Thuis,Infovideo's over A* en dijkstra algoritme
+21/04/2018,19:10,19:45,0:35,Thuis,Analyseren code in A*klasse van Aleandro
+21/04/2018,19:45,20:45,1:00,Thuis,Nieuwe pacman tileset zoeken + verschalen/knippen afbeeldingen voor deathanimatie
+21/04/2018,22:00,23:30,1:30,Thuis,Gameover deel 1 maken + problemen hiermee proberen oplossen
