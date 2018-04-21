@@ -195,5 +195,5 @@ class PacMan(Character):
 
     def reset_character(self):
         super().reset_character()
-        self._direction = Direction.LEFT
-        self._set_on_coord(self._coord, self.__image)
+        self._direction = Direction.RIGHT
+        self._set_on_coord(self.start_coord, self.__image)

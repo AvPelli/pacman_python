@@ -38,8 +38,8 @@ class Game():
         self.pacman = PacMan(self.game_display, self.map.get_pacman_start(), self, self.map.get_wall_list())
 
         self.ghosts = []
-        starting_positions = self.map.get_ghosts_start()
-        for i in starting_positions:
+        self.starting_positions = self.map.get_ghosts_start()
+        for i in self.starting_positions:
             self.ghosts.append(Ghost(self.game_display, i, self, self.map.get_wall_list()))
         # Link objects
         self.map.set_pacman(self.pacman)
@@ -53,6 +53,8 @@ class Game():
             self.gamemode3()
         elif self.gamemode == 4:
             self.gamemode4()
+        elif self.gamemode == 5:
+            self.gamemode5()
 
     # Startscreen mode - game displays startscreen
     def gamemode1(self):
@@ -119,16 +121,17 @@ class Game():
         pg.time.delay(1000)  # wait 1 second
 
         # pacman back to the starting position
-        coord = self.map.get_pacman_start()
-        self.pacman.set_coord(coord)
-        self.map.draw_startpacman()
+        #coord = self.map.get_pacman_start()
+        #self.pacman.set_coord(coord)
+        #self.map.draw_startpacman()
 
         # ghosts back to starting position
-        list = self.map.get_ghosts_start()
-        iteratie = 0
-        for ghost in self.ghosts:
-            ghost.set_coord(list[iteratie])
-            iteratie += 1
+        #list = self.starting_positions
+        #iteratie = 0
+        #for ghost in self.ghosts:
+         #   ghost.set_coord(list[iteratie])
+          #  iteratie += 1
+        self.reset_chars()
         self.map.draw_map()
         self.gamemode = 3
 
