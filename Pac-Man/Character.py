@@ -72,4 +72,6 @@ class Character(ABC):
 
     # Base model of a method that reset the character to the begin status
     def reset_character(self):
-        self._coord = self.start_coord
+        #deepcopy, or else the attribute __coord will be a reference to the attribute start_coord
+        #this way when pacman gets caught the second time, it will "reset" to the coordinate it already stands on
+        self._coord = deepcopy(self.start_coord)

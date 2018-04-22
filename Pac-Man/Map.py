@@ -36,6 +36,7 @@ class Map():
         self.__ghosts_coord = list()
         self.__init_items()
         self.__transp_list = list()
+        self.__pacman_coord_deepcopy
 
         # Pacman himself
         self.pacman = None
@@ -164,6 +165,7 @@ class Map():
                     self.__candy_dict[coord] = (Candy(self.__game_display, coord))
                 elif map_noborders[y][x] == "P":  # Place where PacMan needs to be located
                     self.__pacman_coord = Coordinate(x, y)
+                    self.__pacman_coord_deepcopy = deepcopy(self.__pacman_coord)
                 elif map_noborders[y][x] in "/=.-_\éè\()}{][abcd12345678uijonq":  # All the characters that are walls
                     self.__wall_list.append(Coordinate(x, y))
                 elif map_noborders[y][x] == 'g':
@@ -189,7 +191,7 @@ class Map():
 
     # Getter: returns a copy of pacman his start coordinate
     def get_pacman_start(self):
-        return self.__pacman_coord
+        return self.__pacman_coord_deepcopy
 
     def get_ghosts_start(self):
         return self.__ghosts_coord
