@@ -137,7 +137,7 @@ class Game():
 
         # Event check, quit event check first
         self.check_quit_events()
-        pg.quit()
+        self.gameExit=True
 
         """"
         gamemode4_exit = False
