@@ -46,18 +46,18 @@ class Game():
 
     def gamemode_handler(self):
         if self.gamemode == 1:
-            self.gamemode1()
+            self.start_screen()
         elif self.gamemode == 2:
-            self.gamemode2()
+            self.ready_screen()
         elif self.gamemode == 3:
-            self.gamemode3()
+            self.play_screen()
         elif self.gamemode == 4:
-            self.gamemode4()
+            self.reset_screen()
         elif self.gamemode == 5:
-            self.gamemode5()
+            self.gameover_screen()
 
     # Startscreen mode - game displays startscreen
-    def gamemode1(self):
+    def start_screen(self):
         # self.game_display.fill(Game.black)
         startscreen_image = pg.image.load("res/startscreen/startscreen.jpg")
         self.game_display.blit(startscreen_image, (0, 125))
@@ -71,7 +71,7 @@ class Game():
 
     # Setting up the game - press a  KEY to start
 
-    def gamemode2(self):
+    def ready_screen(self):
         # Draw methods, be aware of the sequence!
         self.map.draw_candy()
         self.map.draw_startpacman()
@@ -92,7 +92,7 @@ class Game():
         self.check_beginningmusic_events()
 
     # Gaming
-    def gamemode3(self):
+    def game_screen(self):
         self.game_display.fill(black)
         self.map.draw_candy()
         self.pacman.move()
@@ -115,7 +115,7 @@ class Game():
         if not (self.pacman.getLifes()):
             self.gamemode = 5  # no more lifes left: game over
 
-    def gamemode4(self):
+    def reset_screen(self):
         pg.time.delay(1000)  # wait 1 second
 
         # pacman back to the starting position
@@ -125,7 +125,7 @@ class Game():
         self.reset_ghosts()
         self.gamemode = 3
 
-    def gamemode5(self):
+    def gameover_screen(self):
         pg.time.delay(1000)
         self.game_display.fill(black)
         self.map.draw_candy()
