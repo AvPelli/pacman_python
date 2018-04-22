@@ -112,6 +112,7 @@ class Game():
             self.pacmanCaught = False
             self.gamemode = 4  # reset the game: ghosts in center and pacman in middle
 
+
         if not (self.pacman.getLifes()):
             self.gamemode = 5  # no more lifes left: game over
 
