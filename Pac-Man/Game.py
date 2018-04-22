@@ -73,7 +73,6 @@ class Game():
 
     def gamemode2(self):
         # Draw methods, be aware of the sequence!
-        self.map.draw_map()
         self.map.draw_candy()
         self.map.draw_startpacman()
         self.map.draw_readytext()
@@ -95,7 +94,6 @@ class Game():
     # Gaming
     def gamemode3(self):
         self.game_display.fill(black)
-        self.map.draw_map()
         self.map.draw_candy()
         self.pacman.move()
         for ghost in self.ghosts:
@@ -130,7 +128,6 @@ class Game():
     def gamemode5(self):
         pg.time.delay(1000)
         self.game_display.fill(black)
-        self.map.draw_map()
         self.map.draw_candy()
         self.map.draw_oneup()
         pg.display.update()
