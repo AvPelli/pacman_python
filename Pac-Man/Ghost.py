@@ -51,7 +51,7 @@ class Ghost(Character):
                 self._set_on_opposite_side()
             self._moving_between_tiles = True
             self.check_direction()
-            self._set_on_coord(self._coord, self.__image)
+            self._draw_character(self._coord, self.__image)
 
     def check_direction(self):
         if self._direction is None:
@@ -60,7 +60,7 @@ class Ghost(Character):
     def __move_between_tiles(self):
         # Proceed to the next tile
         super()._move_between_tiles()
-        self._set_on_coord(self._coord, self.__image)
+        self._draw_character(self._coord, self.__image)
 
     def __calculate_target_tile(self):
         return self._game.get_pacman_coord()
@@ -82,4 +82,4 @@ class Ghost(Character):
     def reset_character(self):
         super().reset_character()
         self._direction = Direction.UP
-        self._set_on_coord(self.start_coord, self.__image)
+        self._draw_character(self.start_coord, self.__image)

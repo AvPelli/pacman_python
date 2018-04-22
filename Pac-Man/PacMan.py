@@ -28,7 +28,11 @@ class PacMan(Character):
         # Collision and direction control check variables
         self.walls = walls
         self.__change_direction = None
+        # Music haven't been loaded yet. If another song gets loaded in this game than you'll have to set this variable to False again!
+        self.__music_plays=False
 
+    def set_music(self):
+        self.__music_plays=False
     # draw pacman on that coordinate
     def draw_pacman(self):
         self._game_display.blit(self.__image, self._coord.get_pixel_tuple())
@@ -52,7 +56,7 @@ class PacMan(Character):
         # Else it checks if it needs to calculate a new coordinate, and if a different direction input has been given
         else:
             if not self._movable:
-                self._set_on_coord(self._coord, self.__image)
+                self._draw_character(self._coord, self.__image)
                 return
             # Checks if the direction what was not possible a while ago is possible now
             self.__direction_waiter()
@@ -66,9 +70,9 @@ class PacMan(Character):
                 self.__moveable = False
             else:
                 if jump:
-                    self.set_on_opposite_side()
+                    self._set_on_opposite_side()
                 self._moving_between_tiles = True
-            self._set_on_coord(self._coord, self.__image)
+            self._draw_character(self._coord, self.__image)
             # Moves to the new coordinate
             # Checks if there is candy to eat on the new coordinate
             self.__eat_candy()
@@ -79,7 +83,7 @@ class PacMan(Character):
             # Proceed to the next tile
             self.__image = self.__get_image_direction(self._direction)
             super()._move_between_tiles()
-            self.__number = 0
+            self.__number +=1
         # However if turnaround has been set (see check_turnaround), pacman will have to move back to the beginning his original tile 1st
         # Once there he'll set himself ready for the next iteration (and its coordinate will NOT be updated)
         # To solve issues bug-wise, number will be set on 0 once it has moved back, so its beak is closed at the end, as usual
@@ -92,20 +96,8 @@ class PacMan(Character):
                 self._moving_between_tiles = False
                 self.__turnaround = False
                 self.__number = 0
-        self._set_on_coord(self._coord, self.__image)
+        self._draw_character(self._coord, self.__image)
 
-    # When Pacman reaches the edge of the map, its coordinates must be updated to the opposite side
-    def set_on_opposite_side(self):
-        (maxX, maxY) = self._game.get_max()
-        (x, y) = (self._coord.get_coord_tuple())
-        if x < 0:
-            self._direction = Direction.LEFT
-            self._coord = Coordinate(maxX, y)
-        elif x > maxX:
-            self._direction = Direction.RIGHT
-            self._coord = Coordinate(-2, y)
-
-    """"Check/Calculate Methods"""
 
     # This method will change the direction to the change_direction variable if it is possible
     # So when someone has pressed UP-key and it was not possible at that moment, this method will change the direction to UP
@@ -121,9 +113,14 @@ class PacMan(Character):
 
     # Checks if there is a candy object on Pacmans coordinate
     # If so it will delete that Candy object out of the dictionary (So it will not be redrawn)
+    # Also the first time this method gets used it will load the music of eating fruit
     def __eat_candy(self):
         candies = self._game.get_candy_dict()
+        if not self.__music_plays:
+           pg.mixer.music.load("res/files/music/pacman-chomp/pacman_chomp.wav")
+           self.__music_plays = True
         if self._coord in candies.keys():
+            pg.mixer.music.play()
             del self._game.get_candy_dict()[self._coord]
             self.score += 10
 

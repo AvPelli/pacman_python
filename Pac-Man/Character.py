@@ -23,7 +23,7 @@ class Character(ABC):
 
     # It wil draw a Character(image) of the given coordinate on the given game_display
     # Protected method: It can and only will be used in subclasses. Prohibited to be used outside these subclasses
-    def _set_on_coord(self, coordinate, image):
+    def _draw_character(self, coordinate, image):
         # self.check_reset()
         if self._direction is None:
             return
