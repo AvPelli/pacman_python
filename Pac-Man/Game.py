@@ -119,7 +119,7 @@ class Game():
         pg.time.delay(1000)  # wait 1 second
 
         # pacman back to the starting position
-        self.pacman.reset_character(self.map.get_pacman_start())
+        self.pacman.reset_character()
 
         # ghosts back to starting position
         self.reset_ghosts()

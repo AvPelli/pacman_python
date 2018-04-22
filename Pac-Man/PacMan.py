@@ -195,8 +195,7 @@ class PacMan(Character):
     """"Reset Method"""""
 
     # Does move Pac-Man to original start coordinate and sets the direction  LEFT
-    def reset_character(self,coordinate):
+    def reset_character(self):
         super().reset_character()
         self._direction = Direction.LEFT
         self.__change_direction = None
-        self.draw_startpacman(coordinate)
