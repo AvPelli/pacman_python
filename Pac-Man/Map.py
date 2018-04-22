@@ -125,8 +125,8 @@ class Map():
                          (self.__width, self.__tile_size * y))
 
     # Draws start Pacman
-    def draw_startpacman(self):
-        self.pacman.draw_startpacman()
+    def draw_startpacman(self,coordinate):
+        self.pacman.draw_startpacman(coordinate)
 
     # Draws Pacman his death animation
     def draw_pacmandeathani(self, deadco):

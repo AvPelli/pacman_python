@@ -34,8 +34,8 @@ class PacMan(Character):
         self._game_display.blit(self.__image, self._coord.get_pixel_tuple())
 
     # Initializes Pacman on give start coordinate
-    def draw_startpacman(self):
-        co = self._coord.get_pixel_tuple()
+    def draw_startpacman(self,coordinate):
+        co = coordinate.get_pixel_tuple()
         self._game_display.blit(self.__image, (co[0] - 8, co[1]))
 
     """"Move method"""
@@ -195,8 +195,8 @@ class PacMan(Character):
     """"Reset Method"""""
 
     # Does move Pac-Man to original start coordinate and sets the direction  LEFT
-    def reset_character(self):
+    def reset_character(self,coordinate):
         super().reset_character()
         self._direction = Direction.LEFT
         self.__change_direction = None
-        self.draw_startpacman()
+        self.draw_startpacman(coordinate)

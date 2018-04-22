@@ -74,7 +74,7 @@ class Game():
     def ready_screen(self):
         # Draw methods, be aware of the sequence!
         self.map.draw_candy()
-        self.map.draw_startpacman()
+        self.map.draw_startpacman(self.map.get_pacman_start())
         self.map.draw_readytext()
         self.map.draw_oneup()
         pg.display.update()
@@ -92,7 +92,7 @@ class Game():
         self.check_beginningmusic_events()
 
     # Gaming
-    def game_screen(self):
+    def play_screen(self):
         self.game_display.fill(black)
         self.map.draw_candy()
         self.pacman.move()
@@ -119,7 +119,7 @@ class Game():
         pg.time.delay(1000)  # wait 1 second
 
         # pacman back to the starting position
-        self.pacman.reset_character()
+        self.pacman.reset_character(self.map.get_pacman_start())
 
         # ghosts back to starting position
         self.reset_ghosts()
