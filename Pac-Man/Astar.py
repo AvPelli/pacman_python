@@ -115,6 +115,7 @@ class Astar():
                 result = tpl
         return Coordinate(result[0], result[1])
 
+
     # Gives the first direction from the calculated path
     def get_direction(self, start, goal):
         if (start == goal):

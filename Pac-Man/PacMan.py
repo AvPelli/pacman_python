@@ -125,7 +125,7 @@ class PacMan(Character):
             candy = candies[self._coord]
             if isinstance(candy, SuperCandy):
                 self.__supercandy_eaten = True
-                print("SuperCandy")
+                print("SuperCandy",self.__supercandy_eaten)
             pg.mixer.music.play()
             del self._game.get_candy_dict()[self._coord]
             self.score += 10
@@ -141,6 +141,7 @@ class PacMan(Character):
 
     """"Getters"""
     def isSuperCandyEaten(self):
+        print("check isSuperCandyEaten")
         return self.__supercandy_eaten
 
     # Returns the amount of lifes left

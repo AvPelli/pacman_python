@@ -113,11 +113,15 @@ class Game():
         #scatter 7 seconds
         if(self.time_passed < 7000):
             for ghost in self.ghosts:
+                if self.pacman.isSuperCandyEaten():
+                    ghost.set_frightened(True)
                 ghost.move(True)
 
         #chase 20 seconds
         elif(self.time_passed < 27000):
             for ghost in self.ghosts:
+                if self.pacman.isSuperCandyEaten():
+                    ghost.set_frightened(True)
                 ghost.move(False)
         else:
             #reset timer
