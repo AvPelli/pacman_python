@@ -24,13 +24,11 @@ class Character(ABC):
     # It wil draw a Character(image) of the given coordinate on the given game_display
     # Protected method: It can and only will be used in subclasses. Prohibited to be used outside these subclasses
     def _draw_character(self, coordinate, image):
-        # self.check_reset()
-        if self._direction is None:
-            return
         (xPixels, yPixels) = (coordinate.get_pixel_tuple())
-        xPixels += self._direction.value[0] * self._moving_pos
-        yPixels += self._direction.value[1] * self._moving_pos
-
+        # self.check_reset()
+        if self._direction is not None:
+            xPixels += self._direction.value[0] * self._moving_pos
+            yPixels += self._direction.value[1] * self._moving_pos
         self._game_display.blit(image, (xPixels, yPixels))
 
     @abstractmethod

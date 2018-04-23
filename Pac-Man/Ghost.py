@@ -22,7 +22,7 @@ class Ghost(Character):
         Ghost.ghost_id %= 4
         self._speed = (16 - self.__id) / 8.0
         self.astar = Astar(game.get_gates())
-        self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(self.__update_target_tile()))
+        self._direction = Direction.UP
         self.imagechooser()
         self.__update_target_tile()
 

@@ -116,7 +116,7 @@ class Astar():
     # Gives the first direction from the calculated path
     def get_direction(self, start, goal):
         path = self.find_path(start, goal)
-        return self.dictionary[path[0]] if len(path) > 0 else None
+        return self.dictionary[path[0]]
 
     """Getters"""
 
