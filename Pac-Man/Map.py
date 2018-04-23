@@ -145,6 +145,17 @@ class Map():
         self.draw_map()
         for candy in self.__candy_dict.values():
             candy.draw(candy.get_coord())
+    #This method will change the color of the walls
+    def change_wall_color(self,won=True):
+        filename = "res/files/tile_codering.txt"
+        for line in open(filename, 'r'):
+            sign_tilename = line.strip().split(" : ")
+            if(won):
+                 tile_name = "res/tileset/Game-won/" + sign_tilename[1] + ".png"
+            else:
+                 tile_name = "res/tileset/" + sign_tilename[1] + ".png"
+
+            self.__tiles[sign_tilename[0]] = pg.image.load(tile_name)
 
     """Initialize methods"""
 

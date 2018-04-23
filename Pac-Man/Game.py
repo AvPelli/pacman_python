@@ -152,8 +152,11 @@ class Game():
     def game_won(self):
         pg.time.delay(1000)
         self.game_display.fill(black)
+        self.map.change_wall_color()
+        self.map.draw_map()
         pg.display.update()
         pg.time.delay(1000)
+        self.map.change_wall_color(won=False)
         self.map.draw_map()
         pg.display.update()
         self.check_quit_events()
