@@ -28,3 +28,7 @@ Datum,Start,Einde,Uren,Plaats,Omschrijving
 21/04/2018,19:10,19:45,0:35,Thuis,Analyseren code in A*klasse van Aleandro
 21/04/2018,19:45,20:45,1:00,Thuis,Nieuwe pacman tileset zoeken + verschalen/knippen afbeeldingen voor deathanimatie
 21/04/2018,22:00,23:30,1:30,Thuis,Gameover deel 1 maken + problemen hiermee proberen oplossen
+24/04/2018,15:45,18:45,3:00,Campus,Aanmaken klasse SuperFood, afbeeldingen superfood en frightened ghosts, start implementatie frightened mode
+24/04/2018,19:15,20:15,1:00,Thuis,Random laten bewegen ghosts, implementatie frightened mode ghost
+24/04/2018,20:30,21:45,1:15,Thuis,implementatie frightened mode ghost
+24/04/2018,23:05,23:59,00:54,Thuis,implementatie frightened mode ghost

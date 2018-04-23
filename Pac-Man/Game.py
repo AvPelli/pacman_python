@@ -133,7 +133,7 @@ class Game():
                 else:
                     print("gevangen")
                     ghost.set_gostart(True)
-                    ghost.move(False)
+                    # ghost.move(False)
         else:
             # reset timer
             self.start_time = pg.time.get_ticks()
