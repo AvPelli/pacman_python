@@ -22,8 +22,9 @@ class Ghost(Character):
         Ghost.ghost_id %= 4
         self._speed = (16 - self.__id) / 8.0
         self.astar = Astar(game.get_gates())
-        self._direction = self.astar.get_direction(self._coord, self.__calculate_target_tile())
+        self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(self.__update_target_tile()))
         self.imagechooser()
+        self.__update_target_tile()
 
     def imagechooser(self):
         if self.__id == 2:
@@ -36,16 +37,15 @@ class Ghost(Character):
             self.__image = pg.image.load("res/ghost/pinky/start.png")
 
     def move(self):
-        self._speed = (16 - self.__id) / 8.0
         if self._moving_between_tiles:
             self.__move_between_tiles()
         else:
             check_next_coord, jump = self._calculate_new_coord()
             if check_next_coord in self.walls:
-                self._direction = self.astar.get_direction(self._coord, self.__calculate_target_tile())
+                self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(self.__update_target_tile()))
                 self.check_direction()
             if self.__check_neighbours() == True:
-                self._direction = self.astar.get_direction(self._coord, self.__calculate_target_tile())
+                self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(self.__update_target_tile()))
                 self.check_direction()
             if jump:
                 self._set_on_opposite_side()
@@ -62,8 +62,41 @@ class Ghost(Character):
         super()._move_between_tiles()
         self._draw_character(self._coord, self.__image)
 
-    def __calculate_target_tile(self):
-        return self._game.get_pacman_coord()
+    def __update_target_tile(self):
+        pac_coord = self._game.get_pacman_coord()
+        pac_direction = self._game.get_pacman_direction()
+        if self.__id == 0:
+            self.__target_tile = pac_coord
+        elif self.__id == 1:
+            for i in range(4):
+                pac_coord.update_coord(pac_direction)
+            self.__target_tile = pac_coord
+        elif self.__id == 2:
+            for i in range(2):
+                pac_coord.update_coord(pac_direction)
+            blinky_coord = (self._game.get_ghosts()[0]).get_coord()
+            pac_x = pac_coord.get_x()
+            pac_y = pac_coord.get_y()
+            blinky_x = blinky_coord.get_x()
+            blinky_y = blinky_coord.get_y()
+            x_diff = pac_x - blinky_x
+            y_diff = pac_y - blinky_y
+            # aanpassen als move en calculate_direction beter geschreven zijn maar voor nu:
+
+            self.__target_tile = Coordinate(blinky_x + 2 * x_diff, blinky_y + 2 * y_diff)
+
+        else:
+            if self.astar.manhattan_distance(pac_coord.get_coord_tuple(), self._coord.get_coord_tuple()) < 10:
+                self.__target_tile = Coordinate(15,15)
+            else:
+                self.__target_tile = pac_coord
+
+            # aanpassen
+        self.__target_tile = self.astar.get_closest_tile(self.__target_tile)
+        return self.__target_tile
+
+    def calculate_direction(self):
+        pass #voor nu
 
     def __check_neighbours(self):
         amount = 0
@@ -77,7 +110,7 @@ class Ghost(Character):
         return self._coord
 
     def set_coord(self, coord):
-        self.__coord = coord
+        self._coord = coord
 
     def reset_character(self):
         super().reset_character()

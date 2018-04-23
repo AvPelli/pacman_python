@@ -4,6 +4,7 @@ from Direction import Direction
 from Ghost import Ghost
 from Map import Map
 from PacMan import PacMan
+from copy import deepcopy
 
 black = (0, 0, 0)
 tile_size = 16
@@ -65,7 +66,7 @@ class Game():
         self.game_display.blit(startscreen_image, (0, 125))
         pg.display.flip()
 
-        self.clock.tick(10)
+        self.clock.tick(3)
 
         # Event check, quit event check first
         self.check_x_event()
@@ -195,10 +196,17 @@ class Game():
         return self.map.tiles_horiz_size - 1, self.map.tiles_vert_size - 1
 
     def get_pacman_coord(self):
-        return self.pacman.getCoord()
+        return deepcopy(self.pacman.getCoord())
+
+    def get_pacman_direction(self):
+        return deepcopy(self.pacman.get_direction())
 
     def get_gates(self):
         return self.map.get_gates()
+
+    def get_ghosts(self):
+        return self.ghosts
+
 
     """"Events"""
 

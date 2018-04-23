@@ -102,6 +102,17 @@ class Astar():
                     return self.failsafe(start, goal)
         return "No WAY"
 
+    def get_closest_tile(self, coord):
+        coord_as_tuple = coord.get_coord_tuple()
+        min = 1000
+        result = None
+        for tpl in self.graph.keys():
+            hulp = self.manhattan_distance(coord_as_tuple, tpl)
+            if hulp < min:
+                min = hulp
+                result = tpl
+        return Coordinate(result[0], result[1])
+
     # Gives the first direction from the calculated path
     def get_direction(self, start, goal):
         path = self.find_path(start, goal)
