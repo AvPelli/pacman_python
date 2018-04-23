@@ -26,7 +26,7 @@ class Game():
         self.gameExit = False
         self.game_display = pg.display.set_mode(resolution)
         self.pacmanCaught = False
-        self.ghostCaught = False
+        self.ghost_caught = False
         self.start_time = pg.time.get_ticks()
         self.time_passed = 0
 
@@ -102,32 +102,34 @@ class Game():
     def play_screen(self):
         self.game_display.fill(black)
         self.map.draw_candy()
-        self.pacman.move()
 
-        # check if ghost is frightened
-        for ghost in self.ghosts:
-            if self.pacman.isSuperCandyEaten():
-                ghost.set_frightened(True)
+        if not self.ghost_caught:
+            self.pacman.move()
 
-        # count time for scatter mode
-        self.time_passed = pg.time.get_ticks() - self.start_time
-
-        # scatter 7 seconds
-        if (self.time_passed < 7000):
+            # check if ghost is frightened
             for ghost in self.ghosts:
                 if self.pacman.isSuperCandyEaten():
                     ghost.set_frightened(True)
-                ghost.move(True)
 
-        # chase 20 seconds
-        elif (self.time_passed < 27000):
-            for ghost in self.ghosts:
-                if self.pacman.isSuperCandyEaten():
-                    ghost.set_frightened(True)
-                ghost.move(False)
-        else:
-            # reset timer
-            self.start_time = pg.time.get_ticks()
+            # count time for scatter mode
+            self.time_passed = pg.time.get_ticks() - self.start_time
+
+            # scatter 7 seconds
+            if (self.time_passed < 7000):
+                for ghost in self.ghosts:
+                    if self.pacman.isSuperCandyEaten():
+                        ghost.set_frightened(True)
+                    ghost.move(True)
+
+            # chase 20 seconds
+            elif (self.time_passed < 27000):
+                for ghost in self.ghosts:
+                    if self.pacman.isSuperCandyEaten():
+                        ghost.set_frightened(True)
+                    ghost.move(False)
+            else:
+                # reset timer
+                self.start_time = pg.time.get_ticks()
 
         self.map.draw_oneup()
         self.clock.tick(60)
@@ -152,8 +154,9 @@ class Game():
                 pg.mixer.music.play()
                 self.pacman.set_music()  # pac-man can load his chomp music again
 
-        if (self.ghostCaught):
+        if (self.ghost_caught):
             print("spook gevangen")
+            self.pacman.set_streak(1)
 
         if not (self.pacman.getLifes()):
             self.gamemode = 5  # no more lifes left: game over
@@ -226,7 +229,8 @@ class Game():
     def check_ghost_caught(self):
         for ghost in self.ghosts:
             if self.pacman.getCoord() == ghost.get_coord():
-                self.ghostCaught = True
+                self.ghost_caught = True
+                ghost.set_eaten(True)
 
     def reset_ghosts(self):
         for ghost in self.ghosts:

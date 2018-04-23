@@ -33,6 +33,7 @@ class PacMan(Character):
         self.__music_plays = False
 
         self.__supercandy_eaten = False
+        self.__streak = 0
 
     def set_music(self):
         self.__music_plays = False
@@ -154,6 +155,9 @@ class PacMan(Character):
     def getCoord(self):
         return self._coord
 
+    def get_streak(self):
+        return self.__streak
+
     """"Setters"""
 
     # Setter: this method sets the given direction
@@ -177,6 +181,9 @@ class PacMan(Character):
 
     def set_coord(self, coordinate):
         self._coord = coordinate
+
+    def set_streak(self,eatstreak):
+        self.__streak = self.__streak+eatstreak
 
     """"Getters"""
 

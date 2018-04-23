@@ -29,6 +29,8 @@ class Ghost(Character):
         self.__frightened = False
         self.__frightenedimg = 1
 
+        self.__eaten = False
+
     def imagechooser(self):
         if self.__id == 2:
             self.__image = pg.image.load("res/ghost/inky/start.png")
@@ -39,12 +41,12 @@ class Ghost(Character):
         elif self.__id == 1:
             self.__image = pg.image.load("res/ghost/pinky/start.png")
 
-    def move(self, scatter=False):
+    def move(self, scatter):
         if self._moving_between_tiles:
             self.__move_between_tiles()
         else:
-            check_next_coord, jump = self._calculate_new_coord()
             if not scatter:
+                check_next_coord, jump = self._calculate_new_coord()
                 if check_next_coord in self.walls:
                     self._direction = self.astar.get_direction(self._coord,
                                                                self.astar.get_closest_tile(self.__update_target_tile()))
@@ -53,21 +55,28 @@ class Ghost(Character):
                     self._direction = self.astar.get_direction(self._coord,
                                                                self.astar.get_closest_tile(self.__update_target_tile()))
 
-                if self.__frightened:
-                    if check_next_coord in self.walls:
-                        self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(
-                            self.__update_target_tile()))
+                if jump:
+                    self._set_on_opposite_side()
+                self._moving_between_tiles = True
 
-                    if self.__check_neighbours() == True:
-                        self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(
-                            self.__update_target_tile()))
+                self.check_frightened()
+                self._draw_character(self._coord, self.__image)
+
+            if self.__frightened:
+                check_next_coord, jump = self._calculate_new_coord()
+                if check_next_coord in self.walls:
+                    self._direction = self.astar.get_direction(self._coord, self._coord)
+
+                if self.__check_neighbours() == True:
+                    self._direction = self.astar.get_direction(self._coord, self._coord)
 
             else:
+                check_next_coord, jump = self._calculate_new_coord()
                 if check_next_coord in self.walls:
                     self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(
                         self.__update_target_tile_scatter()))
 
-                if self.__check_neighbours() == True:
+                if self.__check_neighbours() == True and check_next_coord != self._game.get_pacman_coord:
                     self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(
                         self.__update_target_tile_scatter()))
 
@@ -164,3 +173,9 @@ class Ghost(Character):
         super().reset_character()
         self._direction = Direction.UP
         self._draw_character(self.start_coord, self.__image)
+
+    def set_eaten(self,value):
+        self.__eaten = value
+
+    def is_eaten(self):
+        return self.__eaten
