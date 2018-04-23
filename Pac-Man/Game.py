@@ -25,6 +25,8 @@ class Game():
         self.gameExit = False
         self.game_display = pg.display.set_mode(resolution)
         self.pacmanCaught = False
+        self.start_time = pg.time.get_ticks()
+        self.time_passed = 0
 
         # Music settings
         self.intro_played = False
@@ -51,12 +53,13 @@ class Game():
         elif self.gamemode == 2:
             self.ready_screen()
         elif self.gamemode == 3:
+            self.clock.tick() #start the game timer (to measure time for scatter/chase mode)
             self.play_screen()
         elif self.gamemode == 4:
             self.reset_screen()
         elif self.gamemode == 5:
             self.gameover_screen()
-        elif self.gamemode == 6:
+        elif self.gamemode==6:
             self.game_won()
 
     # Startscreen mode - game displays startscreen
@@ -99,13 +102,26 @@ class Game():
         self.game_display.fill(black)
         self.map.draw_candy()
         self.pacman.move()
-        for ghost in self.ghosts:
-            if self.pacman.isSuperCandyEaten():
-                ghost.set_frightened(True)
-            ghost.move()
+
+        #count time for scatter mode
+        self.time_passed = pg.time.get_ticks() - self.start_time
+
+        #scatter 7 seconds
+        if(self.time_passed < 7000):
+            for ghost in self.ghosts:
+                ghost.move(True)
+
+        #chase 20 seconds
+        elif(self.time_passed < 27000):
+            for ghost in self.ghosts:
+                ghost.move(False)
+        else:
+            #reset timer
+            self.start_time = pg.time.get_ticks()
+
         self.map.draw_oneup()
-        pg.display.update()
         self.clock.tick(60)
+        pg.display.update()
         # Event check, quit event check first
         self.check_move_events()
         self.check_quit_events()
@@ -122,11 +138,12 @@ class Game():
                pg.mixer.music.play()
                self.pacman.set_music()  # pac-man can load his chomp music again
 
+
         if not (self.pacman.getLifes()):
             self.gamemode = 5  # no more lifes left: game over
 
-        if (len(self.candies) == 0):
-            self.gamemode = 6
+        if (len(self.candies)==0):
+            self.gamemode=6
 
     def reset_screen(self):
         pg.time.delay(1000)  # wait 1 second
@@ -152,7 +169,7 @@ class Game():
 
         # Event check, quit event check first
         self.check_quit_events()
-        self.gameExit = True
+        self.gameExit=True
 
     def game_won(self):
         pg.time.delay(1000)
@@ -215,6 +232,7 @@ class Game():
     def get_ghosts(self):
         return self.ghosts
 
+
     """"Events"""
 
     def check_quit_events(self):
@@ -240,6 +258,7 @@ class Game():
         for event in pg.event.get(self.SONG_END):
             self.gamemode = 3
             self.map.remove_readytext()
+
 
     def check_x_event(self):
         for event in pg.event.get(pg.KEYDOWN):
