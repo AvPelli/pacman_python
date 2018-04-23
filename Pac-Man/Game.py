@@ -65,7 +65,7 @@ class Game():
         self.game_display.blit(startscreen_image, (0, 125))
         pg.display.flip()
 
-        self.clock.tick(10)
+        self.clock.tick(3)
 
         # Event check, quit event check first
         self.check_x_event()

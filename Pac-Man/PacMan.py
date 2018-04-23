@@ -83,7 +83,6 @@ class PacMan(Character):
             # Proceed to the next tile
             self.__image = self.__get_image_direction(self._direction)
             super()._move_between_tiles()
-            self.__number +=1
         # However if turnaround has been set (see check_turnaround), pacman will have to move back to the beginning his original tile 1st
         # Once there he'll set himself ready for the next iteration (and its coordinate will NOT be updated)
         # To solve issues bug-wise, number will be set on 0 once it has moved back, so its beak is closed at the end, as usual
