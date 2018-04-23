@@ -35,6 +35,10 @@ class Character(ABC):
     def move(self):
         pass
 
+    @abstractmethod
+    def move(self,scatter):
+        pass
+
     # Method used for character while they move between tiles (Base model of the method)
     # Each subclass expands this method
     def _move_between_tiles(self):
