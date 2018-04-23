@@ -82,12 +82,15 @@ class Ghost(Character):
             x_diff = pac_x - blinky_x
             y_diff = pac_y - blinky_y
             # aanpassen als move en calculate_direction beter geschreven zijn maar voor nu:
-            if abs(x_diff) + abs(y_diff) <= 10:
-                self.__target_tile = Coordinate(blinky_x + 2 * x_diff, blinky_y + 2 * y_diff)
+
+            self.__target_tile = Coordinate(blinky_x + 2 * x_diff, blinky_y + 2 * y_diff)
+
+        else:
+            if self.astar.manhattan_distance(pac_coord.get_coord_tuple(), self._coord.get_coord_tuple()) < 10:
+                self.__target_tile = Coordinate(15,15)
             else:
                 self.__target_tile = pac_coord
-        else:
-            self.__target_tile = pac_coord
+
             # aanpassen
         self.__target_tile = self.astar.get_closest_tile(self.__target_tile)
         return self.__target_tile
@@ -107,7 +110,7 @@ class Ghost(Character):
         return self._coord
 
     def set_coord(self, coord):
-        self.__coord = coord
+        self._coord = coord
 
     def reset_character(self):
         super().reset_character()
