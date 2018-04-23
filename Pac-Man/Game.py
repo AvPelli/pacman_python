@@ -25,6 +25,7 @@ class Game():
         self.gameExit = False
         self.game_display = pg.display.set_mode(resolution)
         self.pacmanCaught = False
+        self.ghostCaught = False
         self.start_time = pg.time.get_ticks()
         self.time_passed = 0
 
@@ -53,13 +54,13 @@ class Game():
         elif self.gamemode == 2:
             self.ready_screen()
         elif self.gamemode == 3:
-            self.clock.tick() #start the game timer (to measure time for scatter/chase mode)
+            self.clock.tick()  # start the game timer (to measure time for scatter/chase mode)
             self.play_screen()
         elif self.gamemode == 4:
             self.reset_screen()
         elif self.gamemode == 5:
             self.gameover_screen()
-        elif self.gamemode==6:
+        elif self.gamemode == 6:
             self.game_won()
 
     # Startscreen mode - game displays startscreen
@@ -102,29 +103,29 @@ class Game():
         self.map.draw_candy()
         self.pacman.move()
 
-        #check if ghost is frightened
+        # check if ghost is frightened
         for ghost in self.ghosts:
             if self.pacman.isSuperCandyEaten():
                 ghost.set_frightened(True)
 
-        #count time for scatter mode
+        # count time for scatter mode
         self.time_passed = pg.time.get_ticks() - self.start_time
 
-        #scatter 7 seconds
-        if(self.time_passed < 7000):
+        # scatter 7 seconds
+        if (self.time_passed < 7000):
             for ghost in self.ghosts:
                 if self.pacman.isSuperCandyEaten():
                     ghost.set_frightened(True)
                 ghost.move(True)
 
-        #chase 20 seconds
-        elif(self.time_passed < 27000):
+        # chase 20 seconds
+        elif (self.time_passed < 27000):
             for ghost in self.ghosts:
                 if self.pacman.isSuperCandyEaten():
                     ghost.set_frightened(True)
                 ghost.move(False)
         else:
-            #reset timer
+            # reset timer
             self.start_time = pg.time.get_ticks()
 
         self.map.draw_oneup()
@@ -141,17 +142,20 @@ class Game():
             self.pacman.set_lifes(lifes)
             self.pacmanCaught = False
             self.gamemode = 4  # reset the game: ghosts in center and pacman in middle
-            #each time pac-man gets caught,this song will be played if he has no lifes anymore this somng will play in game_over_screen
-            if(self.pacman.getLifes()):
-               pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
-               pg.mixer.music.play()
-               self.pacman.set_music()  # pac-man can load his chomp music again
+            # each time pac-man gets caught,this song will be played if he has no lifes anymore this somng will play in game_over_screen
+            if (self.pacman.getLifes()):
+                pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
+                pg.mixer.music.play()
+                self.pacman.set_music()  # pac-man can load his chomp music again
+
+        if (self.ghostCaught):
+            print("spook gevangen")
 
         if not (self.pacman.getLifes()):
             self.gamemode = 5  # no more lifes left: game over
 
-        if (len(self.candies)==0):
-            self.gamemode=6
+        if (len(self.candies) == 0):
+            self.gamemode = 6
 
     def reset_screen(self):
         pg.time.delay(1000)  # wait 1 second
@@ -178,7 +182,7 @@ class Game():
         # Event check, quit event check first
         self.save_highscore()
         self.check_quit_events()
-        self.gameExit=True
+        self.gameExit = True
 
     def game_won(self):
         pg.time.delay(1000)
@@ -211,8 +215,13 @@ class Game():
 
     def check_pacman_caught(self):
         for ghost in self.ghosts:
-            if (self.pacman.getCoord() == ghost.get_coord()):
+            if self.pacman.getCoord() == ghost.get_coord():
                 self.pacmanCaught = True
+
+    def check_ghost_caught(self):
+        for ghost in self.ghosts:
+            if self.pacman.getCoord() == ghost.get_coord():
+                self.ghostCaught = True
 
     def reset_ghosts(self):
         for ghost in self.ghosts:
@@ -224,7 +233,7 @@ class Game():
         score.append(self.pacman.getScore())
         filename = "res/files/highscore.txt"
         try:
-            for line in open(filename,"r"):
+            for line in open(filename, "r"):
                 try:
                     score.append(int(line.strip()))
                 except:
@@ -242,7 +251,6 @@ class Game():
         file.write("\n".join(score))
         file.close()
 
-
     def read_highscores(self):
         scores = []
         filename = "res/files/highscore.txt"
@@ -250,7 +258,6 @@ class Game():
             scores.append(line)
         as_string = "\n".join(scores)
         return as_string
-
 
     """"Getters"""
 
@@ -273,7 +280,6 @@ class Game():
 
     def get_ghosts(self):
         return self.ghosts
-
 
     """"Events"""
 
@@ -300,7 +306,6 @@ class Game():
         for event in pg.event.get(self.SONG_END):
             self.gamemode = 3
             self.map.remove_readytext()
-
 
     def check_x_event(self):
         for event in pg.event.get(pg.KEYDOWN):
