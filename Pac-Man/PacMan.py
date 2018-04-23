@@ -3,7 +3,6 @@ import pygame as pg
 from Character import Character
 from Coordinate import Coordinate
 from Direction import Direction
-from Candy import Candy
 from SuperCandy import SuperCandy
 
 
@@ -16,7 +15,7 @@ class PacMan(Character):
                          moving_between_tiles=False, game_display=game_display,
                          game=game, coordinate=coordinate)
         self.score = 0
-        self.lifes = 1
+        self.lifes = 3
         self.__turnaround = False
 
         # Variables for cosmetics

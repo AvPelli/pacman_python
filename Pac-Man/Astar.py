@@ -1,4 +1,5 @@
 import math
+import random
 from heapq import heappop, heappush
 
 from Coordinate import Coordinate
@@ -99,8 +100,9 @@ class Astar():
                         heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1,
                                             path + direction, neighbour))
                 except KeyError:
-                    return self.failsafe(start, goal)
-        return "No WAY"
+                    print("Error")
+                    # return self.failsafe(start, goal)
+        return ""
 
     def get_closest_tile(self, coord):
         coord_as_tuple = coord.get_coord_tuple()
@@ -115,8 +117,21 @@ class Astar():
 
     # Gives the first direction from the calculated path
     def get_direction(self, start, goal):
+        if (start == goal):
+            return self.choose_random(start)
         path = self.find_path(start, goal)
+        if path is "":
+            return self.choose_random(start)
         return self.dictionary[path[0]]
+
+    def choose_random(self, coord):
+        pos = []
+        x, y = coord.get_coord_tuple()
+        for dir in Direction:
+            if (x + dir.value[0], y + dir.value[1]) in self.graph.keys():
+                pos.append(dir)
+        a = random.randint(0, len(pos) - 1)
+        return pos[a]
 
     """Getters"""
 

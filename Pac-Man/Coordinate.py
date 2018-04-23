@@ -1,6 +1,6 @@
 class Coordinate:
     # Constructor of Coordinate
-    def __init__(self, x, y):
+    def __init__(self, x, y, is_wall=False):
         self.__x = x
         self.__y = y
         self.__PIXELSIZE = 16

@@ -3,9 +3,9 @@ from copy import deepcopy
 import pygame as pg  # Importeren van pg module
 
 from Candy import Candy
-from SuperCandy import SuperCandy
 from Coordinate import Coordinate
 from Gate import Gate
+from SuperCandy import SuperCandy
 
 
 class Map():
@@ -47,6 +47,7 @@ class Map():
         self.fontoffset = 3
 
         # Map settings
+        self.clock = pg.time.Clock()
         self.upcounter = 0
 
     def draw_map(self):
@@ -125,7 +126,7 @@ class Map():
                          (self.__width, self.__tile_size * y))
 
     # Draws start Pacman
-    def draw_startpacman(self,coordinate):
+    def draw_startpacman(self, coordinate):
         self.pacman.draw_startpacman(coordinate)
 
     # Draws Pacman his death animation
@@ -138,6 +139,7 @@ class Map():
             self.draw_oneup()
             pacmanimgdeath = pg.image.load(imagefolder + str(x) + ".png")
             self.__game_display.blit(pacmanimgdeath, deadco.get_pixel_tuple())
+
             pg.display.update()
 
     # This method redraws some items like:

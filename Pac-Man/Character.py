@@ -8,7 +8,6 @@ from Direction import Direction
 class Character(ABC):
     def __init__(self, PIXELSIZE, speed, moving_pos, direction, movable, moving_between_tiles, game_display, game,
                  coordinate):
-
         # protected variables for all the subclasses
         self._speed = speed
         self._PIXELSIZE = PIXELSIZE
@@ -18,6 +17,7 @@ class Character(ABC):
         self._moving_between_tiles = moving_between_tiles
         self._game = game
         self._game_display = game_display
+        print(game.get_max())
         self._coord = coordinate
         self.start_coord = deepcopy(coordinate)
 
@@ -49,10 +49,11 @@ class Character(ABC):
     def _set_on_opposite_side(self):
         (maxX, maxY) = self._game.get_max()
         (x, y) = (self._coord.get_coord_tuple())
+
         if x < 0:
             self._direction = Direction.LEFT
-            self._coord = Coordinate(maxX - 1, y)
-        elif x > maxX - 1:
+            self._coord = Coordinate(maxX, y)
+        elif x > maxX:
             self._direction = Direction.RIGHT
             self._coord = Coordinate(0, y)
 
@@ -64,7 +65,7 @@ class Character(ABC):
         addX, addY = self._direction.value
         newX, newY = x + addX, y + addY
         jump = False
-        if newX < 0 or newX > maxX - 1:
+        if newX < 0 or newX > maxX:
             jump = True
         return Coordinate(newX, newY), jump
 

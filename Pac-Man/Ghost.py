@@ -87,7 +87,7 @@ class Ghost(Character):
 
         else:
             if self.astar.manhattan_distance(pac_coord.get_coord_tuple(), self._coord.get_coord_tuple()) < 10:
-                self.__target_tile = Coordinate(15,15)
+                self.__target_tile = Coordinate(14, 2)
             else:
                 self.__target_tile = pac_coord
 
