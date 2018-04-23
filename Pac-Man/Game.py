@@ -76,7 +76,6 @@ class Game():
         self.check_quit_events()
 
     # Setting up the game - press a  KEY to start
-
     def ready_screen(self):
         # Draw methods, be aware of the sequence!
         self.map.draw_candy()
@@ -103,6 +102,11 @@ class Game():
         self.map.draw_candy()
         self.pacman.move()
 
+        #check if ghost is frightened
+        for ghost in self.ghosts:
+            if self.pacman.isSuperCandyEaten():
+                ghost.set_frightened(True)
+
         #count time for scatter mode
         self.time_passed = pg.time.get_ticks() - self.start_time
 
@@ -122,6 +126,7 @@ class Game():
         self.map.draw_oneup()
         self.clock.tick(60)
         pg.display.update()
+
         # Event check, quit event check first
         self.check_move_events()
         self.check_quit_events()
@@ -137,7 +142,6 @@ class Game():
                pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
                pg.mixer.music.play()
                self.pacman.set_music()  # pac-man can load his chomp music again
-
 
         if not (self.pacman.getLifes()):
             self.gamemode = 5  # no more lifes left: game over
