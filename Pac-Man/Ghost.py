@@ -43,34 +43,31 @@ class Ghost(Character):
         if self._moving_between_tiles:
             self.__move_between_tiles()
         else:
+            check_next_coord, jump = self._calculate_new_coord()
             if not scatter:
-                check_next_coord, jump = self._calculate_new_coord()
                 if check_next_coord in self.walls:
                     self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(self.__update_target_tile()))
                     self.check_direction()
                 if self.__check_neighbours() == True:
                     self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(self.__update_target_tile()))
                     self.check_direction()
-                if jump:
-                    self._set_on_opposite_side()
-                self._moving_between_tiles = True
-                self.check_direction()
-                self.check_frightened()
-                self._draw_character(self._coord, self.__image)
             else:
-                check_next_coord, jump = self._calculate_new_coord()
                 if check_next_coord in self.walls:
-                    self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(self.__update_target_tile_scatter()))
+                    self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(
+                        self.__update_target_tile_scatter()))
                     self.check_direction()
                 if self.__check_neighbours() == True:
-                    self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(self.__update_target_tile_scatter()))
+                    self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(
+                        self.__update_target_tile_scatter()))
                     self.check_direction()
-                if jump:
-                    self._set_on_opposite_side()
-                self._moving_between_tiles = True
-                self.check_direction()
-                self.check_frightened()
-                self._draw_character(self._coord, self.__image)
+
+            if jump:
+                self._set_on_opposite_side()
+            self._moving_between_tiles = True
+            self.check_direction()
+            self.check_frightened()
+            self._draw_character(self._coord, self.__image)
+
 
     def check_direction(self):
         if self._direction is None:
