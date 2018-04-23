@@ -47,7 +47,6 @@ class Map():
 
         # Map settings
         self.upcounter = 0
-        self.clock = pg.time.Clock()
 
     def draw_map(self):
         for row in range(0, self.tiles_vert_size):
@@ -135,7 +134,6 @@ class Map():
             self.draw_map()
             self.draw_candy()
             self.draw_oneup()
-            self.clock.tick(5)
             pacmanimgdeath = pg.image.load(imagefolder + str(x) + ".png")
             self.__game_display.blit(pacmanimgdeath, deadco.get_pixel_tuple())
             pg.display.update()
