@@ -132,6 +132,7 @@ class Map():
     def draw_pacmandeathani(self, deadco):
         imagefolder = "res/pacmandeath/"
         for x in range(1, 12):
+            pg.time.delay(100)
             self.draw_map()
             self.draw_candy()
             self.draw_oneup()

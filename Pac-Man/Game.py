@@ -114,6 +114,11 @@ class Game():
             self.pacman.set_lifes(lifes)
             self.pacmanCaught = False
             self.gamemode = 4  # reset the game: ghosts in center and pacman in middle
+            #each time pac-man gets caught,this song will be played if he has no lifes anymore this somng will play in game_over_screen
+            if(self.pacman.getLifes()):
+               pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
+               pg.mixer.music.play()
+            self.pacman.set_music()  # pac-man can load his chomp music again
 
 
         if not (self.pacman.getLifes()):
@@ -141,7 +146,6 @@ class Game():
         deathco = self.pacman.getCoord()
         pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
         pg.mixer.music.play()
-        self.pacman.set_music()  # pac-man can load his chomp music again
         self.map.draw_pacmandeathani(deathco)
         pg.display.update()
 
