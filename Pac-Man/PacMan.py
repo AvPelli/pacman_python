@@ -80,7 +80,7 @@ class PacMan(Character):
             # Moves to the new coordinate
             # Checks if there is candy to eat on the new coordinate
             self.__eat_candy()
-        print(self._coord)
+
     # Function that is used while pacman is moving form one coordinate to another
     def __move_between_tiles(self):
         if not self.__turnaround:

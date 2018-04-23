@@ -121,7 +121,7 @@ class Astar():
     # Gives the first direction from the calculated path
     def get_direction(self, start, goal):
         pacCoord = self.pacman.getCoord()
-        print("Start:" + str(start) + " goal:" + str(goal))
+
         if (start == goal and goal != pacCoord):
             return self.choose_random(start)
         path = self.find_path(start, goal)
