@@ -3,6 +3,8 @@ import pygame as pg
 from Character import Character
 from Coordinate import Coordinate
 from Direction import Direction
+from Candy import Candy
+from SuperCandy import SuperCandy
 
 
 class PacMan(Character):
@@ -29,16 +31,17 @@ class PacMan(Character):
         self.walls = walls
         self.__change_direction = None
         # Music haven't been loaded yet. If another song gets loaded in this game than you'll have to set this variable to False again!
-        self.__music_plays=False
+        self.__music_plays = False
 
     def set_music(self):
-        self.__music_plays=False
+        self.__music_plays = False
+
     # draw pacman on that coordinate
     def draw_pacman(self):
         self._game_display.blit(self.__image, self._coord.get_pixel_tuple())
 
     # Initializes Pacman on give start coordinate
-    def draw_startpacman(self,coordinate):
+    def draw_startpacman(self, coordinate):
         co = coordinate.get_pixel_tuple()
         self._game_display.blit(self.__image, (co[0] - 8, co[1]))
 
@@ -97,7 +100,6 @@ class PacMan(Character):
                 self.__number = 0
         self._draw_character(self._coord, self.__image)
 
-
     # This method will change the direction to the change_direction variable if it is possible
     # So when someone has pressed UP-key and it was not possible at that moment, this method will change the direction to UP
     # As soon as it is possible, therefor we check if pacmans its coordinates  added with the direction it would be change to is not a wall
@@ -116,11 +118,12 @@ class PacMan(Character):
     def __eat_candy(self):
         candies = self._game.get_candy_dict()
         if not self.__music_plays:
-           pg.mixer.music.load("res/files/music/pacman-chomp/pacman_chomp.wav")
-           self.__music_plays = True
+            pg.mixer.music.load("res/files/music/pacman-chomp/pacman_chomp.wav")
+            self.__music_plays = True
         if self._coord in candies.keys():
-            # if isinstance(a, dict):
-
+            candy = candies[self._coord]
+            if isinstance(candy, SuperCandy):
+                print("SuperCandy")
             pg.mixer.music.play()
             del self._game.get_candy_dict()[self._coord]
             self.score += 10
