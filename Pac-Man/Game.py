@@ -56,7 +56,7 @@ class Game():
             self.reset_screen()
         elif self.gamemode == 5:
             self.gameover_screen()
-        elif self.gamemode==6:
+        elif self.gamemode == 6:
             self.game_won()
 
     # Startscreen mode - game displays startscreen
@@ -100,6 +100,8 @@ class Game():
         self.map.draw_candy()
         self.pacman.move()
         for ghost in self.ghosts:
+            if self.pacman.isSuperCandyEaten():
+                ghost.set_frightened(True)
             ghost.move()
         self.map.draw_oneup()
         pg.display.update()
@@ -120,12 +122,11 @@ class Game():
                pg.mixer.music.play()
                self.pacman.set_music()  # pac-man can load his chomp music again
 
-
         if not (self.pacman.getLifes()):
             self.gamemode = 5  # no more lifes left: game over
 
-        if (len(self.candies)==0):
-            self.gamemode=6
+        if (len(self.candies) == 0):
+            self.gamemode = 6
 
     def reset_screen(self):
         pg.time.delay(1000)  # wait 1 second
@@ -151,7 +152,7 @@ class Game():
 
         # Event check, quit event check first
         self.check_quit_events()
-        self.gameExit=True
+        self.gameExit = True
 
     def game_won(self):
         pg.time.delay(1000)
@@ -214,7 +215,6 @@ class Game():
     def get_ghosts(self):
         return self.ghosts
 
-
     """"Events"""
 
     def check_quit_events(self):
@@ -240,7 +240,6 @@ class Game():
         for event in pg.event.get(self.SONG_END):
             self.gamemode = 3
             self.map.remove_readytext()
-
 
     def check_x_event(self):
         for event in pg.event.get(pg.KEYDOWN):

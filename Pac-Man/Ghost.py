@@ -26,6 +26,9 @@ class Ghost(Character):
         self.imagechooser()
         self.__update_target_tile()
 
+        self.__frightened = False
+        self.__frightenedimg = 1
+
     def imagechooser(self):
         if self.__id == 2:
             self.__image = pg.image.load("res/ghost/inky/start.png")
@@ -42,15 +45,18 @@ class Ghost(Character):
         else:
             check_next_coord, jump = self._calculate_new_coord()
             if check_next_coord in self.walls:
-                self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(self.__update_target_tile()))
+                self._direction = self.astar.get_direction(self._coord,
+                                                           self.astar.get_closest_tile(self.__update_target_tile()))
                 self.check_direction()
             if self.__check_neighbours() == True:
-                self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(self.__update_target_tile()))
+                self._direction = self.astar.get_direction(self._coord,
+                                                           self.astar.get_closest_tile(self.__update_target_tile()))
                 self.check_direction()
             if jump:
                 self._set_on_opposite_side()
             self._moving_between_tiles = True
             self.check_direction()
+            self.check_frightened()
             self._draw_character(self._coord, self.__image)
 
     def check_direction(self):
@@ -87,7 +93,7 @@ class Ghost(Character):
 
         else:
             if self.astar.manhattan_distance(pac_coord.get_coord_tuple(), self._coord.get_coord_tuple()) < 10:
-                self.__target_tile = Coordinate(14, 2)
+                self.__target_tile = Coordinate(15, 15)
             else:
                 self.__target_tile = pac_coord
 
@@ -96,7 +102,7 @@ class Ghost(Character):
         return self.__target_tile
 
     def calculate_direction(self):
-        pass #voor nu
+        pass  # voor nu
 
     def __check_neighbours(self):
         amount = 0
@@ -111,6 +117,21 @@ class Ghost(Character):
 
     def set_coord(self, coord):
         self._coord = coord
+
+    def set_frightened(self, value):
+        self.__frightened = value
+
+    def check_frightened(self):
+        if self.__frightened:
+            self.go_frightened()
+
+    def go_frightened(self):
+        if self.__frightenedimg == 1:
+            self.__image = pg.image.load("res/pacmanghost/bluepacman.png")
+            self.__frightenedimg = self.__frightenedimg + 1
+        elif self.__frightenedimg == 2:
+            self.__image = pg.image.load("res/pacmanghost/bluepacman2.png")
+            self.__frightenedimg = 1
 
     def reset_character(self):
         super().reset_character()
