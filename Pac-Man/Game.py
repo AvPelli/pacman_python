@@ -151,6 +151,7 @@ class Game():
         pg.display.update()
 
         # Event check, quit event check first
+        self.save_highscore()
         self.check_quit_events()
         self.gameExit = True
 
@@ -192,6 +193,39 @@ class Game():
         for ghost in self.ghosts:
             ghost.reset_character()
         # self.pacman.reset_character()
+
+    def save_highscore(self):
+        score = []
+        score.append(self.pacman.getScore())
+        filename = "res/files/highscore.txt"
+        try:
+            for line in open(filename,"r"):
+                try:
+                    score.append(int(line.strip()))
+                except:
+                    pass
+        except:
+            print("Creating new highscore file...")
+        score.sort()
+        score.reverse()
+        max_amount = 10
+        if len(score) < 10:
+            max_amount = len(score)
+        for i in range(max_amount):
+            score[i] = str(score[i])
+        file = open(filename, "w+")
+        file.write("\n".join(score))
+        file.close()
+
+
+    def read_highscores(self):
+        scores = []
+        filename = "res/files/highscore.txt"
+        for line in open(filename, "r"):
+            scores.append(line)
+        as_string = "\n".join(scores)
+        return as_string
+
 
     """"Getters"""
 
