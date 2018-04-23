@@ -221,6 +221,7 @@ class Game():
             if self.pacman.getCoord() == ghost.get_coord():
                 self.pacmanCaught = True
 
+    # Pacman searches for ghosts
     def check_ghost_caught(self):
         for ghost in self.ghosts:
             if self.pacman.getCoord() == ghost.get_coord():
