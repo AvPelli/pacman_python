@@ -21,7 +21,7 @@ class Ghost(Character):
         Ghost.ghost_id += 1
         Ghost.ghost_id %= 4
         self._speed = (16 - self.__id) / 8.0
-        self.astar = Astar(game.get_gates())
+        self.astar = Astar(game.get_gates(), self._game.get_pacman())
         self._direction = Direction.UP
         self.imagechooser()
         self.__update_target_tile()
@@ -48,54 +48,43 @@ class Ghost(Character):
                 if check_next_coord in self.walls:
                     self._direction = self.astar.get_direction(self._coord,
                                                                self.astar.get_closest_tile(self.__update_target_tile()))
-                    self.check_direction()
+
                 if self.__check_neighbours() == True:
                     self._direction = self.astar.get_direction(self._coord,
                                                                self.astar.get_closest_tile(self.__update_target_tile()))
-                    self.check_direction()
+
                 if jump:
                     self._set_on_opposite_side()
                 self._moving_between_tiles = True
-                self.check_direction()
+
                 self.check_frightened()
                 self._draw_character(self._coord, self.__image)
 
             if self.__frightened:
                 check_next_coord, jump = self._calculate_new_coord()
                 if check_next_coord in self.walls:
-                    self._direction = self.astar.get_direction(self._coord, self._coord)
-                    self.check_direction()
-                if self.__check_neighbours() == True:
-                    self._direction = self.astar.get_direction(self._coord, self._coord)
-                    self.check_direction()
-                if jump:
-                    self._set_on_opposite_side()
-                self._moving_between_tiles = True
-                self.check_direction()
-                self.check_frightened()
-                self._draw_character(self._coord, self.__image)
+                    self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(
+                        self.__update_target_tile()))
 
+                if self.__check_neighbours() == True:
+                    self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(
+                        self.__update_target_tile()))
 
             else:
                 check_next_coord, jump = self._calculate_new_coord()
                 if check_next_coord in self.walls:
                     self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(
                         self.__update_target_tile_scatter()))
-                    self.check_direction()
-                if self.__check_neighbours() == True:
+
+                if self.__check_neighbours() == True and check_next_coord != self._game.get_pacman_coord:
                     self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(
                         self.__update_target_tile_scatter()))
-                    self.check_direction()
-                if jump:
-                    self._set_on_opposite_side()
-                self._moving_between_tiles = True
-                self.check_direction()
-                self.check_frightened()
-                self._draw_character(self._coord, self.__image)
 
-    def check_direction(self):
-        if self._direction is None:
-            self._speed = 0
+            if jump:
+                self._set_on_opposite_side()
+            self._moving_between_tiles = True
+            self.check_frightened()
+            self._draw_character(self._coord, self.__image)
 
     def __move_between_tiles(self):
         # Proceed to the next tile
@@ -115,10 +104,8 @@ class Ghost(Character):
             for i in range(2):
                 pac_coord.update_coord(pac_direction)
             blinky_coord = (self._game.get_ghosts()[0]).get_coord()
-            pac_x = pac_coord.get_x()
-            pac_y = pac_coord.get_y()
-            blinky_x = blinky_coord.get_x()
-            blinky_y = blinky_coord.get_y()
+            pac_x, pac_y = pac_coord.get_coord_tuple()
+            blinky_x, blinky_y = blinky_coord.get_coord_tuple()
             x_diff = pac_x - blinky_x
             y_diff = pac_y - blinky_y
             # aanpassen als move en calculate_direction beter geschreven zijn maar voor nu:
@@ -152,12 +139,14 @@ class Ghost(Character):
         pass  # voor nu
 
     def __check_neighbours(self):
-        amount = 0
+        horizontal = False
+        vertical = False
         x, y = self._coord.get_coord_tuple()
-        for dir in Direction:
-            if Coordinate(x + dir.value[0], y + dir.value[1]) not in self.walls:
-                amount += 1
-        return amount >= 2
+        if Coordinate(x - 1, y) not in self.walls or Coordinate(x + 1, y) not in self.walls:
+            horizontal = True
+        if Coordinate(x, y + 1) not in self.walls or Coordinate(x, y - 1) not in self.walls:
+            vertical = True
+        return horizontal and vertical
 
     def get_coord(self):
         return self._coord

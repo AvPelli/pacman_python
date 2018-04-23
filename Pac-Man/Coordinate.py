@@ -45,4 +45,4 @@ class Coordinate:
 
     # to string method of Coordinate
     def __str__(self) -> str:
-        return "X: {x},   Y: {y}".format(x=self.__x, y=self.__y)
+        return "Coordinate: X: {x},   Y: {y}".format(x=self.__x, y=self.__y)

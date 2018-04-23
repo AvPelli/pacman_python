@@ -17,7 +17,6 @@ class Character(ABC):
         self._moving_between_tiles = moving_between_tiles
         self._game = game
         self._game_display = game_display
-        print(game.get_max())
         self._coord = coordinate
         self.start_coord = deepcopy(coordinate)
 

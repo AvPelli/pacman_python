@@ -1,10 +1,11 @@
+from copy import deepcopy
+
 import pygame as pg  # Importeren van pg module
 
 from Direction import Direction
 from Ghost import Ghost
 from Map import Map
 from PacMan import PacMan
-from copy import deepcopy
 
 black = (0, 0, 0)
 tile_size = 16
@@ -255,6 +256,7 @@ class Game():
         file.write("\n".join(score))
         file.close()
 
+
     def read_highscores(self):
         scores = []
         filename = "res/files/highscore.txt"
@@ -275,6 +277,9 @@ class Game():
 
     def get_pacman_coord(self):
         return deepcopy(self.pacman.getCoord())
+
+    def get_pacman(self):
+        return self.pacman
 
     def get_pacman_direction(self):
         return deepcopy(self.pacman.get_direction())

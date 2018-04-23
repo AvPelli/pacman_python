@@ -9,13 +9,15 @@ from Direction import Direction
 class Astar():
 
     # Constructor for Astar algorithm
-    def __init__(self, gates, file="res/files/maze2.txt"):
+    def __init__(self, gates, pacman, file="res/files/maze2.txt"):
         self.__file = file
         self.gates = gates
+        self.pacman = pacman
         self.transporters = self.get_gates_coords_list(gates)
         self.maze = self.make_maze()
         self.graph = self.make_graph()
-        self.dictionary = {"S": Direction.DOWN, "W": Direction.LEFT, "E": Direction.RIGHT, "N": Direction.UP}
+        self.dictionary = {"S": Direction.DOWN, "W": Direction.LEFT, "E": Direction.RIGHT, "N": Direction.UP,
+                           "B": Direction.BLOCK}
         self.reverse_dict = {v: k for k, v in self.dictionary.items()}
 
     # Makes a maze of the given file
@@ -92,7 +94,7 @@ class Astar():
         while pr_queue:
             total_cost, cost, path, current_cell = heappop(pr_queue)
             if current_cell == goal:
-                return path
+                return path if len(path) > 0 else "B"
             if current_cell not in visited:
                 visited.add(current_cell)
                 try:
@@ -102,7 +104,7 @@ class Astar():
                 except KeyError:
                     print("Error")
                     # return self.failsafe(start, goal)
-        return ""
+        return "NO PATH"
 
     def get_closest_tile(self, coord):
         coord_as_tuple = coord.get_coord_tuple()
@@ -118,7 +120,9 @@ class Astar():
 
     # Gives the first direction from the calculated path
     def get_direction(self, start, goal):
-        if (start == goal):
+        pacCoord = self.pacman.getCoord()
+        print("Start:" + str(start) + " goal:" + str(goal))
+        if (start == goal and goal != pacCoord):
             return self.choose_random(start)
         path = self.find_path(start, goal)
         if path is "":
@@ -129,7 +133,7 @@ class Astar():
         pos = []
         x, y = coord.get_coord_tuple()
         for dir in Direction:
-            if (x + dir.value[0], y + dir.value[1]) in self.graph.keys():
+            if dir is not Direction.BLOCK and (x + dir.value[0], y + dir.value[1]) in self.graph.keys():
                 pos.append(dir)
         a = random.randint(0, len(pos) - 1)
         return pos[a]
