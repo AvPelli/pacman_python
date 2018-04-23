@@ -109,9 +109,6 @@ class Game():
         self.check_pacman_caught()
 
         if (self.pacmanCaught):
-            pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
-            pg.mixer.music.play()
-            self.pacman.set_music() #pac-man can load his chomp music again
             lifes = self.pacman.getLifes() - 1
             self.pacman.set_lifes(lifes)
             self.pacmanCaught = False
@@ -141,6 +138,9 @@ class Game():
         self.map.draw_oneup()
         pg.display.update()
         deathco = self.pacman.getCoord()
+        pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
+        pg.mixer.music.play()
+        self.pacman.set_music()  # pac-man can load his chomp music again
         self.map.draw_pacmandeathani(deathco)
         pg.display.update()
 
