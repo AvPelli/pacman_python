@@ -135,7 +135,10 @@ class Game():
         # Event check, quit event check first
         self.check_move_events()
         self.check_quit_events()
-        self.check_pacman_caught()
+        if not (self.pacman.isSuperCandyEaten()):
+            self.check_pacman_caught()
+        else:
+            self.check_ghost_caught()
 
         if (self.pacmanCaught):
             lifes = self.pacman.getLifes() - 1

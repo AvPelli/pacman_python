@@ -61,7 +61,6 @@ class Ghost(Character):
                 self._draw_character(self._coord, self.__image)
 
             if self.__frightened:
-                print("fright")
                 check_next_coord, jump = self._calculate_new_coord()
                 if check_next_coord in self.walls:
                     self._direction = self.astar.get_direction(self._coord, self._coord)
