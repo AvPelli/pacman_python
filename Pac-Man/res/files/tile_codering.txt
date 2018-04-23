@@ -31,6 +31,7 @@ j : tile_rechts_scherp_onder
 o : tile_links_scherp_onder
 G : tile_gate
 f : tile_black
+D : tile_black
 P : tile_black
 t : tile_black
 g : tile_black

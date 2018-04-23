@@ -14,7 +14,7 @@ class PacMan(Character):
                          moving_between_tiles=False, game_display=game_display,
                          game=game, coordinate=coordinate)
         self.score = 0
-        self.lifes = 3
+        self.lifes = 1
         self.__turnaround = False
 
         # Variables for cosmetics
@@ -119,6 +119,8 @@ class PacMan(Character):
            pg.mixer.music.load("res/files/music/pacman-chomp/pacman_chomp.wav")
            self.__music_plays = True
         if self._coord in candies.keys():
+            # if isinstance(a, dict):
+
             pg.mixer.music.play()
             del self._game.get_candy_dict()[self._coord]
             self.score += 10

@@ -3,6 +3,7 @@ from copy import deepcopy
 import pygame as pg  # Importeren van pg module
 
 from Candy import Candy
+from SuperCandy import SuperCandy
 from Coordinate import Coordinate
 from Gate import Gate
 
@@ -160,6 +161,9 @@ class Map():
                 if map_noborders[y][x] == "f":  # Place where candy show be drawn
                     coord = Coordinate(x, y)
                     self.__candy_dict[coord] = (Candy(self.__game_display, coord))
+                elif map_noborders[y][x] == "D":
+                    coord = Coordinate(x, y)
+                    self.__candy_dict[coord] = (SuperCandy(self.__game_display, coord))
                 elif map_noborders[y][x] == "P":  # Place where PacMan needs to be located
                     self.__pacman_coord = Coordinate(x, y)
                 elif map_noborders[y][x] in "/=.-_\éè\()}{][abcd12345678uijonq":  # All the characters that are walls
