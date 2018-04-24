@@ -19,4 +19,4 @@ Datum,Start,Einde,Plaats,Omschrijving
 21/04/18,13:00,15:30,Thuis,Zoeken naar bug chars_reset()
 22/04/18,9:00,11:00,Thuis,Bekijken gamemode code + reset_character() 
 23/04/18,13:30,17:45,Campus,Eerste versie scattered mode
-24/04/18,16:30,20:00,Kot,move() splitsen in move,scatter en frightened + frightened timer
+24/04/18,16:30,20:00,Kot,move() splitsen in move0/scatter en frightened + frightened timer
