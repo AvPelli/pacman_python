@@ -32,7 +32,7 @@ class PacMan(Character):
         # Music haven't been loaded yet. If another song gets loaded in this game than you'll have to set this variable to False again!
         self.__music_plays = False
 
-        self.__supercandy_eaten = False
+        self.supercandy_eaten = False
         self.__streak = 0
 
     def set_music(self):
@@ -125,7 +125,7 @@ class PacMan(Character):
         if self._coord in candies.keys():
             candy = candies[self._coord]
             if isinstance(candy, SuperCandy):
-                self.__supercandy_eaten = True
+                self.supercandy_eaten = True
             pg.mixer.music.play()
             del self._game.get_candy_dict()[self._coord]
             self.score += 10
@@ -141,7 +141,7 @@ class PacMan(Character):
 
     """"Getters"""
     def isSuperCandyEaten(self):
-        return self.__supercandy_eaten
+        return self.supercandy_eaten
 
     # Returns the amount of lifes left
     def getLifes(self):

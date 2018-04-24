@@ -28,8 +28,14 @@ class Game():
         self.pacmanCaught = False
         self.ghost_caught = False
         self.__next = False
-        self.start_time = pg.time.get_ticks()
-        self.time_passed = 0
+
+
+        self.start_time_scatter = pg.time.get_ticks()
+        self.scatter_timer = 0
+
+        self.start_time_frightened = 0
+        self.frightened_timer = 0
+        self.frightened_mode = False
 
         # Music settings
         self.intro_played = False
@@ -108,35 +114,55 @@ class Game():
             self.pacman.move()
 
         # check if ghost is frightened
-        for ghost in self.ghosts:
-            if self.pacman.isSuperCandyEaten():
+        if self.pacman.isSuperCandyEaten():
+            #start frightened timer
+            self.start_time_frightened = pg.time.get_ticks()
+
+            for ghost in self.ghosts:
+                self.frightened_mode = True
+
+                #__frightened = true : boolean value to set new ghost images
                 ghost.set_frightened(True)
 
-        # count time for scatter mode
-        self.time_passed = pg.time.get_ticks() - self.start_time
+                #ghosts start moving randomly:
+                ghost.frightened()
 
-        # scatter 7 seconds
-        if (self.time_passed < 7000):
-            for ghost in self.ghosts:
-                if not (ghost.is_eaten()):
-                    ghost.move(True)
-                else:
-                    print("gevangen")
-                    ghost.set_gostart(True)
-                    ghost.move(True)
+            #supercandy_eaten = False : or else the frightened_timer will reset infinitely
+            self.pacman.supercandy_eaten = False
 
-        # chase 20 seconds
-        elif (self.time_passed < 27000):
-            for ghost in self.ghosts:
-                if not (ghost.is_eaten()):
-                    ghost.move(False)
-                else:
-                    print("gevangen")
-                    ghost.set_gostart(True)
-                    # ghost.move(False)
+        if not self.frightened_mode:
+            # count time for scatter mode
+            self.scatter_timer = pg.time.get_ticks() - self.start_time_scatter
+
+            # scatter 7 seconds
+            if (self.scatter_timer < 7000):
+                for ghost in self.ghosts:
+                    ghost.scatter()
+
+            # chase 20 seconds
+            elif (self.scatter_timer < 27000):
+                for ghost in self.ghosts:
+                    ghost.move()
+
+            else:
+                # reset timer
+                self.start_time_scatter = pg.time.get_ticks()
         else:
-            # reset timer
-            self.start_time = pg.time.get_ticks()
+            self.frightened_timer = pg.time.get_ticks() - self.start_time_frightened
+
+            if(self.frightened_timer < 5000):
+                for ghost in self.ghosts:
+                    if not (ghost.is_eaten()):
+                        ghost.frightened()
+                    else:
+                        print("gevangen")
+                        ghost.set_gostart(True)
+                        ghost.scatter()
+            else:
+                self.frightened_mode = False
+                for ghost in self.ghosts:
+                    ghost.set_frightened(False)
+                    ghost.imagechooser()
 
         self.map.draw_oneup()
         self.clock.tick(60)
