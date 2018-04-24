@@ -43,8 +43,11 @@ class Ghost(Character):
             self.__image = pg.image.load("res/ghost/pinky/start.png")
 
     def move(self):
+
         if self._moving_between_tiles:
             self.__move_between_tiles()
+        elif(self.get_gostart()):
+            self.move_to_start()
         else:
             check_next_coord, jump = self._calculate_new_coord()
             if check_next_coord in self.walls:
@@ -54,15 +57,6 @@ class Ghost(Character):
             if self.__check_neighbours() == True:
                 self._direction = self.astar.get_direction(self._coord,
                                                            self.astar.get_closest_tile(self.__update_target_tile()))
-            if self.__movestart:
-                if check_next_coord in self.walls:
-                    self._direction = self.astar.get_direction(self._coord, self.start_coord)
-
-                if self.__check_neighbours() == True:
-                    self._direction = self.astar.get_direction(self._coord, self.start_coord)
-
-                if self._coord == self.start_coord:
-                    self.__movestart = False
 
             #check if frightened
             elif self.__frightened:
@@ -80,6 +74,8 @@ class Ghost(Character):
     def scatter(self):
         if self._moving_between_tiles:
             self.__move_between_tiles()
+        elif (self.get_gostart()):
+            self.move_to_start()
         else:
             check_next_coord, jump = self._calculate_new_coord()
             if check_next_coord in self.walls:
@@ -99,6 +95,8 @@ class Ghost(Character):
     def frightened(self):
         if self._moving_between_tiles:
             self.__move_between_tiles()
+        elif (self.get_gostart()):
+            self.move_to_start()
         else:
             check_next_coord, jump = self._calculate_new_coord()
 
@@ -119,6 +117,28 @@ class Ghost(Character):
 
             if jump:
                 self._set_on_opposite_side()
+            self._moving_between_tiles = True
+            self.check_frightened()
+            self._draw_character(self._coord, self.__image)
+
+    def move_to_start(self):
+        # Unlike scatter(), frightened() and move(); move_to_start() doesn't have to check for "jump"
+        # because the shortest path to start never requires going through the sides of the game (aka the gates)
+        if self._moving_between_tiles:
+            self.__move_between_tiles()
+        else:
+            check_next_coord, jump = self._calculate_new_coord()
+
+            if check_next_coord in self.walls:
+                self._direction = self.astar.get_direction(self._coord, self.start_coord)
+
+            if self.__check_neighbours() == True:
+                self._direction = self.astar.get_direction(self._coord, self.start_coord)
+
+            if self._coord == self.start_coord:
+                self.__movestart = False
+                self.imagechooser()
+
             self._moving_between_tiles = True
             self.check_frightened()
             self._draw_character(self._coord, self.__image)

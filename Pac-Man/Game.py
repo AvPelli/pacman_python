@@ -113,51 +113,52 @@ class Game():
         if not self.ghost_caught:
             self.pacman.move()
 
-        # check if ghost is frightened
         if self.pacman.isSuperCandyEaten():
-            #start frightened timer
+
+            # Start frightened timer
             self.start_time_frightened = pg.time.get_ticks()
 
             for ghost in self.ghosts:
+                # set_frightened() to display blue (frightened) ghosts
                 self.frightened_mode = True
-
-                #__frightened = true : boolean value to set new ghost images
                 ghost.set_frightened(True)
-
-                #ghosts start moving randomly:
                 ghost.frightened()
 
-            #supercandy_eaten = False : or else the frightened_timer will reset infinitely
+            # Reset to False, this if-block only has to be run once every supercandy
             self.pacman.supercandy_eaten = False
 
+        # Frightened_mode = False : ghosts use move() and scatter()
         if not self.frightened_mode:
-            # count time for scatter mode
+            # Count time for scatter mode
             self.scatter_timer = pg.time.get_ticks() - self.start_time_scatter
+            self.check_pacman_caught()
 
-            # scatter 7 seconds
+            # Scatter 7 seconds
             if (self.scatter_timer < 7000):
                 for ghost in self.ghosts:
                     ghost.scatter()
 
-            # chase 20 seconds
+            # Chase 20 seconds
             elif (self.scatter_timer < 27000):
                 for ghost in self.ghosts:
                     ghost.move()
 
             else:
-                # reset timer
+                # Reset timer
                 self.start_time_scatter = pg.time.get_ticks()
+
+        # Frightened_mode = True : ghosts use frightened()
         else:
             self.frightened_timer = pg.time.get_ticks() - self.start_time_frightened
+            self.check_ghost_caught()
 
             if(self.frightened_timer < 5000):
                 for ghost in self.ghosts:
-                    if not (ghost.is_eaten()):
-                        ghost.frightened()
+                    if ghost.get_gostart():
+                        ghost.move_to_start()
                     else:
-                        print("gevangen")
-                        ghost.set_gostart(True)
-                        ghost.scatter()
+                        ghost.frightened()
+
             else:
                 self.frightened_mode = False
                 for ghost in self.ghosts:
@@ -171,10 +172,6 @@ class Game():
         # Event check, quit event check first
         self.check_move_events()
         self.check_quit_events()
-        if not (self.pacman.isSuperCandyEaten()):
-            self.check_pacman_caught()
-        else:
-            self.check_ghost_caught()
 
         if (self.pacmanCaught):
             lifes = self.pacman.getLifes() - 1
@@ -274,7 +271,8 @@ class Game():
             if self.pacman.getCoord() == ghost.get_coord():
                 if not ghost.get_gostart():
                     self.ghost_caught = True
-                    ghost.set_eaten(True)
+                    # Make the ghost start moving to the center
+                    ghost.set_gostart(True)
 
     def reset_ghosts(self):
         for ghost in self.ghosts:
