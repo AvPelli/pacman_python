@@ -129,6 +129,14 @@ class Astar():
             return self.choose_random(start)
         return self.dictionary[path[0]]
 
+    def get_direction_scatter(self,start,goal):
+        if(start == goal):
+            return
+        path = self.find_path(start,goal)
+        if path is "":
+            return self.choose_random(start)
+        return self.dictionary[path[0]]
+
     def choose_random(self, coord):
         pos = []
         x, y = coord.get_coord_tuple()

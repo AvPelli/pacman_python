@@ -134,7 +134,7 @@ class Game():
             self.check_pacman_caught()
 
             # Scatter 7 seconds
-            if (self.scatter_timer < 7000):
+            if (self.scatter_timer < 20000):
                 for ghost in self.ghosts:
                     ghost.scatter()
 

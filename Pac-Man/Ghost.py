@@ -32,6 +32,16 @@ class Ghost(Character):
         self.__eaten = False
         self.__movestart = False
 
+        self.__scatter_state = 0
+        #blinky scattercoordinates
+        self.blinky_dict = {0 : Coordinate(21,5), 1 : Coordinate(26,5), 2 : Coordinate(26,1), 3 : Coordinate(21,1)}
+        #pinky scattercoordinates
+        self.pinky_dict = {0 : Coordinate(6,5), 1 : Coordinate(6,1), 2 : Coordinate(1,1), 3 : Coordinate(1,5)}
+        #inky scattercoordinates
+        self.inky_dict = {0 : Coordinate(19,23), 1 : Coordinate(26,29), 2 : Coordinate(16,29)}
+        #clyde scattercoordinates
+        self.clyde_dict = {0 : Coordinate(7,23), 1 : Coordinate(1,29), 2 : Coordinate(12,29)}
+
     def imagechooser(self):
         if self.__id == 2:
             self.__image = pg.image.load("res/ghost/inky/start.png")
@@ -78,13 +88,14 @@ class Ghost(Character):
             self.move_to_start()
         else:
             check_next_coord, jump = self._calculate_new_coord()
+            self.__update_target_tile_scatter()
             if check_next_coord in self.walls:
-                self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(
-                    self.__update_target_tile_scatter()))
+                path = self.astar.find_path(self._coord,self.__target_tile)
+                self._direction = self.astar.dictionary[path[0]]
 
             if self.__check_neighbours() == True:
-                self._direction = self.astar.get_direction(self._coord, self.astar.get_closest_tile(
-                    self.__update_target_tile_scatter()))
+                path = self.astar.find_path(self._coord,self.__target_tile)
+                self._direction = self.astar.dictionary[path[0]]
 
             if jump:
                 self._set_on_opposite_side()
@@ -180,16 +191,31 @@ class Ghost(Character):
         return self.__target_tile
 
     def __update_target_tile_scatter(self):
-        if self.__id == 0:
-            self.__target_tile = Coordinate(21, 23)
-        elif self.__id == 1:
-            self.__target_tile = Coordinate(21, 23)
-        elif self.__id == 2:
-            self.__target_tile = Coordinate(21, 23)
-        elif self.__id == 3:
-            self.__target_tile = Coordinate(21, 23)
+        #the _moving_between_tiles boolean makes the ghost recalculate position to quickly, this function has to slow it down
+        #so the ghost doesnt move back and forth without going in a circle
+        #this is done by checking if manhattan distance to the target tile is < 1.
 
-        self.__target_tile = self.astar.get_closest_tile(self.__target_tile)
+        #blinky (red ghost) corner:
+        if self.__id == 0:
+            self.__target_tile = self.blinky_dict.get(self.__scatter_state)
+            if(self.astar.manhattan_distance(self.get_coord().get_coord_tuple(),self.__target_tile.get_coord_tuple()) < 1):
+                self.__scatter_state = (self.__scatter_state + 1)%4
+                print(self.__scatter_state)
+
+        elif self.__id == 1:
+            self.__target_tile = self.pinky_dict.get(self.__scatter_state)
+            if(self.astar.manhattan_distance(self.get_coord().get_coord_tuple(),self.__target_tile.get_coord_tuple()) < 1):
+                self.__scatter_state = (self.__scatter_state + 1)%4
+
+        elif self.__id == 2:
+            self.__target_tile = self.inky_dict.get(self.__scatter_state)
+            if(self.astar.manhattan_distance(self.get_coord().get_coord_tuple(),self.__target_tile.get_coord_tuple()) < 1):
+                self.__scatter_state = (self.__scatter_state + 1)%3
+
+        elif self.__id == 3:
+            self.__target_tile = self.clyde_dict.get(self.__scatter_state)
+            if(self.astar.manhattan_distance(self.get_coord().get_coord_tuple(),self.__target_tile.get_coord_tuple()) < 1):
+                self.__scatter_state = (self.__scatter_state + 1)%3
         return self.__target_tile
 
     def calculate_direction(self):
