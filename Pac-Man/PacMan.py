@@ -119,8 +119,7 @@ class PacMan(Character):
             if isinstance(candy, SuperCandy):
                 self.supercandy_eaten = True
             self.score += candy.get_score()
-            if not pg.mixer.Channel(1).get_busy():
-                pg.mixer.Channel(1).play(pg.mixer.Sound("res/files/music/pacman-chomp/pacman-wakawaka.wav"))
+            pg.mixer.Channel(1).play(pg.mixer.Sound("res/files/music/pacman-chomp/pacman-wakawaka.wav"))
             del self._game.get_map().get_candy_dict()[self._coord]
 
 
