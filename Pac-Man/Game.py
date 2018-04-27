@@ -89,7 +89,7 @@ class Game():
         # Draw methods, be aware of the sequence!
         self.__map.draw_candy()
         self.__map.draw_startpacman(self.__map.get_pacman_start())
-        self.__map.draw_readytext()
+        self.__map.draw_text("READY!",11,20,(255, 238, 0))
         self.__map.draw_oneup()
         pg.display.update()
         self.clock.tick(50)
@@ -298,25 +298,25 @@ class Game():
     def get_game_display(self):
         return self.__game_display
 
-    # Getter: returns dictionary, Coordinate mapped on a Candy object
-    def get_candy_dict(self):
-        return self.__candies
-
     # Getter: returns max amount of colums and rows
     def get_max(self):
         return self.__map.get_tiles_horiz_size() - 1, self.__map.get_tiles_vert_size() - 1
 
-    def get_pacman_coord(self):
-        return deepcopy(self.__pacman.getCoord())
+    # Getters: return map
+    def get_map(self):
+        return self.__map
 
     def get_pacman(self):
         return self.__pacman
 
+    def get_pacman_coord(self):
+        return deepcopy(self.__pacman.getCoord())
+
     def get_pacman_direction(self):
         return deepcopy(self.__pacman.get_direction())
 
-    def get_gates(self):
-        return self.__map.get_gates()
+    def get_pacman_direction(self):
+        return deepcopy(self.__pacman.get_direction())
 
     def get_ghosts(self):
         return self.__ghosts
@@ -345,7 +345,7 @@ class Game():
     def __check_beginningmusic_events(self):
         for event in pg.event.get(self.SONG_END):
             self.__gamemode = 3
-            self.__map.remove_readytext()
+            self.__map.draw_text('',11,20)
 
     def __check_x_event(self):
         for event in pg.event.get(pg.KEYDOWN):

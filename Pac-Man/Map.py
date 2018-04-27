@@ -39,7 +39,7 @@ class Map():
         self.__transp_list = list()
 
         # Pacman himself
-        self.pacman = None
+        self.__pacman = None
 
         # Font settings
         self.font_obj = pg.font.Font("res/files/fonts/emulogic.ttf", 16)
@@ -59,7 +59,7 @@ class Map():
 
     def draw_extra(self):
         self.draw_lifes()
-        self.draw_hsletters()
+        self.draw_text("HIGHSCORE",9,0)
         self.draw_grid()
         self.draw_score()
 
@@ -69,43 +69,32 @@ class Map():
         height = self.__tile_size * (self.__tiles_vert_size - 2)
         lifesimg = pg.image.load("res/tileset/pacman_lifes.png")
         img_width = lifesimg.get_width()
-        for i in range(0, self.pacman.getLifes()):
+        for i in range(0, self.__pacman.getLifes()):
             self.__game_display.blit(lifesimg, (width, height))
             width += img_width
 
-    # Method for drawing the high score letters
-    def draw_hsletters(self):
-        text_surface_obj = self.font_obj.render('HIGH SCORE', False, (255, 255, 255))
-        self.__game_display.blit(text_surface_obj, (9 * self.__tile_size, 0 - self.fontoffset))
-
-    # Draw Ready! text, displayed at the start of the game
-    def draw_readytext(self):
-        text_surface_obj = self.font_obj.render('READY!', False, (255, 238, 0))
-        self.__game_display.blit(text_surface_obj, (11 * self.__tile_size, 20 * self.__tile_size - self.fontoffset))
-
-    def remove_readytext(self):
-        text_surface_obj = self.font_obj.render('      ', False, (0, 0, 0))
-        self.__game_display.blit(text_surface_obj, (11 * self.__tile_size, 20 * self.__tile_size - self.fontoffset))
+    # Draw text with a given coordinate and color(as a tuple). x en y depends on the tile_size
+    def draw_text(self,text,x,y,color_rgb=(255,255,255)):
+        text_surface_obj = self.font_obj.render(text, False, color_rgb)
+        self.__game_display.blit(text_surface_obj, (x * self.__tile_size, y * self.__tile_size - self.fontoffset))
 
     def draw_oneup(self):
         duration = 60
         if self.upcounter < duration:
             self.oneup = False
-            text_surface_obj = self.font_obj.render('1UP', False, (255, 255, 255))
+            self.draw_text('1UP',3,0)
             self.upcounter += 1
-            self.__game_display.blit(text_surface_obj, (3 * self.__tile_size, -self.fontoffset))
         elif self.upcounter >= duration and self.upcounter < duration * 2:
             self.oneup = True
-            text_surface_obj = self.font_obj.render('      ', False, (255, 255, 255))
+            self.draw_text('',3,0)
             self.upcounter += 1
             if self.upcounter == duration * 2:
                 self.upcounter = 0
-            self.__game_display.blit(text_surface_obj, (3 * self.__tile_size, -self.fontoffset))
 
     # Method for drawing the score
     def draw_score(self):
-        score = self.pacman.getScore()
-        scorestr = str(self.pacman.getScore())
+        score = self.__pacman.getScore()
+        scorestr = str(self.__pacman.getScore())
         if score < 10:
             scorestr = str(0) + scorestr
         score_size = len(scorestr)
@@ -127,7 +116,7 @@ class Map():
 
     # Draws start Pacman
     def draw_startpacman(self, coordinate):
-        self.pacman.draw_startpacman(coordinate)
+        self.__pacman.draw_startpacman(coordinate)
 
     # Draws Pacman his death animation
     def draw_pacmandeathani(self, deadco):
@@ -226,17 +215,17 @@ class Map():
         return self.gate_list
 
     def get_tiles_horiz_size(self):
-        return deepcopy(self.__tiles_horiz_size)
+        return self.__tiles_horiz_size
 
     def get_tiles_vert_size(self):
-        return deepcopy((self.__tiles_vert_size))
+        return self.__tiles_vert_size
 
     """Setters"""
 
     # Setter: sets the pacman object
 
     def set_pacman(self, p):
-        self.pacman = p
+        self.__pacman = p
 
     def add_gate(self, gate_number, coordinate):
         if len(self.__gates_dict.keys()) == 0 or gate_number not in self.__gates_dict.keys():

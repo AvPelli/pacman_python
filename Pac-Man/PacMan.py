@@ -118,7 +118,7 @@ class PacMan(Character):
     # If so it will delete that Candy object out of the dictionary (So it will not be redrawn)
     # Also the first time this method gets used it will load the music of eating fruit
     def __eat_candy(self):
-        candies = self._game.get_candy_dict()
+        candies = self._game.get_map().get_candy_dict()
         if not self.__music_plays:
             pg.mixer.music.load("res/files/music/pacman-chomp/pacman_chomp.wav")
             self.__music_plays = True
@@ -127,7 +127,7 @@ class PacMan(Character):
             if isinstance(candy, SuperCandy):
                 self.supercandy_eaten = True
             pg.mixer.music.play()
-            del self._game.get_candy_dict()[self._coord]
+            del self._game.get_map().get_candy_dict()[self._coord]
             self.score += 10
 
     # When pacman is moving between tiles, he should still be able to immediately turn around instead of finishing moving to the next tile 1st,
