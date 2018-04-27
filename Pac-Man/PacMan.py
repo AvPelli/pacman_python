@@ -29,14 +29,9 @@ class PacMan(Character):
         # Collision and direction control check variables
         self.walls = walls
         self.__change_direction = None
-        # Music haven't been loaded yet. If another song gets loaded in this game than you'll have to set this variable to False again!
-        self.__music_plays = False
 
         self.supercandy_eaten = False
         self.__streak = 0
-
-    def set_music(self):
-        self.__music_plays = False
 
     # draw pacman on that coordinate
     def draw_pacman(self):
@@ -119,15 +114,13 @@ class PacMan(Character):
     # Also the first time this method gets used it will load the music of eating fruit
     def __eat_candy(self):
         candies = self._game.get_map().get_candy_dict()
-        if not self.__music_plays:
-            pg.mixer.music.load("res/files/music/pacman-chomp/pacman_chomp.wav")
-            self.__music_plays = True
         if self._coord in candies.keys():
             candy = candies[self._coord]
             if isinstance(candy, SuperCandy):
                 self.supercandy_eaten = True
-            pg.mixer.music.play()
             self.score += candy.get_score()
+            if not pg.mixer.Channel(1).get_busy():
+                pg.mixer.Channel(1).play(pg.mixer.Sound("res/files/music/pacman-chomp/pacman-wakawaka.wav"))
             del self._game.get_map().get_candy_dict()[self._coord]
 
 

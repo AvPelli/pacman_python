@@ -19,7 +19,6 @@ class Game():
         # Init of pygame
         pg.init()
         pg.display.set_caption('Pac-Man')
-
         # Game variables
         self.__game_display = pg.display.set_mode(resolution)
         self.__gamemode = 1
@@ -174,6 +173,7 @@ class Game():
         self.__map.draw_oneup()
         self.clock.tick(60)
         pg.display.update()
+        self.__play_background_music()
 
         # Event check, quit event check first
         self.__check_move_events()
@@ -304,6 +304,10 @@ class Game():
     def __reset_highscore(self):
         filename = "res/files/highscore.txt"
         open(filename,"w")
+
+    def __play_background_music(self):
+        if not pg.mixer.Channel(0).get_busy():
+            pg.mixer.Channel(0).play(pg.mixer.Sound("res/files/music/pacman-siren/Pacman_Siren.wav"))
 
     """"Getters"""
     def get_game_display(self):
