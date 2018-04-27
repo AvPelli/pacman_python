@@ -55,6 +55,8 @@ class Game():
             self.__ghosts.append(Ghost( i, self, self.__map.get_wall_list()))
         # Link objects
         self.__map.set_pacman(self.__pacman)
+        # Highscore(list of 5 strings)
+        self.__score = self.__read_highscores()
 
     def __gamemode_handler(self):
         if self.__gamemode == 1:
@@ -90,6 +92,8 @@ class Game():
         self.__map.draw_candy()
         self.__map.draw_startpacman(self.__map.get_pacman_start())
         self.__map.draw_text("READY!",11,20,(255, 238, 0))
+        if len(self.__score)!= 0:
+            self.__map.draw_text(self.__score[0], 11, 1)
         self.__map.draw_oneup()
         pg.display.update()
         self.clock.tick(50)
@@ -109,6 +113,8 @@ class Game():
     def __play_screen(self):
         self.__game_display.fill(black)
         self.__map.draw_candy()
+        if len(self.__score)!= 0:
+            self.__map.draw_text(self.__score[0], 11, 1)
 
         if not self.__ghost_caught:
             self.__pacman.move()
@@ -277,13 +283,15 @@ class Game():
             print("Creating new highscore file...")
         score.sort()
         score.reverse()
-        max_amount = 10
-        if len(score) < 10:
+        new_score = [] #This list keeps the top max_count new high scores. It cannot be higher than max_count
+        max_amount = 5
+        if len(score) < 5:
             max_amount = len(score)
         for i in range(max_amount):
-            score[i] = str(score[i])
+            new_score.append(str(score[i]))
+
         file = open(filename, "w+")
-        file.write("\n".join(score))
+        file.write("\n".join(new_score))
         file.close()
 
     def __read_highscores(self):
@@ -291,8 +299,11 @@ class Game():
         filename = "res/files/highscore.txt"
         for line in open(filename, "r"):
             scores.append(line)
-        as_string = "\n".join(scores)
-        return as_string
+        return scores
+
+    def __reset_highscore(self):
+        filename = "res/files/highscore.txt"
+        open(filename,"w")
 
     """"Getters"""
     def get_game_display(self):

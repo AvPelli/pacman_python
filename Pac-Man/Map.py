@@ -59,7 +59,7 @@ class Map():
 
     def draw_extra(self):
         self.draw_lifes()
-        self.draw_text("HIGHSCORE",9,0)
+        self.draw_text("HIGHSCORE",9,0,(0,255,0))
         self.draw_grid()
         self.draw_score()
 
@@ -82,7 +82,7 @@ class Map():
         duration = 60
         if self.upcounter < duration:
             self.oneup = False
-            self.draw_text('1UP',3,0)
+            self.draw_text('1UP',3,0,(255,0,0))
             self.upcounter += 1
         elif self.upcounter >= duration and self.upcounter < duration * 2:
             self.oneup = True
