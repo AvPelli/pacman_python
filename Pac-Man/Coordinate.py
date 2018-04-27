@@ -4,12 +4,17 @@ class Coordinate:
         self.__x = x
         self.__y = y
         self.__PIXELSIZE = 16
+        self.__is_wall = is_wall
 
     def update_coord(self, direction):
         self.__x += direction.value[0]
         self.__y += direction.value[1]
 
     """Getters"""
+
+    # Getter: returns if there is a wall on this coordinate
+    def is_wall(self):
+        return self.__is_wall
 
     # Getter: returns x value
     def get_x(self):
@@ -22,7 +27,7 @@ class Coordinate:
     # Getter: returns a tuple (Pixel X, Pixel Y)
     def get_pixel_tuple(self):
         # Formule voor van coord systeem --> naar pixels
-        return int((self.__x * self.__PIXELSIZE) ), int(
+        return int((self.__x * self.__PIXELSIZE)), int(
             (self.__y * self.__PIXELSIZE) + 3 * self.__PIXELSIZE)
 
     # Getter: returns a tuple (X, Y)

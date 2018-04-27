@@ -6,15 +6,14 @@ from Direction import Direction
 
 
 class Character(ABC):
-    def __init__(self, PIXELSIZE, speed, moving_pos, direction, movable, moving_between_tiles,game,
-                 coordinate):
+    def __init__(self, PIXELSIZE, speed, moving_pos, direction, game, coordinate):
         # protected variables for all the subclasses
         self._speed = speed
         self._PIXELSIZE = PIXELSIZE
         self._moving_pos = moving_pos
         self._direction = direction
-        self._movable = movable
-        self._moving_between_tiles = moving_between_tiles
+        self._movable = True
+        self._moving_between_tiles = False
         self._game = game
         self._coord = coordinate
         self.start_coord = deepcopy(coordinate)
@@ -34,7 +33,7 @@ class Character(ABC):
         pass
 
     @abstractmethod
-    def move(self,scatter):
+    def move(self, scatter):
         pass
 
     # Method used for character while they move between tiles (Base model of the method)
@@ -52,10 +51,10 @@ class Character(ABC):
         (maxX, maxY) = self._game.get_max()
         (x, y) = (self._coord.get_coord_tuple())
 
-        if x < 0:
+        if x <= 0:
             self._direction = Direction.LEFT
             self._coord = Coordinate(maxX, y)
-        elif x > maxX:
+        elif x >= maxX:
             self._direction = Direction.RIGHT
             self._coord = Coordinate(0, y)
 
@@ -69,12 +68,13 @@ class Character(ABC):
         jump = False
         if newX < 0 or newX > maxX:
             jump = True
+            newX, newY = 0, 0
         return Coordinate(newX, newY), jump
 
     # Base model of a method that reset the character to the begin status
     def reset_character(self):
-        #deepcopy, or else the attribute __coord will be a reference to the attribute start_coord
-        #this way when pacman gets caught the second time, it will "reset" to the coordinate it already stands on
+        # deepcopy, or else the attribute __coord will be a reference to the attribute start_coord
+        # this way when pacman gets caught the second time, it will "reset" to the coordinate it already stands on
         self._coord = deepcopy(self.start_coord)
 
     def get_coord(self):

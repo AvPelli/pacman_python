@@ -28,7 +28,6 @@ class Game():
         self.__ghost_caught = False
         self.__next = False
 
-
         self.start_time_scatter = pg.time.get_ticks()
         self.scatter_timer = 0
 
@@ -43,15 +42,15 @@ class Game():
         self.__mainmenu_exit = False
 
         # Game objects
-        self.__map = Map(self.__game_display, resolution[0], resolution[1], tile_size)
+        self.__map = Map(self, resolution[0], resolution[1], tile_size)
         self.clock = pg.time.Clock()
         self.__candies = self.__map.get_candy_dict()
-        self.__pacman = PacMan(self.__map.get_pacman_start(), self, self.__map.get_wall_list())
+        self.__pacman = PacMan(self.__map.get_pacman_start(), self, self.__map.get_coord_dict())
 
         self.__ghosts = []
         starting_positions = self.__map.get_ghosts_start()
         for i in starting_positions:
-            self.__ghosts.append(Ghost( i, self, self.__map.get_wall_list()))
+            self.__ghosts.append(Ghost(i, self, self.__map.get_coord_dict()))
         # Link objects
         self.__map.set_pacman(self.__pacman)
         # Highscore(list of 5 strings)
@@ -90,8 +89,8 @@ class Game():
         # Draw methods, be aware of the sequence!
         self.__map.draw_candy()
         self.__map.draw_startpacman(self.__map.get_pacman_start())
-        self.__map.draw_text("READY!",11,20,(255, 238, 0))
-        if len(self.__score)!= 0:
+        self.__map.draw_text("READY!", 11, 20, (255, 238, 0))
+        if len(self.__score) != 0:
             self.__map.draw_text(self.__score[0], 11, 1)
         self.__map.draw_oneup()
         pg.display.update()
@@ -112,7 +111,7 @@ class Game():
     def __play_screen(self):
         self.__game_display.fill(black)
         self.__map.draw_candy()
-        if len(self.__score)!= 0:
+        if len(self.__score) != 0:
             self.__map.draw_text(self.__score[0], 11, 1)
 
         if not self.__ghost_caught:
@@ -157,7 +156,7 @@ class Game():
             self.frightened_timer = pg.time.get_ticks() - self.start_time_frightened
             self.check_ghost_caught()
 
-            if(self.frightened_timer < 5000):
+            if (self.frightened_timer < 5000):
                 for ghost in self.__ghosts:
                     if ghost.get_gostart():
                         ghost.move_to_start()
@@ -196,8 +195,8 @@ class Game():
         if (len(self.__candies) == 0):
             self.__gamemode = 6
 
-        if self.__next:                 # Only possible in the next loop
-            print(self.__next,print("next"))
+        if self.__next:  # Only possible in the next loop
+            print(self.__next, print("next"))
             for ghost in self.__ghosts:
                 ghost.set_eaten(False)  # Ghosts eaten -> false, ghost not eaten -> still false
             self.__next = False
@@ -208,7 +207,6 @@ class Game():
             self.__pacman.set_streak(1)
             self.__next = True
             pg.time.delay(1000)
-
 
     def __reset_screen(self):
         pg.time.delay(1000)  # wait 1 second
@@ -249,7 +247,6 @@ class Game():
         pg.display.update()
         self.__check_quit_events()
 
-
     def check_pacman_caught(self):
         for ghost in self.__ghosts:
             if self.__pacman.get_coord() == ghost.get_coord():
@@ -283,7 +280,7 @@ class Game():
             print("Creating new highscore file...")
         score.sort()
         score.reverse()
-        new_score = [] #This list keeps the top max_count new high scores. It cannot be higher than max_count
+        new_score = []  # This list keeps the top max_count new high scores. It cannot be higher than max_count
         max_amount = 5
         if len(score) < 5:
             max_amount = len(score)
@@ -303,13 +300,14 @@ class Game():
 
     def __reset_highscore(self):
         filename = "res/files/highscore.txt"
-        open(filename,"w")
+        open(filename, "w")
 
     def __play_background_music(self):
         if not pg.mixer.Channel(0).get_busy():
             pg.mixer.Channel(0).play(pg.mixer.Sound("res/files/music/pacman-siren/Pacman_Siren.wav"))
 
     """"Getters"""
+
     def get_game_display(self):
         return self.__game_display
 
@@ -360,7 +358,7 @@ class Game():
     def __check_beginningmusic_events(self):
         for event in pg.event.get(self.SONG_END):
             self.__gamemode = 3
-            self.__map.draw_text('',11,20)
+            self.__map.draw_text('', 11, 20)
 
     def __check_x_event(self):
         for event in pg.event.get(pg.KEYDOWN):

@@ -1,18 +1,16 @@
 import pygame as pg
 
 from Character import Character
-from Coordinate import Coordinate
 from Direction import Direction
 from SuperCandy import SuperCandy
 
 
 class PacMan(Character):
     # Constructor of PacMan
-    def __init__(self,coordinate, game, walls):
+    def __init__(self, coordinate, game, coord_dict):
         # Start variables
         super().__init__(PIXELSIZE=16, speed=2, moving_pos=-8,
-                         direction=Direction.RIGHT, movable=True,
-                         moving_between_tiles=False, game=game,
+                         direction=Direction.RIGHT, game=game,
                          coordinate=coordinate)
         self.score = 0
         self.lifes = 4
@@ -27,7 +25,7 @@ class PacMan(Character):
                                                              number=self.__number))
 
         # Collision and direction control check variables
-        self.walls = walls
+        self.__coord_dict = coord_dict
         self.__change_direction = None
 
         self.supercandy_eaten = False
@@ -66,12 +64,14 @@ class PacMan(Character):
             # Checks if the new coordinate is a wall
             # If it is a wall, it will not move ( as long as the direction isn't changed)
             # Else it can start moving there in the next iteration (will perform if self.__moving_between_tiles:)
-            if check_next_coord in self.walls:
+            x, y = check_next_coord.get_coord_tuple()
+            self._moving_between_tiles = True
+            if jump:
+                self._set_on_opposite_side()
+            elif self.__coord_dict.get((x, y)).is_wall():
                 self.__moveable = False
-            else:
-                if jump:
-                    self._set_on_opposite_side()
-                self._moving_between_tiles = True
+                self._moving_between_tiles = False
+
             self._draw_character(self._coord, self.__image)
             # Moves to the new coordinate
             # Checks if there is candy to eat on the new coordinate
@@ -102,11 +102,10 @@ class PacMan(Character):
     # As soon as it is possible, therefor we check if pacmans its coordinates  added with the direction it would be change to is not a wall
     # If so it will change the moving direction
     def __direction_waiter(self):
-        if not self._moving_between_tiles:
-            if self.__change_direction is not None and Coordinate(
-                    self._coord.get_x() + self.__change_direction.value[0],
-                    self._coord.get_y() + self.__change_direction.value[
-                        1]) not in self.walls:
+        if not self._moving_between_tiles and self.__change_direction is not None:
+            x, y = self._coord.get_x() + self.__change_direction.value[0], self._coord.get_y() + \
+                   self.__change_direction.value[1]
+            if (x, y) in self.__coord_dict.keys() and not self.__coord_dict.get((x, y)).is_wall():
                 self._direction = self.__change_direction
 
     # Checks if there is a candy object on Pacmans coordinate
@@ -157,8 +156,8 @@ class PacMan(Character):
     # If the following coorinate (if you follows the given direction) is a wall
     # It will put the given direction in the change_direction variable (More info in __direction_changer methode)
     def set_direction(self, direction):
-        if Coordinate(self._coord.get_x() + direction.value[0],
-                      self._coord.get_y() + direction.value[1]) in self.walls:
+        x, y = self._coord.get_x() + direction.value[0], self._coord.get_y() + direction.value[1]
+        if self.__coord_dict.get((x, y)).is_wall() or (x, y) not in self.__coord_dict.keys():
             self.__change_direction = direction
             return
         if self._moving_between_tiles:
@@ -175,8 +174,8 @@ class PacMan(Character):
     def set_coord(self, coordinate):
         self._coord = coordinate
 
-    def set_streak(self,eatstreak):
-        self.__streak = self.__streak+eatstreak
+    def set_streak(self, eatstreak):
+        self.__streak = self.__streak + eatstreak
 
     """"Getters"""
 
