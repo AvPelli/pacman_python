@@ -14,8 +14,8 @@ class Map():
 
     def __init__(self, game_display, width, height, tile_size):
         # Amount of rows en colums
-        self.tiles_horiz_size = 28
-        self.tiles_vert_size = 36
+        self.__tiles_horiz_size = 28
+        self.__tiles_vert_size = 36
 
         # Screen and Resolution variables
         self.__game_display = game_display  # The display of the game
@@ -51,8 +51,8 @@ class Map():
         self.upcounter = 0
 
     def draw_map(self):
-        for row in range(0, self.tiles_vert_size):
-            for col in range(0, self.tiles_horiz_size):  # = Amount of tiles in 1 row
+        for row in range(0, self.__tiles_vert_size):
+            for col in range(0, self.__tiles_horiz_size):  # = Amount of tiles in 1 row
                 tile_sign = self.__map[row][col]
                 self.__game_display.blit(self.__tiles[tile_sign], (col * self.__tile_size, row * self.__tile_size))
         self.draw_extra()
@@ -66,7 +66,7 @@ class Map():
     # Method for drawing the amount of lives pacman has left
     def draw_lifes(self):
         width = self.__tile_size * 2
-        height = self.__tile_size * (self.tiles_vert_size - 2)
+        height = self.__tile_size * (self.__tiles_vert_size - 2)
         lifesimg = pg.image.load("res/tileset/pacman_lifes.png")
         img_width = lifesimg.get_width()
         for i in range(0, self.pacman.getLifes()):
@@ -117,11 +117,11 @@ class Map():
     def draw_grid(self):
         """ Draws a grid to mark the tile borders """
         # (200, 10, 20): is kleur rood
-        # pg.draw.line(self.gameDisplay, (200, 10, 20), (0, self.tile_size), (self.__width, self.tile_size))
-        for x in range(0, self.tiles_horiz_size):
+        # pg.draw.line(self.gameDisplay, (200, 10, 20), (0, self.__tile_size), (self.__width, self.__tile_size))
+        for x in range(0, self.__tiles_horiz_size):
             pg.draw.line(self.__game_display, (169, 169, 169), (self.__tile_size * x, 0),
                          (self.__tile_size * x, self.__height))
-        for y in range(0, self.tiles_vert_size):
+        for y in range(0, self.__tiles_vert_size):
             pg.draw.line(self.__game_display, (169, 169, 169), (0, self.__tile_size * y),
                          (self.__width, self.__tile_size * y))
 
@@ -214,10 +214,6 @@ class Map():
     def get_wall_list(self):
         return deepcopy(self.__wall_list)
 
-    # Getter: returns a the game_display
-    def get_game_display(self):
-        return self.__game_display
-
     # Getter: returns the dictionary, Coordinates mapped on a Candy Object
     def get_candy_dict(self):
         return self.__candy_dict
@@ -228,6 +224,12 @@ class Map():
 
     def get_gates(self):
         return self.gate_list
+
+    def get_tiles_horiz_size(self):
+        return deepcopy(self.__tiles_horiz_size)
+
+    def get_tiles_vert_size(self):
+        return deepcopy((self.__tiles_vert_size))
 
     """Setters"""
 

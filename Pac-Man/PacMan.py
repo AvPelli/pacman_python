@@ -8,12 +8,12 @@ from SuperCandy import SuperCandy
 
 class PacMan(Character):
     # Constructor of PacMan
-    def __init__(self, game_display, coordinate, game, walls):
+    def __init__(self,coordinate, game, walls):
         # Start variables
         super().__init__(PIXELSIZE=16, speed=2, moving_pos=-8,
                          direction=Direction.RIGHT, movable=True,
-                         moving_between_tiles=False, game_display=game_display,
-                         game=game, coordinate=coordinate)
+                         moving_between_tiles=False, game=game,
+                         coordinate=coordinate)
         self.score = 0
         self.lifes = 4
         self.__turnaround = False
@@ -40,12 +40,12 @@ class PacMan(Character):
 
     # draw pacman on that coordinate
     def draw_pacman(self):
-        self._game_display.blit(self.__image, self._coord.get_pixel_tuple())
+        self._game.get_game_display().blit(self.__image, self._coord.get_pixel_tuple())
 
     # Initializes Pacman on give start coordinate
     def draw_startpacman(self, coordinate):
         co = coordinate.get_pixel_tuple()
-        self._game_display.blit(self.__image, (co[0] - 8, co[1]))
+        self._game.get_game_display().blit(self.__image, (co[0] - 8, co[1]))
 
     """"Move method"""
 

@@ -6,7 +6,7 @@ from Direction import Direction
 
 
 class Character(ABC):
-    def __init__(self, PIXELSIZE, speed, moving_pos, direction, movable, moving_between_tiles, game_display, game,
+    def __init__(self, PIXELSIZE, speed, moving_pos, direction, movable, moving_between_tiles,game,
                  coordinate):
         # protected variables for all the subclasses
         self._speed = speed
@@ -16,7 +16,6 @@ class Character(ABC):
         self._movable = movable
         self._moving_between_tiles = moving_between_tiles
         self._game = game
-        self._game_display = game_display
         self._coord = coordinate
         self.start_coord = deepcopy(coordinate)
 
@@ -28,7 +27,7 @@ class Character(ABC):
         if self._direction is not None:
             xPixels += self._direction.value[0] * self._moving_pos
             yPixels += self._direction.value[1] * self._moving_pos
-        self._game_display.blit(image, (xPixels, yPixels))
+        self._game.get_game_display().blit(image, (xPixels, yPixels))
 
     @abstractmethod
     def move(self):

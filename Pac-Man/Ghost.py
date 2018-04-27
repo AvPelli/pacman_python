@@ -9,12 +9,12 @@ from Direction import Direction
 class Ghost(Character):
     ghost_id = 0
 
-    def __init__(self, game_display, coordinate, game, walls):
+    def __init__(self, coordinate, game, walls):
         # Start variables
         super().__init__(PIXELSIZE=16, speed=2, moving_pos=0,
                          direction=Direction.UP, movable=True,
-                         moving_between_tiles=False, game_display=game_display,
-                         game=game, coordinate=coordinate)
+                         moving_between_tiles=False,game=game,
+                         coordinate=coordinate)
 
         self.walls = walls
         self.__id = Ghost.ghost_id
