@@ -119,7 +119,7 @@ class Game():
         if not self.__ghost_caught:
             self.__pacman.move()
 
-        if self.__pacman.isSuperCandyEaten():
+        if self.__pacman.is_super_candy_eaten():
 
             # Start frightened timer
             self.start_time_frightened = pg.time.get_ticks()
@@ -180,17 +180,17 @@ class Game():
         self.__check_quit_events()
 
         if (self.__pacman_caught):
-            lifes = self.__pacman.getLifes() - 1
+            lifes = self.__pacman.get_lifes() - 1
             self.__pacman.set_lifes(lifes)
             self.__pacman_caught = False
             self.__gamemode = 4  # reset the game: ghosts in center and pacman in middle
             # each time pac-man gets caught,this song will be played if he has no lifes anymore this somng will play in game_over_screen
-            if (self.__pacman.getLifes()):
+            if (self.__pacman.get_lifes()):
                 pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
                 pg.mixer.music.play()
                 self.__pacman.set_music()  # pac-man can load his chomp music again
 
-        if not (self.__pacman.getLifes()):
+        if not (self.__pacman.get_lifes()):
             self.__gamemode = 5  # no more lifes left: game over
 
         if (len(self.__candies) == 0):
@@ -226,7 +226,7 @@ class Game():
         self.__map.draw_candy()
         self.__map.draw_oneup()
         pg.display.update()
-        deathco = self.__pacman.getCoord()
+        deathco = self.__pacman.get_coord()
         pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
         pg.mixer.music.play()
         self.__map.draw_pacmandeathani(deathco)
@@ -252,13 +252,13 @@ class Game():
 
     def check_pacman_caught(self):
         for ghost in self.__ghosts:
-            if self.__pacman.getCoord() == ghost.get_coord():
+            if self.__pacman.get_coord() == ghost.get_coord():
                 self.__pacman_caught = True
 
     # Pacman searches for ghosts
     def check_ghost_caught(self):
         for ghost in self.__ghosts:
-            if self.__pacman.getCoord() == ghost.get_coord():
+            if self.__pacman.get_coord() == ghost.get_coord():
                 if not ghost.get_gostart():
                     self.__ghost_caught = True
                     # Make the ghost start moving to the center
@@ -271,7 +271,7 @@ class Game():
 
     def __save_highscore(self):
         score = []
-        score.append(self.__pacman.getScore())
+        score.append(self.__pacman.get_score())
         filename = "res/files/highscore.txt"
         try:
             for line in open(filename, "r"):
@@ -321,7 +321,7 @@ class Game():
         return self.__pacman
 
     def get_pacman_coord(self):
-        return deepcopy(self.__pacman.getCoord())
+        return deepcopy(self.__pacman.get_coord())
 
     def get_pacman_direction(self):
         return deepcopy(self.__pacman.get_direction())

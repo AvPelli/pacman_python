@@ -127,8 +127,9 @@ class PacMan(Character):
             if isinstance(candy, SuperCandy):
                 self.supercandy_eaten = True
             pg.mixer.music.play()
+            self.score += candy.get_score()
             del self._game.get_map().get_candy_dict()[self._coord]
-            self.score += 10
+
 
     # When pacman is moving between tiles, he should still be able to immediately turn around instead of finishing moving to the next tile 1st,
     # This method will check if an opposite key has been pressed and sets the variable __turnaround
@@ -140,19 +141,19 @@ class PacMan(Character):
         return None
 
     """"Getters"""
-    def isSuperCandyEaten(self):
+    def is_super_candy_eaten(self):
         return self.supercandy_eaten
 
     # Returns the amount of lifes left
-    def getLifes(self):
+    def get_lifes(self):
         return self.lifes
 
     # Returns the score
-    def getScore(self):
+    def get_score(self):
         return self.score
 
     # Return
-    def getCoord(self):
+    def get_coord(self):
         return self._coord
 
     def get_streak(self):

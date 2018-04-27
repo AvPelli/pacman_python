@@ -13,3 +13,6 @@ class SuperCandy(Candy):
     def draw(self, coordinate):
         (xPixels, yPixels) = (coordinate.get_pixel_tuple())
         self._game_Display.blit(self._superimage, (xPixels, yPixels))
+
+    def get_score(self):
+        return 100

@@ -28,3 +28,6 @@ class Candy:
         if other == None or not isinstance(other, Candy):
             return False
         return self._coord.get_x() == other.get_coord().get_x() and self._coord.get_y() == other.get_coord().get_y()
+
+    def get_score(self):
+        return 10

@@ -69,7 +69,7 @@ class Map():
         height = self.__tile_size * (self.__tiles_vert_size - 2)
         lifesimg = pg.image.load("res/tileset/pacman_lifes.png")
         img_width = lifesimg.get_width()
-        for i in range(0, self.__pacman.getLifes()):
+        for i in range(0, self.__pacman.get_lifes()):
             self.__game_display.blit(lifesimg, (width, height))
             width += img_width
 
@@ -93,8 +93,8 @@ class Map():
 
     # Method for drawing the score
     def draw_score(self):
-        score = self.__pacman.getScore()
-        scorestr = str(self.__pacman.getScore())
+        score = self.__pacman.get_score()
+        scorestr = str(self.__pacman.get_score())
         if score < 10:
             scorestr = str(0) + scorestr
         score_size = len(scorestr)
