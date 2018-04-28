@@ -21,6 +21,10 @@ class Game():
         pg.display.set_caption('Pac-Man')
         # Game variables
         self.__game_display = pg.display.set_mode(resolution)
+        self.__init_game()
+
+    # Initialise the game. It can also be used to reset the game!
+    def __init_game(self):
         self.__gamemode = 1
         self.__pauze = False
         self.__game_exit = False
@@ -51,9 +55,9 @@ class Game():
         starting_positions = self.__map.get_ghosts_start()
         for i in starting_positions:
             self.__ghosts.append(Ghost(i, self, self.__map.get_coord_dict()))
+
         # Link objects
         self.__map.set_pacman(self.__pacman)
-
 
     def __gamemode_handler(self):
         if self.__gamemode == 1:
@@ -199,7 +203,7 @@ class Game():
             self.__gamemode = 5  # no more lifes left: game over
 
         if (len(self.__candies) == 0):
-            self.__gamemode = 6
+           self.__gamemode = 6
 
         if self.__next:  # Only possible in the next loop
             print(self.__next, print("next"))
@@ -236,22 +240,35 @@ class Game():
         self.__map.draw_pacmandeathani(deathco)
         pg.display.update()
 
+
         # Event check, quit event check first
         self.__save_highscore()
         self.__check_quit_events()
         self.__game_exit = True
 
     def __game_won(self):
+        self.__save_highscore()
+        score = self.__read_highscores()
+        if len(score) != 0:
+            self.__map.draw_text(score[0], 11, 1)
+            pg.display.update()
+
         pg.time.delay(1000)
         self.__game_display.fill(black)
         self.__map.change_wall_color()
         self.__map.draw_map()
+        self.__map.draw_text("YOU HAVE WON!", 8, 14, (255, 238, 0))
+        self.__map.draw_text("PRESS X TO RESTART GAME", 3, 17, (255,0, 0))
         pg.display.update()
         pg.time.delay(1000)
         self.__map.change_wall_color(won=False)
         self.__map.draw_map()
+        self.__map.draw_text("YOU HAVE WON!", 8, 14, (255, 238, 0))
         pg.display.update()
+
+        self.__check_x_event(reset=True)
         self.__check_quit_events()
+
 
     def check_pacman_caught(self):
         for ghost in self.__ghosts:
@@ -366,10 +383,15 @@ class Game():
             self.__gamemode = 3
             self.__map.draw_text('', 11, 20)
 
-    def __check_x_event(self):
+    def __check_x_event(self,reset=False):
         for event in pg.event.get(pg.KEYDOWN):
             if event.key == pg.K_x:
-                self.__gamemode = 2
+                if not reset:
+                   self.__gamemode = 2
+                else:
+                   self.__game_display.fill(black)
+                   pg.display.update()
+                   self.__init_game()
 
     """"Main method"""
 
