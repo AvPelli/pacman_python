@@ -244,14 +244,18 @@ class Game():
            pg.display.update()
            self.__gamemode = 6
         else:
-           pg.time.delay(1000)
+           score = self.__read_highscores()
+           if len(score) != 0:
+              self.__map.draw_text(score[0], 11, 1)
+              pg.display.update()
+           pg.time.delay(500)
            self.__game_display.fill(black)
            self.__map.change_wall_color()
            self.__map.draw_map()
            self.__map.draw_text("LOSER!", 11, 14, (255, 238, 0))
            self.__map.draw_text("PRESS X TO RESTART GAME", 3, 17, (255, 0, 0))
            pg.display.update()
-           pg.time.delay(1000)
+           pg.time.delay(500)
            self.__map.change_wall_color(won=False)
            self.__map.draw_map()
            self.__map.draw_text("LOSER!", 11, 14, (255, 238, 0))
@@ -260,10 +264,6 @@ class Game():
 
         # Event check, quit event check first
         self.__save_highscore()
-        score = self.__read_highscores()
-        if len(score) != 0:
-            self.__map.draw_text(score[0], 11, 1)
-            pg.display.update()
         self.__check_quit_events()
 
     def __game_won(self):
