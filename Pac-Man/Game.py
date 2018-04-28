@@ -72,6 +72,8 @@ class Game():
         elif self.__gamemode == 5:
             self.__gameover_screen()
         elif self.__gamemode == 6:
+            self.__gameover_screen(wait=True) # Make the game wait for an event
+        elif self.__gamemode == 7:
             self.__game_won()
 
     # Startscreen mode - game displays startscreen
@@ -203,7 +205,7 @@ class Game():
             self.__gamemode = 5  # no more lifes left: game over
 
         if (len(self.__candies) == 0):
-           self.__gamemode = 6
+           self.__gamemode = 7
 
         if self.__next:  # Only possible in the next loop
             print(self.__next, print("next"))
@@ -228,23 +230,41 @@ class Game():
         self.reset_ghosts()
         self.__gamemode = 3
 
-    def __gameover_screen(self):
-        pg.time.delay(1000)
-        self.__game_display.fill(black)
-        self.__map.draw_candy()
-        self.__map.draw_oneup()
-        pg.display.update()
-        deathco = self.__pacman.get_coord()
-        pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
-        pg.mixer.music.play()
-        self.__map.draw_pacmandeathani(deathco)
-        pg.display.update()
-
+    def __gameover_screen(self,wait=False):
+        if not wait:
+           pg.time.delay(1000)
+           self.__game_display.fill(black)
+           self.__map.draw_candy()
+           self.__map.draw_oneup()
+           pg.display.update()
+           deathco = self.__pacman.get_coord()
+           pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
+           pg.mixer.music.play()
+           self.__map.draw_pacmandeathani(deathco)
+           pg.display.update()
+           self.__gamemode = 6
+        else:
+           pg.time.delay(1000)
+           self.__game_display.fill(black)
+           self.__map.change_wall_color()
+           self.__map.draw_map()
+           self.__map.draw_text("LOSER!", 11, 14, (255, 238, 0))
+           self.__map.draw_text("PRESS X TO RESTART GAME", 3, 17, (255, 0, 0))
+           pg.display.update()
+           pg.time.delay(1000)
+           self.__map.change_wall_color(won=False)
+           self.__map.draw_map()
+           self.__map.draw_text("LOSER!", 11, 14, (255, 238, 0))
+           pg.display.update()
+           self.__check_x_event(reset=True)
 
         # Event check, quit event check first
         self.__save_highscore()
+        score = self.__read_highscores()
+        if len(score) != 0:
+            self.__map.draw_text(score[0], 11, 1)
+            pg.display.update()
         self.__check_quit_events()
-        self.__game_exit = True
 
     def __game_won(self):
         self.__save_highscore()
