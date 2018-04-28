@@ -117,7 +117,6 @@ class Astar():
                 result = tpl
         return Coordinate(result[0], result[1])
 
-
     # Gives the first direction from the calculated path
     def get_direction(self, start, goal):
         pacCoord = self.pacman.get_coord()
@@ -129,22 +128,21 @@ class Astar():
             return self.choose_random(start)
         return self.dictionary[path[0]]
 
-    def get_direction_scatter(self,start,goal):
-        if(start == goal):
+    def get_direction_scatter(self, start, goal):
+        if (start == goal):
             return
-        path = self.find_path(start,goal)
+        path = self.find_path(start, goal)
         if path is "":
             return self.choose_random(start)
         return self.dictionary[path[0]]
 
     def choose_random(self, coord):
-        pos = []
+        possible_directions = []
         x, y = coord.get_coord_tuple()
         for dir in Direction:
             if dir is not Direction.BLOCK and (x + dir.value[0], y + dir.value[1]) in self.graph.keys():
-                pos.append(dir)
-        a = random.randint(0, len(pos) - 1)
-        return pos[a]
+                possible_directions.append(dir)
+        return possible_directions[random.randint(0, len(possible_directions) - 1)]
 
     """Getters"""
 

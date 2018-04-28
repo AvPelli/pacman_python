@@ -69,7 +69,7 @@ class Character(ABC):
         if newX < 0 or newX > maxX:
             jump = True
             newX, newY = 0, 0
-        return Coordinate(newX, newY), jump
+        return (newX, newY), jump
 
     # Base model of a method that reset the character to the begin status
     def reset_character(self):

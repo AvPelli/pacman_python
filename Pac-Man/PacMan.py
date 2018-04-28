@@ -7,7 +7,7 @@ from SuperCandy import SuperCandy
 
 class PacMan(Character):
     # Constructor of PacMan
-    def __init__(self, coordinate, game, coord_dict):
+    def __init__(self, game, coordinate, coord_dict):
         # Start variables
         super().__init__(PIXELSIZE=16, speed=2, moving_pos=-8,
                          direction=Direction.RIGHT, game=game,
@@ -64,11 +64,11 @@ class PacMan(Character):
             # Checks if the new coordinate is a wall
             # If it is a wall, it will not move ( as long as the direction isn't changed)
             # Else it can start moving there in the next iteration (will perform if self.__moving_between_tiles:)
-            x, y = check_next_coord.get_coord_tuple()
+
             self._moving_between_tiles = True
             if jump:
                 self._set_on_opposite_side()
-            elif self.__coord_dict.get((x, y)).is_wall():
+            elif self.__coord_dict.get(check_next_coord).is_wall():
                 self.__moveable = False
                 self._moving_between_tiles = False
 
@@ -121,7 +121,6 @@ class PacMan(Character):
             pg.mixer.Channel(1).play(pg.mixer.Sound("res/files/music/pacman-chomp/pacman-wakawaka.wav"))
             del self._game.get_map().get_candy_dict()[self._coord]
 
-
     # When pacman is moving between tiles, he should still be able to immediately turn around instead of finishing moving to the next tile 1st,
     # This method will check if an opposite key has been pressed and sets the variable __turnaround
     def __check_turnaround(self):
@@ -132,6 +131,7 @@ class PacMan(Character):
         return None
 
     """"Getters"""
+
     def is_super_candy_eaten(self):
         return self.supercandy_eaten
 
@@ -156,7 +156,7 @@ class PacMan(Character):
     # If the following coorinate (if you follows the given direction) is a wall
     # It will put the given direction in the change_direction variable (More info in __direction_changer methode)
     def set_direction(self, direction):
-        x, y = self._coord.get_x() + direction.value[0], self._coord.get_y() + direction.value[1]
+        x, y = self._coord.get_x() + direction.x, self._coord.get_y() + direction.y
         if self.__coord_dict.get((x, y)).is_wall() or (x, y) not in self.__coord_dict.keys():
             self.__change_direction = direction
             return
@@ -167,7 +167,7 @@ class PacMan(Character):
             self._direction = direction
             self._moveable = True
 
-    # setter for pacman lifes, to access the pacmanlifes in the Game class
+    # Setter for pacman lifes, to access the pacmanlifes in the Game class
     def set_lifes(self, lifes):
         self.lifes = lifes
 

@@ -8,8 +8,9 @@ from Direction import Direction
 
 class Ghost(Character):
     ghost_id = 0
+    neighbours_map = {}
 
-    def __init__(self, coordinate, game, coord_dict):
+    def __init__(self, game, coordinate, coord_dict):
         # Start variables
         super().__init__(PIXELSIZE=16, speed=2, moving_pos=0, direction=Direction.UP, game=game, coordinate=coordinate)
 
@@ -57,8 +58,7 @@ class Ghost(Character):
             self.move_to_start()
         else:
             check_next_coord, jump = self._calculate_new_coord()
-            x, y = check_next_coord.get_coord_tuple()
-            if self.__coord_dict.get((x, y)).is_wall():
+            if self.__coord_dict.get(check_next_coord).is_wall():
                 self._direction = self.astar.get_direction(self._coord,
                                                            self.astar.get_closest_tile(self.__update_target_tile()))
 
@@ -68,7 +68,7 @@ class Ghost(Character):
 
             # check if frightened
             elif self.__frightened:
-                if check_next_coord in self.__coord_dict:
+                if self.__coord_dict.get(check_next_coord).is_wall():
                     self._direction = self.astar.get_direction(self._coord, self._coord)
 
                 if self.__check_neighbours() == True:
@@ -88,8 +88,8 @@ class Ghost(Character):
         else:
             check_next_coord, jump = self._calculate_new_coord()
             self.__update_target_tile_scatter()
-            x, y = check_next_coord.get_coord_tuple()
-            if self.__coord_dict.get((x, y)).is_wall():
+
+            if self.__coord_dict.get(check_next_coord).is_wall():
                 path = self.astar.find_path(self._coord, self.__target_tile)
                 self._direction = self.astar.dictionary[path[0]]
 
@@ -110,8 +110,7 @@ class Ghost(Character):
             self.move_to_start()
         else:
             check_next_coord, jump = self._calculate_new_coord()
-            x, y = check_next_coord.get_coord_tuple()
-            if self.__coord_dict.get((x, y)).is_wall():
+            if self.__coord_dict.get(check_next_coord).is_wall():
                 self._direction = self.astar.get_direction(self._coord,
                                                            self.astar.get_closest_tile(self.__update_target_tile()))
 
@@ -120,11 +119,11 @@ class Ghost(Character):
                                                            self.astar.get_closest_tile(self.__update_target_tile()))
 
             # frightened mode: random movement
-            if self.__coord_dict.get((x, y)).is_wall():
-                self._direction = self.astar.get_direction(self._coord, self._coord)
+            if self.__coord_dict.get(check_next_coord).is_wall():
+                self._direction = self.astar.choose_random(self._coord)
 
             if self.__check_neighbours() == True:
-                self._direction = self.astar.get_direction(self._coord, self._coord)
+                self._direction = self.astar.choose_random(self._coord)
 
             if jump:
                 self._set_on_opposite_side()
@@ -140,8 +139,7 @@ class Ghost(Character):
         else:
             check_next_coord, jump = self._calculate_new_coord()
 
-            x, y = check_next_coord.get_coord_tuple()
-            if self.__coord_dict.get((x, y)).is_wall():
+            if self.__coord_dict.get(check_next_coord).is_wall():
                 self._direction = self.astar.get_direction(self._coord, self.start_coord)
 
             if self.__check_neighbours() == True:
@@ -227,22 +225,21 @@ class Ghost(Character):
         pass  # voor nu
 
     def __check_neighbours(self):
-        # TODO Map iets laten maken ofzo dat per coord bijhoud hoeveel buren et heeft
-        # Zodat et da gwn kan opvragen ipv de hele tijd herberekenen
         horizontal = False
         vertical = False
         x, y = self._coord.get_coord_tuple()
-        keys = self.__coord_dict.keys()
-        if (x - 1, y) not in keys or (x + 1, y) not in keys or not self.__coord_dict.get(
-                (x - 1, y)).is_wall() or not self.__coord_dict.get(
-            (x + 1, y)).is_wall():
-            horizontal = True
-        if (x, y + 1) not in keys or (x, y - 1) not in keys or not self.__coord_dict.get(
-                (x, y - 1)).is_wall() or not self.__coord_dict.get(
-            (x, y + 1)).is_wall():
-            vertical = True
-
-        return horizontal and vertical
+        if (x, y) in Ghost.neighbours_map.keys():
+            return Ghost.neighbours_map.get((x, y))
+        else:
+            keys = self.__coord_dict.keys()
+            if (x - 1, y) not in keys or (x + 1, y) not in keys or not self.__coord_dict.get(
+                    (x - 1, y)).is_wall() or not self.__coord_dict.get((x + 1, y)).is_wall():
+                horizontal = True
+            if (x, y + 1) not in keys or (x, y - 1) not in keys or not self.__coord_dict.get(
+                    (x, y - 1)).is_wall() or not self.__coord_dict.get((x, y + 1)).is_wall():
+                vertical = True
+            Ghost.neighbours_map[(x, y)] = horizontal and vertical
+        return Ghost.neighbours_map.get((x, y))
 
     def get_coord(self):
         return self._coord

@@ -12,6 +12,11 @@ class Direction(Enum):
     # Example to get the tuple
     # dir = Direction.LEFT
     # dir.value  --> (-1,0)
+    # Or with dir.x and dir.y
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
 
     """Getters"""
 

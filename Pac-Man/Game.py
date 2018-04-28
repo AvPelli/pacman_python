@@ -49,12 +49,12 @@ class Game():
         self.__map = Map(self, resolution[0], resolution[1], tile_size)
         self.clock = pg.time.Clock()
         self.__candies = self.__map.get_candy_dict()
-        self.__pacman = PacMan(self.__map.get_pacman_start(), self, self.__map.get_coord_dict())
+        self.__pacman = PacMan(self, self.__map.get_pacman_start(), self.__map.get_coord_dict())
 
         self.__ghosts = []
         starting_positions = self.__map.get_ghosts_start()
         for i in starting_positions:
-            self.__ghosts.append(Ghost(i, self, self.__map.get_coord_dict()))
+            self.__ghosts.append(Ghost(self, i, self.__map.get_coord_dict()))
 
         # Link objects
         self.__map.set_pacman(self.__pacman)
@@ -82,10 +82,10 @@ class Game():
         self.__game_display.blit(startscreen_image, (0, 125))
         # Print highscore on the screen
         score = self.__read_highscores()
-        if(score != 0):
+        if (score != 0):
             for i in range(len(score)):
-                text=score[i].strip()
-                self.__map.draw_text(text,12+(4-len(text)),21+i,(150,50,150))
+                text = score[i].strip()
+                self.__map.draw_text(text, 12 + (4 - len(text)), 21 + i, (150, 50, 150))
         pg.display.flip()
 
         self.clock.tick(3)
@@ -100,7 +100,7 @@ class Game():
         self.__map.draw_candy()
         self.__map.draw_startpacman(self.__map.get_pacman_start())
         self.__map.draw_text("READY!", 11, 20, (255, 238, 0))
-        score=self.__read_highscores()
+        score = self.__read_highscores()
         if len(score) != 0:
             self.__map.draw_text(score[0], 11, 1)
         self.__map.draw_oneup()
@@ -122,7 +122,7 @@ class Game():
     def __play_screen(self):
         self.__game_display.fill(black)
         self.__map.draw_candy()
-        score=self.__read_highscores()
+        score = self.__read_highscores()
         if len(score) != 0:
             self.__map.draw_text(score[0], 11, 1)
 
@@ -265,6 +265,7 @@ class Game():
         # Event check, quit event check first
         self.__save_highscore()
         self.__check_quit_events()
+        self.__game_exit = True
 
     def __game_won(self):
         self.__save_highscore()
@@ -371,8 +372,6 @@ class Game():
     def get_pacman_direction(self):
         return deepcopy(self.__pacman.get_direction())
 
-    def get_pacman_direction(self):
-        return deepcopy(self.__pacman.get_direction())
 
     def get_ghosts(self):
         return self.__ghosts
@@ -403,15 +402,15 @@ class Game():
             self.__gamemode = 3
             self.__map.draw_text('', 11, 20)
 
-    def __check_x_event(self,reset=False):
+    def __check_x_event(self, reset=False):
         for event in pg.event.get(pg.KEYDOWN):
             if event.key == pg.K_x:
                 if not reset:
-                   self.__gamemode = 2
+                    self.__gamemode = 2
                 else:
-                   self.__game_display.fill(black)
-                   pg.display.update()
-                   self.__init_game()
+                    self.__game_display.fill(black)
+                    pg.display.update()
+                    self.__init_game()
 
     """"Main method"""
 
