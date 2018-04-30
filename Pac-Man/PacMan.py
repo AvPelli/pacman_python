@@ -56,9 +56,6 @@ class PacMan(Character):
             if not self._movable:
                 self._draw_character(self._coord, self.__image)
                 return
-
-            print(self._direction)
-
             # Checks if the direction what was not possible a while ago is possible now
             self.__direction_waiter()
             # Calculates the next coordinate
@@ -99,6 +96,7 @@ class PacMan(Character):
                 self._moving_between_tiles = False
                 self.__turnaround = False
                 self.__number = 0
+
         self._draw_character(self._coord, self.__image)
 
     # This method will change the direction to the change_direction variable if it is possible

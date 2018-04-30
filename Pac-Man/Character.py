@@ -66,7 +66,7 @@ class Character(ABC):
         addX, addY = self._direction.value
         newX, newY = x + addX, y + addY
         jump = False
-        if newX < 0 or newX > maxX:
+        if newX < 0 or newX > maxX or newX > 0 and x == 0 or newX < maxX and x == maxX:
             jump = True
             newX, newY = 0, 0
         return (newX, newY), jump
