@@ -24,3 +24,5 @@ Datum,Start,Einde,Plaats,Omschrijving
 27/04/18,14:00,16:00,Thuis,redundante code verwijderen en meerdere methodes mergen voor abstract
 27/04/18,21:30,22:30,Thuis,Highscore toevoegen aan het spel en methode om highscore te resetten plus kleur
 27/04/18,12:00,15:00,Thuis,Highscore op het startscherm schrijven winnende game_mode toevoegen en Game opnieuw initialiseren voor tweede spel
+30/04/18,11:30,13:30,Thuis,Scatter en Chase verbeteren. Probleem van het vastzitten van pac_man in de gates analyseren
+30/04/18,15:30,17:30,Thuis,Het probleem van vastzitten oplossen
