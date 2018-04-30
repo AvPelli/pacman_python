@@ -56,6 +56,9 @@ class PacMan(Character):
             if not self._movable:
                 self._draw_character(self._coord, self.__image)
                 return
+
+            print(self._direction)
+
             # Checks if the direction what was not possible a while ago is possible now
             self.__direction_waiter()
             # Calculates the next coordinate
@@ -66,6 +69,7 @@ class PacMan(Character):
             # Else it can start moving there in the next iteration (will perform if self.__moving_between_tiles:)
 
             self._moving_between_tiles = True
+
             if jump:
                 self._set_on_opposite_side()
             elif self.__coord_dict.get(check_next_coord).is_wall():
@@ -157,7 +161,7 @@ class PacMan(Character):
     # It will put the given direction in the change_direction variable (More info in __direction_changer methode)
     def set_direction(self, direction):
         x, y = self._coord.get_x() + direction.x, self._coord.get_y() + direction.y
-        if self.__coord_dict.get((x, y)).is_wall() or (x, y) not in self.__coord_dict.keys():
+        if (x, y) not in self.__coord_dict.keys() or self.__coord_dict.get((x, y)).is_wall():
             self.__change_direction = direction
             return
         if self._moving_between_tiles:
