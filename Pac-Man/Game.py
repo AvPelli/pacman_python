@@ -32,6 +32,7 @@ class Game():
         self.__ghost_caught = False
         self.__next = False
 
+        self.__first_time_loop = True
         self.start_time_scatter = pg.time.get_ticks()
         self.scatter_timer = 0
 
@@ -58,6 +59,12 @@ class Game():
 
         # Link objects
         self.__map.set_pacman(self.__pacman)
+        # Score
+        score=self.__read_highscores()
+        if(len(score) != 0):
+           self.__max_digits_score = len(score[0].strip())
+        else:
+            self.__max_digits_score = 0
 
     def __gamemode_handler(self):
         if self.__gamemode == 1:
@@ -65,7 +72,6 @@ class Game():
         elif self.__gamemode == 2:
             self.__ready_screen()
         elif self.__gamemode == 3:
-            self.clock.tick()  # start the game timer (to measure time for scatter/chase mode)
             self.__play_screen()
         elif self.__gamemode == 4:
             self.__reset_screen()
@@ -85,7 +91,7 @@ class Game():
         if (score != 0):
             for i in range(len(score)):
                 text = score[i].strip()
-                self.__map.draw_text(text, 12 + (4 - len(text)), 21 + i, (150, 50, 150))
+                self.__map.draw_text(text, 12 + (self.__max_digits_score - len(text)), 21 + i, (150, 50, 150))
         pg.display.flip()
 
         self.clock.tick(3)
@@ -146,11 +152,16 @@ class Game():
         # Frightened_mode = False : ghosts use move() and scatter()
         if not self.frightened_mode:
             # Count time for scatter mode
-            self.scatter_timer = pg.time.get_ticks() - self.start_time_scatter
             self.check_pacman_caught()
+            # First time this function gets called it will set self.scatter_time to 0
+            if(self.__first_time_loop):
+                self.__first_time_loop = False
+                self.start_time_scatter = pg.time.get_ticks()
+
+            self.scatter_timer = pg.time.get_ticks() - self.start_time_scatter
 
             # Scatter 7 seconds
-            if (self.scatter_timer < 20000):
+            if (self.scatter_timer < 7000):
                 for ghost in self.__ghosts:
                     ghost.scatter()
 
@@ -243,6 +254,7 @@ class Game():
            self.__map.draw_pacmandeathani(deathco)
            pg.display.update()
            self.__gamemode = 6
+           self.__save_highscore()
         else:
            score = self.__read_highscores()
            if len(score) != 0:
@@ -263,9 +275,7 @@ class Game():
            self.__check_x_event(reset=True)
 
         # Event check, quit event check first
-        self.__save_highscore()
         self.__check_quit_events()
-        self.__game_exit = True
 
     def __game_won(self):
         self.__save_highscore()
