@@ -145,17 +145,17 @@ class Ghost(Character):
             if self.__check_neighbours() == True:
                 self._direction = self.astar.get_direction(self._coord, self.start_coord)
 
+            self._moving_between_tiles = True
+            self.go_eyes()
+            self._draw_character(self._coord, self.__image)
+
             if self._coord == self.start_coord:
                 self.__movestart = False
+                self.set_speed(2)
+                self.imagechooser()
                 self.set_frightened(False)
                 self.__eaten = False
-                print(self.__frightened)
-                print("stop fightened")
                 self.imagechooser()
-
-            self._moving_between_tiles = True
-            self.check_frightened()
-            self._draw_character(self._coord, self.__image)
 
     def __move_between_tiles(self):
         # Proceed to the next tile
@@ -266,27 +266,31 @@ class Ghost(Character):
             self.__image = pg.image.load("res/pacmanghost/bluepacman2.png")
             self.__frightenedimg = 1
 
+    def go_eyes(self):
+        directionimg = self._direction.get_letter()
+        self.__image = pg.image.load("res/eyes/" + directionimg + ".png")
+
     def reset_character(self):
         super().reset_character()
         self._direction = Direction.UP
         self._draw_character(self.start_coord, self.__image)
 
-    def set_eaten(self, value,streak=0):
+    def set_eaten(self, value, streak=0):
         self.__eaten = value
-        if(self.__eaten):
-            scoreimg = str((2**streak)*100) + ".png"
-            self.__image = pg.image.load("res/scores/"+scoreimg)
+        if (self.__eaten):
+            scoreimg = str((2 ** streak) * 100) + ".png"
+            self.__image = pg.image.load("res/scores/" + scoreimg)
             print(scoreimg)
 
     def is_frightened(self):
         return self.__frightened
-
 
     def is_eaten(self):
         return self.__eaten
 
     def set_gostart(self, value):
         self.__movestart = value
+        self.set_speed(6)
 
     def get_gostart(self):
         return self.__movestart

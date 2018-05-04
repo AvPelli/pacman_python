@@ -236,7 +236,8 @@ class Game():
             for ghost in self.__ghosts:
                 ghost.move()
             pg.display.update()
-
+            pg.mixer.music.load("res/files/music/pacman-eatghost/pacman_eatghost.wav")
+            pg.mixer.music.play()
             pg.time.delay(1000)
 
     def __reset_screen(self):

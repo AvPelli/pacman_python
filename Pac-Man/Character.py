@@ -82,3 +82,7 @@ class Character(ABC):
 
     def get_direction(self):
         return deepcopy(self._direction)
+
+    def set_speed(self,speedvalue):
+        self._speed = speedvalue
+
