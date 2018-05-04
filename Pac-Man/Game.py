@@ -60,9 +60,9 @@ class Game():
         # Link objects
         self.__map.set_pacman(self.__pacman)
         # Score
-        score=self.__read_highscores()
-        if(len(score) != 0):
-           self.__max_digits_score = len(score[0].strip())
+        score = self.__read_highscores()
+        if (len(score) != 0):
+            self.__max_digits_score = len(score[0].strip())
         else:
             self.__max_digits_score = 0
 
@@ -78,7 +78,7 @@ class Game():
         elif self.__gamemode == 5:
             self.__gameover_screen()
         elif self.__gamemode == 6:
-            self.__gameover_screen(wait=True) # Make the game wait for an event
+            self.__gameover_screen(wait=True)  # Make the game wait for an event
         elif self.__gamemode == 7:
             self.__game_won()
 
@@ -154,7 +154,7 @@ class Game():
             # Count time for scatter mode
             self.check_pacman_caught()
             # First time this function gets called it will set self.scatter_time to 0
-            if(self.__first_time_loop):
+            if (self.__first_time_loop):
                 self.__first_time_loop = False
                 self.start_time_scatter = pg.time.get_ticks()
 
@@ -177,17 +177,21 @@ class Game():
         # Frightened_mode = True : ghosts use frightened()
         else:
             self.frightened_timer = pg.time.get_ticks() - self.start_time_frightened
-            self.check_ghost_caught()
 
-            if (self.frightened_timer < 5000):
+            if (self.frightened_timer < 100000):
                 for ghost in self.__ghosts:
                     if ghost.get_gostart():
                         ghost.move_to_start()
+                    elif not ghost.is_frightened():
+                        ghost.move()
+                        self.check_pacman_caught()
                     else:
                         ghost.frightened()
+                        self.check_ghost_caught()
 
             else:
                 self.frightened_mode = False
+                self.__pacman.reset_streak()
                 for ghost in self.__ghosts:
                     ghost.set_frightened(False)
                     ghost.imagechooser()
@@ -216,7 +220,7 @@ class Game():
             self.__gamemode = 5  # no more lifes left: game over
 
         if (len(self.__candies) == 0):
-           self.__gamemode = 7
+            self.__gamemode = 7
 
         if self.__next:  # Only possible in the next loop
             print(self.__next, print("next"))
@@ -227,8 +231,12 @@ class Game():
         if (self.__ghost_caught):
             print(self.__ghost_caught, "ghost caught")
             self.__ghost_caught = False
-            self.__pacman.set_streak(1)
             self.__next = True
+            self.__map.draw_candy()
+            for ghost in self.__ghosts:
+                ghost.move()
+            pg.display.update()
+
             pg.time.delay(1000)
 
     def __reset_screen(self):
@@ -241,38 +249,38 @@ class Game():
         self.reset_ghosts()
         self.__gamemode = 3
 
-    def __gameover_screen(self,wait=False):
+    def __gameover_screen(self, wait=False):
         if not wait:
-           pg.time.delay(1000)
-           self.__game_display.fill(black)
-           self.__map.draw_candy()
-           self.__map.draw_oneup()
-           pg.display.update()
-           deathco = self.__pacman.get_coord()
-           pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
-           pg.mixer.music.play()
-           self.__map.draw_pacmandeathani(deathco)
-           pg.display.update()
-           self.__gamemode = 6
-           self.__save_highscore()
+            pg.time.delay(1000)
+            self.__game_display.fill(black)
+            self.__map.draw_candy()
+            self.__map.draw_oneup()
+            pg.display.update()
+            deathco = self.__pacman.get_coord()
+            pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
+            pg.mixer.music.play()
+            self.__map.draw_pacmandeathani(deathco)
+            pg.display.update()
+            self.__gamemode = 6
+            self.__save_highscore()
         else:
-           score = self.__read_highscores()
-           if len(score) != 0:
-              self.__map.draw_text(score[0], 11, 1)
-              pg.display.update()
-           pg.time.delay(500)
-           self.__game_display.fill(black)
-           self.__map.change_wall_color()
-           self.__map.draw_map()
-           self.__map.draw_text("LOSER!", 11, 14, (255, 238, 0))
-           self.__map.draw_text("PRESS X TO RESTART GAME", 3, 17, (255, 0, 0))
-           pg.display.update()
-           pg.time.delay(500)
-           self.__map.change_wall_color(won=False)
-           self.__map.draw_map()
-           self.__map.draw_text("LOSER!", 11, 14, (255, 238, 0))
-           pg.display.update()
-           self.__check_x_event(reset=True)
+            score = self.__read_highscores()
+            if len(score) != 0:
+                self.__map.draw_text(score[0], 11, 1)
+                pg.display.update()
+            pg.time.delay(500)
+            self.__game_display.fill(black)
+            self.__map.change_wall_color()
+            self.__map.draw_map()
+            self.__map.draw_text("LOSER!", 11, 14, (255, 238, 0))
+            self.__map.draw_text("PRESS X TO RESTART GAME", 3, 17, (255, 0, 0))
+            pg.display.update()
+            pg.time.delay(500)
+            self.__map.change_wall_color(won=False)
+            self.__map.draw_map()
+            self.__map.draw_text("LOSER!", 11, 14, (255, 238, 0))
+            pg.display.update()
+            self.__check_x_event(reset=True)
 
         # Event check, quit event check first
         self.__check_quit_events()
@@ -289,7 +297,7 @@ class Game():
         self.__map.change_wall_color()
         self.__map.draw_map()
         self.__map.draw_text("YOU HAVE WON!", 8, 14, (255, 238, 0))
-        self.__map.draw_text("PRESS X TO RESTART GAME", 3, 17, (255,0, 0))
+        self.__map.draw_text("PRESS X TO RESTART GAME", 3, 17, (255, 0, 0))
         pg.display.update()
         pg.time.delay(1000)
         self.__map.change_wall_color(won=False)
@@ -300,18 +308,19 @@ class Game():
         self.__check_x_event(reset=True)
         self.__check_quit_events()
 
-
     def check_pacman_caught(self):
         for ghost in self.__ghosts:
-            if self.__pacman.get_coord() == ghost.get_coord():
+            if self.__pacman.get_coord() == ghost.get_coord() and not ghost.is_frightened():
                 self.__pacman_caught = True
 
     # Pacman searches for ghosts
     def check_ghost_caught(self):
         for ghost in self.__ghosts:
             if self.__pacman.get_coord() == ghost.get_coord():
-                if not ghost.get_gostart():
+                if not ghost.get_gostart() and ghost.is_frightened():
                     self.__ghost_caught = True
+                    self.__pacman.set_streak(1)  # adds 1 to the streak
+                    ghost.set_eaten(True, self.__pacman.get_streak())
                     # Make the ghost start moving to the center
                     ghost.set_gostart(True)
 
@@ -381,7 +390,6 @@ class Game():
 
     def get_pacman_direction(self):
         return deepcopy(self.__pacman.get_direction())
-
 
     def get_ghosts(self):
         return self.__ghosts

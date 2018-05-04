@@ -147,6 +147,10 @@ class Ghost(Character):
 
             if self._coord == self.start_coord:
                 self.__movestart = False
+                self.set_frightened(False)
+                self.__eaten = False
+                print(self.__frightened)
+                print("stop fightened")
                 self.imagechooser()
 
             self._moving_between_tiles = True
@@ -267,8 +271,16 @@ class Ghost(Character):
         self._direction = Direction.UP
         self._draw_character(self.start_coord, self.__image)
 
-    def set_eaten(self, value):
+    def set_eaten(self, value,streak=0):
         self.__eaten = value
+        if(self.__eaten):
+            scoreimg = str((2**streak)*100) + ".png"
+            self.__image = pg.image.load("res/scores/"+scoreimg)
+            print(scoreimg)
+
+    def is_frightened(self):
+        return self.__frightened
+
 
     def is_eaten(self):
         return self.__eaten

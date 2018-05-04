@@ -179,6 +179,9 @@ class PacMan(Character):
     def set_streak(self, eatstreak):
         self.__streak = self.__streak + eatstreak
 
+    def reset_streak(self):
+        self.__streak = 0
+
     """"Getters"""
 
     # Getter: Returns the image if needs to use for the give direction (And animation)
