@@ -392,6 +392,7 @@ class Game():
             # Pauze button: p
             if event.key == pg.K_p:
                 self.__pauze = True if self.__pauze == False else False
+                pg.mixer.Channel(0).stop()
             # Sends the direction input to Pacman
             elif event.key == pg.K_LEFT:
                 self.__pacman.set_direction(Direction.LEFT)
