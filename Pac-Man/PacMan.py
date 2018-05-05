@@ -180,7 +180,7 @@ class PacMan(Character):
         self._coord = coordinate
 
     def set_streak(self, eatstreak):
-        self.__streak = self.__streak + eatstreak
+        self.__streak += eatstreak
 
     def reset_streak(self):
         self.__streak = 0

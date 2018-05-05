@@ -132,6 +132,9 @@ class Game():
         if len(score) != 0:
             self.__map.draw_text(score[0], 11, 1)
 
+        for ghost in self.__ghosts:
+            ghost.check_caught()
+
         if not self.__ghost_caught:
             self.__pacman.move()
 
@@ -153,7 +156,6 @@ class Game():
         # Frightened_mode = False : ghosts use move() and scatter()
         if not self.frightened_mode:
             # Count time for scatter mode
-            self.check_pacman_caught()
             # First time this function gets called it will set self.scatter_time to 0
             if (self.__first_time_loop):
                 self.__first_time_loop = False
@@ -185,10 +187,8 @@ class Game():
                         ghost.move_to_start()
                     elif not ghost.is_frightened():
                         ghost.move()
-                        self.check_pacman_caught()
                     else:
                         ghost.frightened()
-                        self.check_ghost_caught()
 
             else:
                 self.frightened_mode = False
@@ -311,22 +311,6 @@ class Game():
         self.__check_x_event(reset=True)
         self.__check_quit_events()
 
-    def check_pacman_caught(self):
-        for ghost in self.__ghosts:
-            if self.__pacman.get_coord() == ghost.get_coord() and not ghost.is_frightened():
-                self.__pacman_caught = True
-
-    # Pacman searches for ghosts
-    def check_ghost_caught(self):
-        for ghost in self.__ghosts:
-            if self.__pacman.get_coord() == ghost.get_coord():
-                if not ghost.get_gostart() and ghost.is_frightened():
-                    self.__ghost_caught = True
-                    self.__pacman.set_streak(1)  # adds 1 to the streak
-                    ghost.set_eaten(True, self.__pacman.get_streak())
-                    # Make the ghost start moving to the center
-                    ghost.set_gostart(True)
-
     def reset_ghosts(self):
         for ghost in self.__ghosts:
             ghost.reset_character()
@@ -432,6 +416,14 @@ class Game():
                     self.__game_display.fill(black)
                     pg.display.update()
                     self.__init_game()
+
+    # Setters that act like events, are triggered in other classes
+    def set_pacman_caught(self):
+        self.__pacman_caught = True
+
+    def set_ghost_caught(self):
+        self.__pacman.set_streak(1)  # adds 1 to the streak
+        self.__ghost_caught = True
 
     """"Main method"""
 

@@ -240,6 +240,18 @@ class Ghost(Character):
             Ghost.neighbours_map[(x, y)] = horizontal and vertical
         return Ghost.neighbours_map.get((x, y))
 
+    def check_caught(self):
+        if self._coord == self._game.get_pacman_coord():
+            if not self.__frightened:
+                self._game.set_pacman_caught()
+            else:
+                if not self.__movestart:
+                    self._game.set_ghost_caught()
+                    self.set_eaten(True, self._game.get_pacman().get_streak())
+                    # Make the ghost start moving to the center
+                    self.__movestart = True
+                    self.set_speed(6)
+
     def get_coord(self):
         return self._coord
 
@@ -291,10 +303,6 @@ class Ghost(Character):
 
     def is_eaten(self):
         return self.__eaten
-
-    def set_gostart(self, value):
-        self.__movestart = value
-        self.set_speed(6)
 
     def get_gostart(self):
         return self.__movestart
