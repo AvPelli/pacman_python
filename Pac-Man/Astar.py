@@ -1,4 +1,3 @@
-import math
 import random
 from heapq import heappop, heappush
 
@@ -19,6 +18,7 @@ class Astar():
         self.dictionary = {"S": Direction.DOWN, "W": Direction.LEFT, "E": Direction.RIGHT, "N": Direction.UP,
                            "B": Direction.BLOCK}
         self.reverse_dict = {v: k for k, v in self.dictionary.items()}
+        # self.test_graph()
 
     # Makes a maze of the given file
     # A 1 stands for a wall or something pacman can't move through
@@ -31,7 +31,7 @@ class Astar():
             check = line_string.replace("0", "")
             # Filters whole lines of 0's, so only the real map (walls and walkable places) are into the maze
             if len(check) > 0:
-                maze.append([0 if letter in "f0gG" or "t" in letter else 1 for letter in line])
+                maze.append([0 if letter in "f0gDG" or "t" in letter else 1 for letter in line])
         return maze
 
     # Makes a graph of the maze that was made in the method above
@@ -42,6 +42,7 @@ class Astar():
     def make_graph(self):
         maze = self.maze
         height, width = len(maze), len(maze[0])
+        print(width)
         graph = {(j, i): [] for j in range(width) for i in range(height) if not maze[i][j]}
         for x, y in graph.keys():
             if Coordinate(x, y) not in self.transporters:
@@ -63,6 +64,10 @@ class Astar():
                     graph[(x, y)].append(("W", (x - 1, y)))
                     graph[(x, y)].append(("E", (0, y)))
         return graph
+
+    def test_graph(self):
+        for coord in self.graph.keys():
+            print("{coord} ---> {neigbours}".format(coord=coord, neigbours=self.graph[coord]))
 
     # Function that returns the manhattan distance between cell and goal
     # Cell and goal are both tuples like (1,1), NOT objects of the class Coordinate
@@ -97,13 +102,9 @@ class Astar():
                 return path if len(path) > 0 else "B"
             if current_cell not in visited:
                 visited.add(current_cell)
-                try:
-                    for direction, neighbour in self.graph[current_cell]:
-                        heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1,
-                                            path + direction, neighbour))
-                except KeyError:
-                    print("Error")
-                    # return self.failsafe(start, goal)
+                for direction, neighbour in self.graph[current_cell]:
+                    heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1,
+                                        path + direction, neighbour))
         return "NO PATH"
 
     def get_closest_tile(self, coord):
@@ -162,17 +163,3 @@ class Astar():
             for y in range(len(self.maze[x])):
                 out += str(self.maze[x][y])
             print(out)
-
-    def failsafe(self, start, goal):
-
-        distance = math.inf
-        x, y = start
-        for dir in Direction:
-            new_x, new_y = (x + dir.value[0], y + dir.value[1])
-            # TODO Fix index out of bound error
-            if not self.maze[new_y][new_x]:
-                dis = self.manhattan_distance((new_x, new_y), goal)
-                if dis < distance:
-                    best_option = dir
-                    distance = dis
-        return self.reverse_dict[best_option]

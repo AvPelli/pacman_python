@@ -187,7 +187,9 @@ class PacMan(Character):
     # Getter: Returns the image if needs to use for the give direction (And animation)
     def __get_image_direction(self, direction):
         self.__number = (self.__number + 1) % 8
-        return pg.image.load(self.dict[direction.get_letter()][self.__number])
+        return pg.image.load(
+            self.dict[direction.get_letter()][self.__number]) if direction is not None else pg.image.load(
+            "res/pacmandeath/1.png")
 
     """"Initialize methods """
 

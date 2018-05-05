@@ -25,7 +25,8 @@ class Ghost(Character):
         self.__update_target_tile()
 
         self.__frightened = False
-        self.__frightenedimg = 1
+        self.__frightenedimg = 0
+        self.ticks = 0
 
         self.__eaten = False
         self.__movestart = False
@@ -259,12 +260,11 @@ class Ghost(Character):
             self.go_frightened()
 
     def go_frightened(self):
-        if self.__frightenedimg == 1:
-            self.__image = pg.image.load("res/pacmanghost/bluepacman.png")
+        self.__image = pg.image.load("res/pacmanghost/bluepacman{number}.png".format(number=self.__frightenedimg % 4))
+        self.ticks += 1
+        if self.ticks >= 3:
             self.__frightenedimg = self.__frightenedimg + 1
-        elif self.__frightenedimg == 2:
-            self.__image = pg.image.load("res/pacmanghost/bluepacman2.png")
-            self.__frightenedimg = 1
+            self.ticks = 0
 
     def go_eyes(self):
         directionimg = self._direction.get_letter()
@@ -273,6 +273,8 @@ class Ghost(Character):
     def reset_character(self):
         super().reset_character()
         self._direction = Direction.UP
+        self.set_frightened(False)
+        self.imagechooser()
         self._draw_character(self.start_coord, self.__image)
 
     def set_eaten(self, value, streak=0):
