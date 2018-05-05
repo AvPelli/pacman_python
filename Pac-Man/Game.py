@@ -111,7 +111,7 @@ class Game():
             self.__map.draw_text(score[0], 11, 1)
         self.__map.draw_oneup()
         pg.display.update()
-        self.clock.tick(50)
+        self.clock.tick(60)
 
         # Music methods
         if not (self.__intro_played):
@@ -143,6 +143,7 @@ class Game():
             for ghost in self.__ghosts:
                 # set_frightened() to display blue (frightened) ghosts
                 self.frightened_mode = True
+                ghost.set_speed(Ghost.frightened_speed)
                 ghost.set_frightened(True)
                 ghost.frightened()
 
@@ -177,8 +178,8 @@ class Game():
         # Frightened_mode = True : ghosts use frightened()
         else:
             self.frightened_timer = pg.time.get_ticks() - self.start_time_frightened
-
-            if (self.frightened_timer < 100000):
+            frightened_timer_mod = 1 - (250 - self.__map.get_candy_amount())/500.0
+            if (self.frightened_timer < 10000 * frightened_timer_mod):
                 for ghost in self.__ghosts:
                     if ghost.get_gostart():
                         ghost.move_to_start()
@@ -195,9 +196,10 @@ class Game():
                 for ghost in self.__ghosts:
                     ghost.set_frightened(False)
                     ghost.imagechooser()
+                    ghost.set_speed(ghost.get_normal_speed())
 
         self.__map.draw_oneup()
-        self.clock.tick(60)
+        self.clock.tick(50)
         pg.display.update()
         self.__play_background_music()
 
