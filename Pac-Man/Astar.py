@@ -138,12 +138,16 @@ class Astar():
         return self.dictionary[path[0]]
 
     def choose_random(self, coord):
+        directions = self.get_possible_dir(coord)
+        return directions[random.randint(0, len(directions) - 1)]
+
+    def get_possible_dir(self, coord):
         possible_directions = []
         x, y = coord.get_coord_tuple()
         for dir in Direction:
             if dir is not Direction.BLOCK and (x + dir.value[0], y + dir.value[1]) in self.graph.keys():
                 possible_directions.append(dir)
-        return possible_directions[random.randint(0, len(possible_directions) - 1)]
+        return possible_directions
 
     """Getters"""
 
