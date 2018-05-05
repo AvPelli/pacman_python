@@ -217,6 +217,9 @@ class Map():
     def get_tiles_vert_size(self):
         return self.__tiles_vert_size
 
+    def get_candy_amount(self):
+        return len(self.__candy_dict)
+
     """Setters"""
 
     # Setter: sets the pacman object

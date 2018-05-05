@@ -12,7 +12,7 @@ class PacMan(Character):
         super().__init__(PIXELSIZE=16, speed=2, moving_pos=-8,
                          direction=Direction.RIGHT, game=game,
                          coordinate=coordinate)
-        self.score = 0
+        self.__score = 0
         self.lifes = 4
         self.__turnaround = False
 
@@ -119,7 +119,7 @@ class PacMan(Character):
             candy = candies[self._coord]
             if isinstance(candy, SuperCandy):
                 self.supercandy_eaten = True
-            self.score += candy.get_score()
+            self.__score += candy.get_score()
             pg.mixer.Channel(1).play(pg.mixer.Sound("res/files/music/pacman-chomp/pacman-wakawaka.wav"))
             del self._game.get_map().get_candy_dict()[self._coord]
 
@@ -132,6 +132,9 @@ class PacMan(Character):
             self.__turnaround = x_direction == 0 and y_direction == 0
         return None
 
+    def add_score(self, value):
+        self.__score += value
+
     """"Getters"""
 
     def is_super_candy_eaten(self):
@@ -143,7 +146,7 @@ class PacMan(Character):
 
     # Returns the score
     def get_score(self):
-        return self.score
+        return self.__score
 
     # Return
     def get_coord(self):

@@ -4,11 +4,12 @@ from Astar import Astar
 from Character import Character
 from Coordinate import Coordinate
 from Direction import Direction
-
+import random
 
 class Ghost(Character):
     ghost_id = 0
     neighbours_map = {}
+    frightened_speed = 1
 
     def __init__(self, game, coordinate, coord_dict):
         # Start variables
@@ -18,7 +19,7 @@ class Ghost(Character):
         self.__id = Ghost.ghost_id
         Ghost.ghost_id += 1
         Ghost.ghost_id %= 4
-        self._speed = (16 - self.__id) / 8.0
+        self._speed = self._normal_speed = (16 - self.__id) / 8.0
         self.astar = Astar(self._game.get_map().get_gates(), self._game.get_pacman())
         self._direction = Direction.UP
         self.imagechooser()
@@ -55,18 +56,17 @@ class Ghost(Character):
 
         if self._moving_between_tiles:
             self.__move_between_tiles()
-        elif (self.get_gostart()):
+        elif self.get_gostart():
             self.move_to_start()
         else:
             check_next_coord, jump = self._calculate_new_coord()
-            if self.__coord_dict.get(check_next_coord).is_wall():
-                self._direction = self.astar.get_direction(self._coord,
+            if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours() == True:
+                self.__update_target_tile()
+                if random.random() < 0.90:
+                    self._direction = self.astar.get_direction(self._coord,
                                                            self.astar.get_closest_tile(self.__update_target_tile()))
-
-            if self.__check_neighbours() == True:
-                self._direction = self.astar.get_direction(self._coord,
-                                                           self.astar.get_closest_tile(self.__update_target_tile()))
-
+                else:
+                    self._direction = self.astar.choose_random(self._coord)
             # check if frightened
             elif self.__frightened:
                 if self.__coord_dict.get(check_next_coord).is_wall():
@@ -90,11 +90,7 @@ class Ghost(Character):
             check_next_coord, jump = self._calculate_new_coord()
             self.__update_target_tile_scatter()
 
-            if self.__coord_dict.get(check_next_coord).is_wall():
-                path = self.astar.find_path(self._coord, self.__target_tile)
-                self._direction = self.astar.dictionary[path[0]]
-
-            if self.__check_neighbours() == True:
+            if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours() == True:
                 path = self.astar.find_path(self._coord, self.__target_tile)
                 self._direction = self.astar.dictionary[path[0]]
 
@@ -111,11 +107,7 @@ class Ghost(Character):
             self.move_to_start()
         else:
             check_next_coord, jump = self._calculate_new_coord()
-            if self.__coord_dict.get(check_next_coord).is_wall():
-                self._direction = self.astar.get_direction(self._coord,
-                                                           self.astar.get_closest_tile(self.__update_target_tile()))
-
-            if self.__check_neighbours() == True:
+            if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours() == True:
                 self._direction = self.astar.get_direction(self._coord,
                                                            self.astar.get_closest_tile(self.__update_target_tile()))
 
@@ -168,10 +160,13 @@ class Ghost(Character):
         pac_direction = self._game.get_pacman_direction()
         if self.__id == 0:
             self.__target_tile = pac_coord
+
         elif self.__id == 1:
-            for i in range(4):
-                pac_coord.update_coord(pac_direction)
+            if self.astar.manhattan_distance(self._coord.get_coord_tuple(), pac_coord.get_coord_tuple()) > 3:
+                for i in range(4):
+                    pac_coord.update_coord(pac_direction)
             self.__target_tile = pac_coord
+
         elif self.__id == 2:
             for i in range(2):
                 pac_coord.update_coord(pac_direction)
@@ -186,11 +181,13 @@ class Ghost(Character):
 
         else:
             if self.astar.manhattan_distance(pac_coord.get_coord_tuple(), self._coord.get_coord_tuple()) < 10:
-                self.__target_tile = Coordinate(15, 15)
+                x = random.randint(-10,10)
+                y = random.randint(-10,10)
+
+                self.__target_tile = Coordinate(pac_coord.get_x() + x, pac_coord.get_y() + y)
             else:
                 self.__target_tile = pac_coord
 
-            # aanpassen
         self.__target_tile = self.astar.get_closest_tile(self.__target_tile)
         return self.__target_tile
 
@@ -226,9 +223,6 @@ class Ghost(Character):
                 self.__scatter_state = (self.__scatter_state + 1) % 3
         return self.__target_tile
 
-    def calculate_direction(self):
-        pass  # voor nu
-
     def __check_neighbours(self):
         horizontal = False
         vertical = False
@@ -249,11 +243,17 @@ class Ghost(Character):
     def get_coord(self):
         return self._coord
 
+    def get_normal_speed(self):
+        return self._normal_speed
+
     def set_coord(self, coord):
         self._coord = coord
 
     def set_frightened(self, value):
         self.__frightened = value
+
+    def set_speed(self, sp):
+        self._speed = sp
 
     def check_frightened(self):
         if self.__frightened:
@@ -280,7 +280,9 @@ class Ghost(Character):
     def set_eaten(self, value, streak=0):
         self.__eaten = value
         if (self.__eaten):
-            scoreimg = str((2 ** streak) * 100) + ".png"
+            score = (2 ** streak) * 100
+            scoreimg = str(score) + ".png"
+            self._game.get_pacman().add_score(score)
             self.__image = pg.image.load("res/scores/" + scoreimg)
             print(scoreimg)
 
