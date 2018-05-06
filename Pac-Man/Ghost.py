@@ -1,15 +1,19 @@
+import random
+from copy import deepcopy
+
 import pygame as pg
 
 from Astar import Astar
 from Character import Character
 from Coordinate import Coordinate
 from Direction import Direction
-import random
+
 
 class Ghost(Character):
     ghost_id = 0
     neighbours_map = {}
     frightened_speed = 1
+    image_names = ["blinky", "pinky", "inky", "clyde"]
 
     def __init__(self, game, coordinate, coord_dict):
         # Start variables
@@ -41,39 +45,25 @@ class Ghost(Character):
         self.inky_dict = {0: Coordinate(19, 23), 1: Coordinate(26, 29), 2: Coordinate(16, 29)}
         # clyde scattercoordinates
         self.clyde_dict = {0: Coordinate(7, 23), 1: Coordinate(1, 29), 2: Coordinate(12, 29)}
+        self.ghost_scatter_coord = [self.blinky_dict, self.pinky_dict, self.inky_dict, self.clyde_dict]
 
     def imagechooser(self):
-        if self.__id == 2:
-            self.__image = pg.image.load("res/ghost/inky/start.png")
-        elif self.__id == 0:
-            self.__image = pg.image.load("res/ghost/blinky/start.png")
-        elif self.__id == 3:
-            self.__image = pg.image.load("res/ghost/clyde/start.png")
-        elif self.__id == 1:
-            self.__image = pg.image.load("res/ghost/pinky/start.png")
+        self.__image = pg.image.load("res/ghost/" + Ghost.image_names[self.__id] + "/start.png")
 
     def move(self):
-
         if self._moving_between_tiles:
             self.__move_between_tiles()
         elif self.get_gostart():
             self.move_to_start()
         else:
             check_next_coord, jump = self._calculate_new_coord()
-            if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours() == True:
+            if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours():
                 self.__update_target_tile()
                 if random.random() < 0.90:
                     self._direction = self.astar.get_direction(self._coord,
-                                                           self.astar.get_closest_tile(self.__update_target_tile()))
+                                                               self.astar.get_closest_tile(self.__update_target_tile()))
                 else:
                     self._direction = self.astar.choose_random(self._coord)
-            # check if frightened
-            elif self.__frightened:
-                if self.__coord_dict.get(check_next_coord).is_wall():
-                    self._direction = self.astar.get_direction(self._coord, self._coord)
-
-                if self.__check_neighbours() == True:
-                    self._direction = self.astar.get_direction(self._coord, self._coord)
 
             if jump:
                 self._set_on_opposite_side()
@@ -89,8 +79,7 @@ class Ghost(Character):
         else:
             check_next_coord, jump = self._calculate_new_coord()
             self.__update_target_tile_scatter()
-
-            if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours() == True:
+            if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours():
                 path = self.astar.find_path(self._coord, self.__target_tile)
                 self._direction = self.astar.dictionary[path[0]]
 
@@ -107,17 +96,12 @@ class Ghost(Character):
             self.move_to_start()
         else:
             check_next_coord, jump = self._calculate_new_coord()
-            if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours() == True:
-                self._direction = self.astar.get_direction(self._coord,
-                                                           self.astar.get_closest_tile(self.__update_target_tile()))
-
+            previous_direction = deepcopy(self._direction)
             # frightened mode: random movement
-            if self.__coord_dict.get(check_next_coord).is_wall():
+            if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours():
                 self._direction = self.astar.choose_random(self._coord)
-
-            if self.__check_neighbours() == True:
-                self._direction = self.astar.choose_random(self._coord)
-
+                while self._direction is previous_direction.get_reverse() and not jump:
+                    self._direction = self.astar.choose_random(self._coord)
             if jump:
                 self._set_on_opposite_side()
             self._moving_between_tiles = True
@@ -131,11 +115,7 @@ class Ghost(Character):
             self.__move_between_tiles()
         else:
             check_next_coord, jump = self._calculate_new_coord()
-
-            if self.__coord_dict.get(check_next_coord).is_wall():
-                self._direction = self.astar.get_direction(self._coord, self.start_coord)
-
-            if self.__check_neighbours() == True:
+            if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours():
                 self._direction = self.astar.get_direction(self._coord, self.start_coord)
 
             self._moving_between_tiles = True
@@ -143,12 +123,12 @@ class Ghost(Character):
             self._draw_character(self._coord, self.__image)
 
             if self._coord == self.start_coord:
-                self.__movestart = False
-                self.set_speed(2)
-                self.imagechooser()
-                self.set_frightened(False)
-                self.__eaten = False
-                self.imagechooser()
+                self.reset_character()
+
+    def _draw_character(self, coordinate, image):
+        self.check_caught()
+        super()._draw_character(coordinate, image)
+        self.check_caught()
 
     def __move_between_tiles(self):
         # Proceed to the next tile
@@ -173,18 +153,14 @@ class Ghost(Character):
             blinky_coord = (self._game.get_ghosts()[0]).get_coord()
             pac_x, pac_y = pac_coord.get_coord_tuple()
             blinky_x, blinky_y = blinky_coord.get_coord_tuple()
-            x_diff = pac_x - blinky_x
-            y_diff = pac_y - blinky_y
+            x_diff, y_diff = pac_x - blinky_x, pac_y - blinky_y
             # aanpassen als move en calculate_direction beter geschreven zijn maar voor nu:
 
             self.__target_tile = Coordinate(blinky_x + 2 * x_diff, blinky_y + 2 * y_diff)
-
         else:
             if self.astar.manhattan_distance(pac_coord.get_coord_tuple(), self._coord.get_coord_tuple()) < 10:
-                x = random.randint(-10,10)
-                y = random.randint(-10,10)
-
-                self.__target_tile = Coordinate(pac_coord.get_x() + x, pac_coord.get_y() + y)
+                self.__target_tile = Coordinate(pac_coord.get_x() + random.randint(-10, 10),
+                                                pac_coord.get_y() + random.randint(-10, 10))
             else:
                 self.__target_tile = pac_coord
 
@@ -195,32 +171,12 @@ class Ghost(Character):
         # the _moving_between_tiles boolean makes the ghost recalculate position to quickly, this function has to slow it down
         # so the ghost doesnt move back and forth without going in a circle
         # this is done by checking if manhattan distance to the target tile is < 1.
+        dictionary = self.ghost_scatter_coord[self.__id]
+        self.__target_tile = dictionary.get(self.__scatter_state)
+        if (self.astar.manhattan_distance(self._coord.get_coord_tuple(),
+                                          self.__target_tile.get_coord_tuple()) < 1):
+            self.__scatter_state = (self.__scatter_state + 1) % len(dictionary.keys())
 
-        # blinky (red ghost) corner:
-        if self.__id == 0:
-            self.__target_tile = self.blinky_dict.get(self.__scatter_state)
-            if (self.astar.manhattan_distance(self.get_coord().get_coord_tuple(),
-                                              self.__target_tile.get_coord_tuple()) < 1):
-                self.__scatter_state = (self.__scatter_state + 1) % 4
-                print(self.__scatter_state)
-
-        elif self.__id == 1:
-            self.__target_tile = self.pinky_dict.get(self.__scatter_state)
-            if (self.astar.manhattan_distance(self.get_coord().get_coord_tuple(),
-                                              self.__target_tile.get_coord_tuple()) < 1):
-                self.__scatter_state = (self.__scatter_state + 1) % 4
-
-        elif self.__id == 2:
-            self.__target_tile = self.inky_dict.get(self.__scatter_state)
-            if (self.astar.manhattan_distance(self.get_coord().get_coord_tuple(),
-                                              self.__target_tile.get_coord_tuple()) < 1):
-                self.__scatter_state = (self.__scatter_state + 1) % 3
-
-        elif self.__id == 3:
-            self.__target_tile = self.clyde_dict.get(self.__scatter_state)
-            if (self.astar.manhattan_distance(self.get_coord().get_coord_tuple(),
-                                              self.__target_tile.get_coord_tuple()) < 1):
-                self.__scatter_state = (self.__scatter_state + 1) % 3
         return self.__target_tile
 
     def __check_neighbours(self):
@@ -241,7 +197,7 @@ class Ghost(Character):
         return Ghost.neighbours_map.get((x, y))
 
     def check_caught(self):
-        if self._coord == self._game.get_pacman_coord():
+        if self._coord == self._game.get_pacman_coord() and not self.__movestart:
             if not self.__frightened:
                 self._game.set_pacman_caught()
             else:
@@ -284,9 +240,12 @@ class Ghost(Character):
 
     def reset_character(self):
         super().reset_character()
-        self._direction = Direction.UP
-        self.set_frightened(False)
+        self.__movestart = False
+        self._speed = self._normal_speed
         self.imagechooser()
+        self.set_frightened(False)
+        self.__eaten = False
+        self._direction = Direction.UP
         self._draw_character(self.start_coord, self.__image)
 
     def set_eaten(self, value, streak=0):
@@ -306,3 +265,8 @@ class Ghost(Character):
 
     def get_gostart(self):
         return self.__movestart
+
+    def set_frightend_mode(self):
+        self.set_speed(Ghost.frightened_speed)
+        self.set_frightened(True)
+        self.frightened()

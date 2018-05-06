@@ -113,9 +113,6 @@ class Map():
             pg.draw.line(self.__game_display, (169, 169, 169), (0, self.__tile_size * y),
                          (self.__width, self.__tile_size * y))
 
-    # Draws start Pacman
-    def draw_startpacman(self, coordinate):
-        self.__pacman.draw_startpacman(coordinate)
 
     # Draws Pacman his death animation
     def draw_pacmandeathani(self, deadco):

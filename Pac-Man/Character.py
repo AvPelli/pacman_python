@@ -32,10 +32,6 @@ class Character(ABC):
     def move(self):
         pass
 
-    @abstractmethod
-    def move(self, scatter):
-        pass
-
     # Method used for character while they move between tiles (Base model of the method)
     # Each subclass expands this method
     def _move_between_tiles(self):
@@ -83,6 +79,5 @@ class Character(ABC):
     def get_direction(self):
         return deepcopy(self._direction)
 
-    def set_speed(self,speedvalue):
+    def set_speed(self, speedvalue):
         self._speed = speedvalue
-

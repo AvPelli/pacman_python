@@ -5,6 +5,7 @@ import pygame as pg  # Importeren van pg module
 from Direction import Direction
 from Ghost import Ghost
 from Map import Map
+from MusicPlayer import MusicPlayer
 from PacMan import PacMan
 
 black = (0, 0, 0)
@@ -41,6 +42,7 @@ class Game():
         self.frightened_mode = False
 
         # Music settings
+        self.music_player = MusicPlayer()
         self.__intro_played = False
 
         # Startscreen settings
@@ -104,21 +106,17 @@ class Game():
     def __ready_screen(self):
         # Draw methods, be aware of the sequence!
         self.__map.draw_candy()
-        self.__map.draw_startpacman(self.__map.get_pacman_start())
+        self.__pacman.draw_startpacman()
         self.__map.draw_text("READY!", 11, 20, (255, 238, 0))
-        score = self.__read_highscores()
-        if len(score) != 0:
-            self.__map.draw_text(score[0], 11, 1)
+        self.draw_score()
         self.__map.draw_oneup()
         pg.display.update()
         self.clock.tick(60)
-
         # Music methods
         if not (self.__intro_played):
             self.SONG_END = pg.USEREVENT + 1
             pg.mixer.music.set_endevent(self.SONG_END)
-            pg.mixer.music.load("res/files/music/pacman-beginning/pacman_beginning.wav")
-            pg.mixer.music.play()
+            self.music_player.play_music("pacman-beginning/pacman_beginning.wav")
             self.__intro_played = True
         # Event check, quit event check first
         self.__check_quit_events()
@@ -128,12 +126,7 @@ class Game():
     def __play_screen(self):
         self.__game_display.fill(black)
         self.__map.draw_candy()
-        score = self.__read_highscores()
-        if len(score) != 0:
-            self.__map.draw_text(score[0], 11, 1)
-
-        for ghost in self.__ghosts:
-            ghost.check_caught()
+        self.draw_score()
 
         if not self.__ghost_caught:
             self.__pacman.move()
@@ -143,12 +136,10 @@ class Game():
             # Start frightened timer
             self.start_time_frightened = pg.time.get_ticks()
 
+            self.frightened_mode = True
             for ghost in self.__ghosts:
                 # set_frightened() to display blue (frightened) ghosts
-                self.frightened_mode = True
-                ghost.set_speed(Ghost.frightened_speed)
-                ghost.set_frightened(True)
-                ghost.frightened()
+                ghost.set_frightend_mode()
 
             # Reset to False, this if-block only has to be run once every supercandy
             self.__pacman.supercandy_eaten = False
@@ -180,7 +171,7 @@ class Game():
         # Frightened_mode = True : ghosts use frightened()
         else:
             self.frightened_timer = pg.time.get_ticks() - self.start_time_frightened
-            frightened_timer_mod = 1 - (250 - self.__map.get_candy_amount())/500.0
+            frightened_timer_mod = 1 - (250 - self.__map.get_candy_amount()) / 500.0
             if (self.frightened_timer < 10000 * frightened_timer_mod):
                 for ghost in self.__ghosts:
                     if ghost.get_gostart():
@@ -201,7 +192,7 @@ class Game():
         self.__map.draw_oneup()
         self.clock.tick(50)
         pg.display.update()
-        self.__play_background_music()
+        self.music_player.play_background_music()
 
         # Event check, quit event check first
         self.__check_move_events()
@@ -216,8 +207,7 @@ class Game():
             self.__gamemode = 4  # reset the game: ghosts in center and pacman in middle
             # each time pac-man gets caught,this song will be played if he has no lifes anymore this somng will play in game_over_screen
             if (self.__pacman.get_lifes()):
-                pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
-                pg.mixer.music.play()
+                self.music_player.play_music("pacman-death/pacman_death.wav")
                 deathco = self.__pacman.get_coord()
                 self.__map.draw_pacmandeathani(deathco)
 
@@ -241,8 +231,7 @@ class Game():
             for ghost in self.__ghosts:
                 ghost.move()
             pg.display.update()
-            pg.mixer.music.load("res/files/music/pacman-eatghost/pacman_eatghost.wav")
-            pg.mixer.music.play()
+            self.music_player.play_music("pacman-eatghost/pacman_eatghost.wav")
             pg.time.delay(1000)
 
     def __reset_screen(self):
@@ -263,8 +252,8 @@ class Game():
             self.__map.draw_oneup()
             pg.display.update()
             deathco = self.__pacman.get_coord()
-            pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
-            pg.mixer.music.play()
+            self.music_player.play_music("pacman-death/pacman_death.wav")
+
             self.__map.draw_pacmandeathani(deathco)
             pg.display.update()
             self.__gamemode = 6
@@ -317,7 +306,6 @@ class Game():
     def reset_ghosts(self):
         for ghost in self.__ghosts:
             ghost.reset_character()
-        # self.__pacman.reset_character()
 
     def __save_highscore(self):
         score = []
@@ -354,10 +342,6 @@ class Game():
     def __reset_highscore(self):
         filename = "res/files/highscore.txt"
         open(filename, "w")
-
-    def __play_background_music(self):
-        if not pg.mixer.Channel(0).get_busy():
-            pg.mixer.Channel(0).play(pg.mixer.Sound("res/files/music/pacman-siren/Pacman_Siren.wav"))
 
     """"Getters"""
 
@@ -428,6 +412,11 @@ class Game():
     def set_ghost_caught(self):
         self.__pacman.set_streak(1)  # adds 1 to the streak
         self.__ghost_caught = True
+
+    def draw_score(self):
+        score = self.__read_highscores()
+        if len(score) != 0:
+            self.__map.draw_text(score[0], 11, 1)
 
     """"Main method"""
 

@@ -22,5 +22,10 @@ class Direction(Enum):
 
     # Getter: returns the first letter of the direction
     def get_letter(self):
-        dicti = {Direction.LEFT: "l", Direction.RIGHT: "r", Direction.DOWN: "d", Direction.UP: "u"}
-        return dicti[self]
+        letters_dict = {Direction.LEFT: "l", Direction.RIGHT: "r", Direction.DOWN: "d", Direction.UP: "u"}
+        return letters_dict[self]
+
+    def get_reverse(self):
+        reverse_dict = {Direction.LEFT: Direction.RIGHT, Direction.RIGHT: Direction.LEFT, Direction.DOWN: Direction.UP,
+                        Direction.UP: Direction.DOWN, Direction.BLOCK: Direction.BLOCK}
+        return reverse_dict[self]

@@ -1,3 +1,5 @@
+import random
+
 import pygame as pg
 
 from Character import Character
@@ -36,8 +38,8 @@ class PacMan(Character):
         self._game.get_game_display().blit(self.__image, self._coord.get_pixel_tuple())
 
     # Initializes Pacman on give start coordinate
-    def draw_startpacman(self, coordinate):
-        co = coordinate.get_pixel_tuple()
+    def draw_startpacman(self, coordinate=None):
+        co = coordinate.get_pixel_tuple() if coordinate is not None else self._coord.get_pixel_tuple()
         self._game.get_game_display().blit(self.__image, (co[0] - 8, co[1]))
 
     """"Move method"""
@@ -210,5 +212,5 @@ class PacMan(Character):
     # Does move Pac-Man to original start coordinate and sets the direction  LEFT
     def reset_character(self):
         super().reset_character()
-        self._direction = Direction.LEFT
+        self._direction = [Direction.LEFT, Direction.RIGHT][random.randint(0, 1)]
         self.__change_direction = None

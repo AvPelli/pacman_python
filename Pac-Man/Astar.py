@@ -111,17 +111,16 @@ class Astar():
         coord_as_tuple = coord.get_coord_tuple()
         min = 1000
         result = None
-        for tpl in self.graph.keys():
-            hulp = self.manhattan_distance(coord_as_tuple, tpl)
+        for tuple in self.graph.keys():
+            hulp = self.manhattan_distance(coord_as_tuple, tuple)
             if hulp < min:
                 min = hulp
-                result = tpl
+                result = tuple
         return Coordinate(result[0], result[1])
 
     # Gives the first direction from the calculated path
     def get_direction(self, start, goal):
         pacCoord = self.pacman.get_coord()
-
         if (start == goal and goal != pacCoord):
             return self.choose_random(start)
         path = self.find_path(start, goal)
