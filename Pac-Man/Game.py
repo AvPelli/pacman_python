@@ -209,6 +209,7 @@ class Game():
 
         if (self.__pacman_caught):
             pg.mixer.Channel(0).stop()
+            pg.time.delay(500)
             lifes = self.__pacman.get_lifes() - 1
             self.__pacman.set_lifes(lifes)
             self.__pacman_caught = False
@@ -217,11 +218,13 @@ class Game():
             if (self.__pacman.get_lifes()):
                 pg.mixer.music.load("res/files/music/pacman-death/pacman_death.wav")
                 pg.mixer.music.play()
+                deathco = self.__pacman.get_coord()
+                self.__map.draw_pacmandeathani(deathco)
 
         if not (self.__pacman.get_lifes()):
             self.__gamemode = 5  # no more lifes left: game over
 
-        if (len(self.__candies) == 0):
+        if len(self.__candies) == 0:
             self.__gamemode = 7
 
         if self.__next:  # Only possible in the next loop
