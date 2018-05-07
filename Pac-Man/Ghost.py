@@ -48,7 +48,6 @@ class Ghost(Character):
         self.ghost_scatter_coord = [self.blinky_dict, self.pinky_dict, self.inky_dict, self.clyde_dict]
 
     def imagechooser(self):
-
         self.__image = pg.image.load("res/ghost/" + Ghost.image_names[self.__id] + "/start.png")
 
     def start_timer_frightend(self):
@@ -56,14 +55,17 @@ class Ghost(Character):
         self.__frightened = True
 
     def move_selector(self):
-        if self.__frightened and not self.__movestart:
+        if self.__movestart:
+            self.move_to_start()
+        elif self.__frightened and not self.__movestart:
             self._speed = Ghost.frightened_speed
-            self.frightened()
             self.frightened_timer = pg.time.get_ticks() - self.start_time_frightened
-            frightened_timer_mod = 1 - (250 - self._game.get_candy_amount()) / 500.0
-            if (self.frightened_timer > 10000 * frightened_timer_mod):
+            self.frightened_timer_mod = (1 - (250 - self._game.get_candy_amount()) / 500.0) * 10000
+            self.frightened()
+            if (self.frightened_timer > self.frightened_timer_mod):
                 self.__frightened = False
                 self._game.reset_pacman_streak()
+                self._speed = self._normal_speed
                 self.start_time_scatter = pg.time.get_ticks()
                 self.imagechooser()
         else:
@@ -80,8 +82,6 @@ class Ghost(Character):
     def move(self):
         if self._moving_between_tiles:
             self.__move_between_tiles()
-        elif self.get_gostart():
-            self.move_to_start()
         else:
             check_next_coord, jump = self._calculate_new_coord()
             if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours():
@@ -101,15 +101,12 @@ class Ghost(Character):
     def scatter(self):
         if self._moving_between_tiles:
             self.__move_between_tiles()
-        elif (self.get_gostart()):
-            self.move_to_start()
         else:
             check_next_coord, jump = self._calculate_new_coord()
             self.__update_target_tile_scatter(check_next_coord)
             if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours():
                 path = self.astar.find_path(self._coord, self.__target_tile)
                 self._direction = self.astar.dictionary[path[0]]
-
             if jump:
                 self._set_on_opposite_side()
             self._moving_between_tiles = True
@@ -119,8 +116,6 @@ class Ghost(Character):
     def frightened(self):
         if self._moving_between_tiles:
             self.__move_between_tiles()
-        elif (self.get_gostart()):
-            self.move_to_start()
         else:
             check_next_coord, jump = self._calculate_new_coord()
             previous_direction = deepcopy(self._direction)
@@ -144,7 +139,7 @@ class Ghost(Character):
             self._direction = self.astar.get_direction(self._coord, self.start_coord)
 
             self._moving_between_tiles = True
-            self.go_eyes()
+            self.display_eyes()
             self._draw_character(self._coord, self.__image)
 
             if self._coord == self.start_coord:
@@ -235,7 +230,6 @@ class Ghost(Character):
                     # Make the ghost start moving to the center
                     self.__movestart = True
 
-
     def get_coord(self):
         return self._coord
 
@@ -257,12 +251,17 @@ class Ghost(Character):
 
     def frightend_image(self):
         self.__image = pg.image.load("res/pacmanghost/bluepacman{number}.png".format(number=self.__frightenedimg % 4))
-        self.ticks += 1
-        if self.ticks >= 3:
-            self.__frightenedimg = self.__frightenedimg + 1
-            self.ticks = 0
+        time_remaining = self.frightened_timer_mod - self.frightened_timer
+        if time_remaining < self.frightened_timer_mod / 2:
+            self.ticks += 1
+            waarde = 2 if time_remaining < self.frightened_timer_mod / 2 and time_remaining > self.frightened_timer_mod / 4 else 1
+            if self.ticks >= waarde:
+                self.__frightenedimg = self.__frightenedimg + 1
+                self.ticks = 0
+        else:
+            self.__frightenedimg = self.__frightenedimg + 2
 
-    def go_eyes(self):
+    def display_eyes(self):
         directionimg = self._direction.get_letter()
         self.__image = pg.image.load("res/eyes/" + directionimg + ".png")
         self._speed = 6
@@ -293,10 +292,5 @@ class Ghost(Character):
     def is_eaten(self):
         return self.__eaten
 
-    def get_gostart(self):
+    def get_movestart(self):
         return self.__movestart
-
-    def set_frightend_mode(self):
-        self.set_speed(Ghost.frightened_speed)
-        self.set_frightened(True)
-        self.frightened()

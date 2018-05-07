@@ -4,7 +4,7 @@ import pygame as pg  # Importeren van pg module
 
 from Direction import Direction
 from Ghost import Ghost
-from Map import Map
+from Maze import Maze
 from MusicPlayer import MusicPlayer
 from PacMan import PacMan
 
@@ -51,18 +51,18 @@ class Game():
         self.__mainmenu_exit = False
 
         # Game objects
-        self.__map = Map(self, resolution[0], resolution[1], tile_size)
+        self.__maze = Maze(self, resolution[0], resolution[1], tile_size)
         self.clock = pg.time.Clock()
-        self.__candies = self.__map.get_candy_dict()
-        self.__pacman = PacMan(self, self.__map.get_pacman_start(), self.__map.get_coord_dict(), old_score)
+        self.__candies = self.__maze.get_candy_dict()
+        self.__pacman = PacMan(self, self.__maze.get_pacman_start(), self.__maze.get_coord_dict(), old_score)
 
         self.__ghosts = []
-        starting_positions = self.__map.get_ghosts_start()
+        starting_positions = self.__maze.get_ghosts_start()
         for i in starting_positions:
-            self.__ghosts.append(Ghost(self, i, self.__map.get_coord_dict()))
+            self.__ghosts.append(Ghost(self, i, self.__maze.get_coord_dict()))
 
         # Link objects
-        self.__map.set_pacman(self.__pacman)
+        self.__maze.set_pacman(self.__pacman)
         # Score
         score = self.__read_highscores()
         if (len(score) != 0):
@@ -95,7 +95,7 @@ class Game():
         if (score != 0):
             for i in range(len(score)):
                 text = score[i].strip()
-                self.__map.draw_text(text, 12 + (self.__max_digits_score - len(text)), 21 + i, (150, 50, 150))
+                self.__maze.draw_text(text, 12 + (self.__max_digits_score - len(text)), 21 + i, (150, 50, 150))
         pg.display.flip()
 
         self.clock.tick(3)
@@ -107,10 +107,10 @@ class Game():
     # Setting up the game - press a  KEY to start
     def __ready_screen(self):
         # Draw methods, be aware of the sequence!
-        self.__map.draw_mapwithcandy()
+        self.__maze.draw_mapwithcandy()
         self.__pacman.draw_startpacman()
-        self.__map.draw_text("READY!", 11, 20, (255, 238, 0))
-        self.__map.draw_todisplay()
+        self.__maze.draw_text("READY!", 11, 20, (255, 238, 0))
+        self.__maze.draw_todisplay()
 
         self.clock.tick(60)
 
@@ -128,7 +128,7 @@ class Game():
     # Gaming
     def __play_screen(self):
         self.__game_display.fill(black)
-        self.__map.draw_candy()
+        self.__maze.draw_candy()
         self.draw_score()
 
         self.__pacman.move()
@@ -142,7 +142,7 @@ class Game():
         for ghost in self.__ghosts:
             ghost.move_selector()
 
-        self.__map.draw_oneup()
+        self.__maze.draw_oneup()
         self.clock.tick(50)
         pg.display.update()
         self.music_player.play_background_music()
@@ -160,7 +160,7 @@ class Game():
 
         if self.__ghost_caught:
             self.__ghost_caught = False
-            self.__map.draw_candy()
+            self.__maze.draw_candy()
             pg.display.update()
             pg.time.delay(1000)
 
@@ -168,10 +168,10 @@ class Game():
         self.__pacman.reset_streak()
 
     def draw_pacman_death(self, coord):
-        self.__map.draw_pacmandeathani(coord)
+        self.__maze.draw_pacmandeathani(coord)
 
     def get_candy_amount(self):
-        return self.__map.get_candy_amount()
+        return self.__maze.get_candy_amount()
 
     def __reset_screen(self):
         pg.time.delay(1000)  # wait 1 second
@@ -187,32 +187,32 @@ class Game():
         if not wait:
             pg.time.delay(1000)
             self.__game_display.fill(black)
-            self.__map.draw_candy()
-            self.__map.draw_oneup()
+            self.__maze.draw_candy()
+            self.__maze.draw_oneup()
             pg.display.update()
             deathco = self.__pacman.get_coord()
             self.music_player.play_music("pacman-death/pacman_death.wav")
 
-            self.__map.draw_pacmandeathani(deathco)
+            self.__maze.draw_pacmandeathani(deathco)
             pg.display.update()
             self.__gamemode = 6
             self.__save_highscore()
         else:
             score = self.__read_highscores()
             if len(score) != 0:
-                self.__map.draw_text(score[0], 11, 1)
+                self.__maze.draw_text(score[0], 11, 1)
                 pg.display.update()
             pg.time.delay(500)
             self.__game_display.fill(black)
-            self.__map.change_wall_color()
-            self.__map.draw_map()
-            self.__map.draw_text("LOSER!", 11, 14, (255, 238, 0))
-            self.__map.draw_text("PRESS X TO RESTART GAME", 3, 17, (255, 0, 0))
+            self.__maze.change_wall_color()
+            self.__maze.draw_map()
+            self.__maze.draw_text("LOSER!", 11, 14, (255, 238, 0))
+            self.__maze.draw_text("PRESS X TO RESTART GAME", 3, 17, (255, 0, 0))
             pg.display.update()
             pg.time.delay(500)
-            self.__map.change_wall_color(won=False)
-            self.__map.draw_map()
-            self.__map.draw_text("LOSER!", 11, 14, (255, 238, 0))
+            self.__maze.change_wall_color(won=False)
+            self.__maze.draw_map()
+            self.__maze.draw_text("LOSER!", 11, 14, (255, 238, 0))
             pg.display.update()
             self.__check_x_event(reset=True)
 
@@ -226,20 +226,20 @@ class Game():
         self.__save_highscore()
         score = self.__read_highscores()
         if len(score) != 0:
-            self.__map.draw_text(score[0], 11, 1)
+            self.__maze.draw_text(score[0], 11, 1)
             pg.display.update()
 
         pg.time.delay(1000)
         self.__game_display.fill(black)
-        self.__map.change_wall_color()
-        self.__map.draw_map()
-        self.__map.draw_text("YOU HAVE WON!", 8, 14, (255, 238, 0))
-        self.__map.draw_text("PRESS X TO RESTART GAME", 3, 17, (255, 0, 0))
+        self.__maze.change_wall_color()
+        self.__maze.draw_map()
+        self.__maze.draw_text("YOU HAVE WON!", 8, 14, (255, 238, 0))
+        self.__maze.draw_text("PRESS X TO RESTART GAME", 3, 17, (255, 0, 0))
         pg.display.update()
         pg.time.delay(1000)
-        self.__map.change_wall_color(won=False)
-        self.__map.draw_map()
-        self.__map.draw_text("YOU HAVE WON!", 8, 14, (255, 238, 0))
+        self.__maze.change_wall_color(won=False)
+        self.__maze.draw_map()
+        self.__maze.draw_text("YOU HAVE WON!", 8, 14, (255, 238, 0))
         pg.display.update()
 
         self.__check_x_event(reset=True, won=True)
@@ -292,11 +292,11 @@ class Game():
 
     # Getter: returns max amount of colums and rows
     def get_max(self):
-        return self.__map.get_tiles_horiz_size() - 1, self.__map.get_tiles_vert_size() - 1
+        return self.__maze.get_tiles_horiz_size() - 1, self.__maze.get_tiles_vert_size() - 1
 
     # Getters: return map
     def get_map(self):
-        return self.__map
+        return self.__maze
 
     def get_pacman(self):
         return self.__pacman
@@ -335,7 +335,7 @@ class Game():
     def __check_beginningmusic_events(self):
         for event in pg.event.get(self.SONG_END):
             self.__gamemode = 3
-            self.__map.draw_text('', 11, 20)
+            self.__maze.draw_text('', 11, 20)
 
     def __check_x_event(self, reset=False, won=False):
         for event in pg.event.get(pg.KEYDOWN):
@@ -362,7 +362,7 @@ class Game():
     def draw_score(self):
         score = self.__read_highscores()
         if len(score) != 0:
-            self.__map.draw_text(score[0], 11, 1)
+            self.__maze.draw_text(score[0], 11, 1)
 
     """"Main method"""
 

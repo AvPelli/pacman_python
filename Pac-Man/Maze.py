@@ -6,7 +6,7 @@ from Gate import Gate
 from SuperCandy import SuperCandy
 
 
-class Map():
+class Maze():
 
     # Constructor of Map
 
