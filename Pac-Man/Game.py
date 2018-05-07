@@ -105,19 +105,20 @@ class Game():
     # Setting up the game - press a  KEY to start
     def __ready_screen(self):
         # Draw methods, be aware of the sequence!
-        self.__map.draw_candy()
+        self.__map.draw_mapwithcandy()
         self.__pacman.draw_startpacman()
         self.__map.draw_text("READY!", 11, 20, (255, 238, 0))
-        self.draw_score()
-        self.__map.draw_oneup()
-        pg.display.update()
+        self.__map.draw_todisplay()
+
         self.clock.tick(60)
+
         # Music methods
         if not (self.__intro_played):
             self.SONG_END = pg.USEREVENT + 1
             pg.mixer.music.set_endevent(self.SONG_END)
             self.music_player.play_music("pacman-beginning/pacman_beginning.wav")
             self.__intro_played = True
+
         # Event check, quit event check first
         self.__check_quit_events()
         self.__check_beginningmusic_events()

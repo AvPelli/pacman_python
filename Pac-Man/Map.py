@@ -134,6 +134,19 @@ class Map():
         for candy in self.__candy_dict.values():
             candy.draw(candy.get_coord())
 
+    def draw_mapwithcandy(self):
+        self.draw_map()
+        self.draw_candy()
+
+    def draw_allsteadyparts(self):
+        self.draw_mapwithcandy()
+        self.draw_score()
+        self.draw_oneup()
+
+    # Updates the parts that are blit to the screen parts  of the screen for software displays
+    def draw_todisplay(self):
+        pg.display.update()
+
     # This method will change the color of the walls
     def change_wall_color(self, won=True):
         filename = "res/files/tile_codering.txt"
