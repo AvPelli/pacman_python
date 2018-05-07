@@ -9,12 +9,12 @@ from SuperCandy import SuperCandy
 
 class PacMan(Character):
     # Constructor of PacMan
-    def __init__(self, game, coordinate, coord_dict):
+    def __init__(self, game, coordinate, coord_dict, old_score):
         # Start variables
         super().__init__(PIXELSIZE=16, speed=2, moving_pos=-8,
                          direction=Direction.RIGHT, game=game,
                          coordinate=coordinate)
-        self.__score = 0
+        self.__score = old_score
         self.lifes = 4
         self.__turnaround = False
 

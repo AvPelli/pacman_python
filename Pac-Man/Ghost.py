@@ -176,7 +176,7 @@ class Ghost(Character):
         if (self.astar.manhattan_distance(self._coord.get_coord_tuple(),
                                           self.__target_tile.get_coord_tuple()) < 1):
             self.__scatter_state = (self.__scatter_state + 1) % len(dictionary.keys())
-
+        self.__target_tile = self.astar.get_closest_tile(self.__target_tile)
         return self.__target_tile
 
     def __check_neighbours(self):

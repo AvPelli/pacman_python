@@ -25,8 +25,8 @@ class Game():
         self.__init_game()
 
     # Initialise the game. It can also be used to reset the game!
-    def __init_game(self):
-        self.__gamemode = 1
+    def __init_game(self, old_score=0):
+        self.__gamemode = 1 if old_score == 0 else 2
         self.__pauze = False
         self.__game_exit = False
         self.__pacman_caught = False
@@ -52,7 +52,7 @@ class Game():
         self.__map = Map(self, resolution[0], resolution[1], tile_size)
         self.clock = pg.time.Clock()
         self.__candies = self.__map.get_candy_dict()
-        self.__pacman = PacMan(self, self.__map.get_pacman_start(), self.__map.get_coord_dict())
+        self.__pacman = PacMan(self, self.__map.get_pacman_start(), self.__map.get_coord_dict(), old_score)
 
         self.__ghosts = []
         starting_positions = self.__map.get_ghosts_start()
@@ -156,7 +156,7 @@ class Game():
             self.scatter_timer = pg.time.get_ticks() - self.start_time_scatter
 
             # Scatter 7 seconds
-            if (self.scatter_timer < 7000):
+            if (self.scatter_timer < 10000000):
                 for ghost in self.__ghosts:
                     ghost.scatter()
 
@@ -404,7 +404,7 @@ class Game():
                 else:
                     self.__game_display.fill(black)
                     pg.display.update()
-                    self.__init_game()
+                    self.__init_game(self.__pacman.get_score())
 
     # Setters that act like events, are triggered in other classes
     def set_pacman_caught(self):
