@@ -190,18 +190,6 @@ class Map():
 
         self.make_gate_list()
 
-    def __init_candies_only(self):
-        map_noborders = self.__map[3:]
-        for y in range(len(map_noborders)):
-            for x in range(len(map_noborders[0])):
-                if map_noborders[y][x] == "f" or map_noborders[y][x] == "D":
-                    self.__coord_dict[(x, y)] = Coordinate(x, y)
-                    coord = self.__coord_dict.get((x, y))
-                    if map_noborders[y][x] == "f":  # Place where candy show be drawn
-                        self.__candy_dict[coord] = (Candy(self.__game_display, coord))
-                    else:
-                        self.__candy_dict[coord] = (SuperCandy(self.__game_display, coord))
-
     # Initialization of a dictionary, every sign is equivalent to a tile image
     def __init_tiles(self):
         filename = "res/files/tile_codering.txt"

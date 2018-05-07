@@ -78,7 +78,7 @@ class Ghost(Character):
             self.move_to_start()
         else:
             check_next_coord, jump = self._calculate_new_coord()
-            self.__update_target_tile_scatter()
+            self.__update_target_tile_scatter(check_next_coord)
             if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours():
                 path = self.astar.find_path(self._coord, self.__target_tile)
                 self._direction = self.astar.dictionary[path[0]]
@@ -167,13 +167,13 @@ class Ghost(Character):
         self.__target_tile = self.astar.get_closest_tile(self.__target_tile)
         return self.__target_tile
 
-    def __update_target_tile_scatter(self):
+    def __update_target_tile_scatter(self, next_coord):
         # the _moving_between_tiles boolean makes the ghost recalculate position to quickly, this function has to slow it down
         # so the ghost doesnt move back and forth without going in a circle
         # this is done by checking if manhattan distance to the target tile is < 1.
         dictionary = self.ghost_scatter_coord[self.__id]
         self.__target_tile = dictionary.get(self.__scatter_state)
-        if (self.astar.manhattan_distance(self._coord.get_coord_tuple(),
+        if (self.astar.manhattan_distance(next_coord,
                                           self.__target_tile.get_coord_tuple()) < 1):
             self.__scatter_state = (self.__scatter_state + 1) % len(dictionary.keys())
         self.__target_tile = self.astar.get_closest_tile(self.__target_tile)
