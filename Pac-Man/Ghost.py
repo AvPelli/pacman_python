@@ -52,6 +52,7 @@ class Ghost(Character):
 
     def start_timer_frightend(self):
         self.start_time_frightened = pg.time.get_ticks()
+        self.__frightenedimg = 0
         self.__frightened = True
 
     def move_selector(self):
@@ -272,6 +273,7 @@ class Ghost(Character):
         self._speed = self._normal_speed
         self.imagechooser()
         self.set_frightened(False)
+        self.__frightenedimg = 0
         self.__eaten = False
         self._direction = Direction.UP
         self._draw_character(self.start_coord, self.__image)
