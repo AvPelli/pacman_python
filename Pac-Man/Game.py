@@ -156,7 +156,7 @@ class Game():
             self.scatter_timer = pg.time.get_ticks() - self.start_time_scatter
 
             # Scatter 7 seconds
-            if (self.scatter_timer < 10000000):
+            if (self.scatter_timer < 7000):
                 for ghost in self.__ghosts:
                     ghost.scatter()
 
@@ -301,7 +301,7 @@ class Game():
         self.__map.draw_text("YOU HAVE WON!", 8, 14, (255, 238, 0))
         pg.display.update()
 
-        self.__check_x_event(reset=True)
+        self.__check_x_event(reset=True, won=True)
         self.__check_quit_events()
 
     def reset_ghosts(self):
@@ -322,7 +322,7 @@ class Game():
             print("Creating new highscore file...")
         score.sort()
         score.reverse()
-        new_score = []  # This list keeps the top max_count new high scores. It cannot be higher than max_count
+        new_score = []  # This list keeps the top max_count new high scores. It cannot be higher than max_amount
         max_amount = 5
         if len(score) < 5:
             max_amount = len(score)
@@ -396,15 +396,19 @@ class Game():
             self.__gamemode = 3
             self.__map.draw_text('', 11, 20)
 
-    def __check_x_event(self, reset=False):
+    def __check_x_event(self, reset=False, won=False):
         for event in pg.event.get(pg.KEYDOWN):
             if event.key == pg.K_x:
                 if not reset:
-                    self.__gamemode = 2
+                    self.__gamemode = 3
                 else:
                     self.__game_display.fill(black)
                     pg.display.update()
-                    self.__init_game(self.__pacman.get_score())
+                    if won:
+                        self.__won_counter += 1
+                        self.__init_game(self.__pacman.get_score())
+                    else:
+                        self.__init_game()
 
     # Setters that act like events, are triggered in other classes
     def set_pacman_caught(self):
