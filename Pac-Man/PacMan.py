@@ -187,6 +187,16 @@ class PacMan(Character):
     def reset_streak(self):
         self.__streak = 0
 
+    def decrease_lifes(self):
+        self.lifes -= 1
+        if self.lifes <= 0:
+            self._game.set_gamemode(5)
+        else:
+            self._game.set_gamemode(4)
+            self._game.music_player.play_music("pacman-death/pacman_death.wav")
+            self._game.draw_pacman_death(self._coord)
+
+
     """"Getters"""
 
     # Getter: Returns the image if needs to use for the give direction (And animation)

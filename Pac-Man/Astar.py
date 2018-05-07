@@ -18,7 +18,7 @@ class Astar():
         self.dictionary = {"S": Direction.DOWN, "W": Direction.LEFT, "E": Direction.RIGHT, "N": Direction.UP,
                            "B": Direction.BLOCK}
         self.reverse_dict = {v: k for k, v in self.dictionary.items()}
-        # self.test_graph()
+
 
     # Makes a maze of the given file
     # A 1 stands for a wall or something pacman can't move through
@@ -42,7 +42,6 @@ class Astar():
     def make_graph(self):
         maze = self.maze
         height, width = len(maze), len(maze[0])
-        print(width)
         graph = {(j, i): [] for j in range(width) for i in range(height) if not maze[i][j]}
         for x, y in graph.keys():
             if Coordinate(x, y) not in self.transporters:
@@ -102,9 +101,12 @@ class Astar():
                 return path if len(path) > 0 else "B"
             if current_cell not in visited:
                 visited.add(current_cell)
-                for direction, neighbour in self.graph[current_cell]:
-                    heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1,
+                try:
+                    for direction, neighbour in self.graph[current_cell]:
+                        heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1,
                                         path + direction, neighbour))
+                except:
+                    print()
         return "NO PATH"
 
     def get_closest_tile(self, coord):

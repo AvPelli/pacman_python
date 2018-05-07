@@ -131,66 +131,16 @@ class Game():
         self.__map.draw_candy()
         self.draw_score()
 
-        if not self.__ghost_caught:
-            self.__pacman.move()
+        self.__pacman.move()
 
         if self.__pacman.is_super_candy_eaten():
-
-            # Start frightened timer
-            self.start_time_frightened = pg.time.get_ticks()
-
-            self.frightened_mode = True
             for ghost in self.__ghosts:
-                # set_frightened() to display blue (frightened) ghosts
-                ghost.set_frightend_mode()
-
+                ghost.start_timer_frightend()
             # Reset to False, this if-block only has to be run once every supercandy
             self.__pacman.supercandy_eaten = False
 
-        # Frightened_mode = False : ghosts use move() and scatter()
-        if not self.frightened_mode:
-            # Count time for scatter mode
-            # First time this function gets called it will set self.scatter_time to 0
-            if (self.__first_time_loop):
-                self.__first_time_loop = False
-                self.start_time_scatter = pg.time.get_ticks()
-
-            self.scatter_timer = pg.time.get_ticks() - self.start_time_scatter
-
-            # Scatter 7 seconds
-            if (self.scatter_timer < 7000):
-                for ghost in self.__ghosts:
-                    ghost.scatter()
-
-            # Chase 20 seconds
-            elif (self.scatter_timer < 27000):
-                for ghost in self.__ghosts:
-                    ghost.move()
-
-            else:
-                # Reset timer
-                self.start_time_scatter = pg.time.get_ticks()
-
-        # Frightened_mode = True : ghosts use frightened()
-        else:
-            self.frightened_timer = pg.time.get_ticks() - self.start_time_frightened
-            frightened_timer_mod = 1 - (250 - self.__map.get_candy_amount()) / 500.0
-            if (self.frightened_timer < 10000 * frightened_timer_mod):
-                for ghost in self.__ghosts:
-                    if ghost.get_gostart():
-                        ghost.move_to_start()
-                    elif not ghost.is_frightened():
-                        ghost.move()
-                    else:
-                        ghost.frightened()
-
-            else:
-                self.frightened_mode = False
-                self.__pacman.reset_streak()
-                for ghost in self.__ghosts:
-                    ghost.set_frightened(False)
-                    ghost.imagechooser()
-                    ghost.set_speed(ghost.get_normal_speed())
+        for ghost in self.__ghosts:
+            ghost.move_selector()
 
         self.__map.draw_oneup()
         self.clock.tick(50)
@@ -202,40 +152,26 @@ class Game():
         self.__check_quit_events()
 
         if (self.__pacman_caught):
-            pg.mixer.Channel(0).stop()
-            pg.time.delay(500)
-            lifes = self.__pacman.get_lifes() - 1
-            self.__pacman.set_lifes(lifes)
+            self.__pacman.decrease_lifes()
             self.__pacman_caught = False
-            self.__gamemode = 4  # reset the game: ghosts in center and pacman in middle
-            # each time pac-man gets caught,this song will be played if he has no lifes anymore this somng will play in game_over_screen
-            if (self.__pacman.get_lifes()):
-                self.music_player.play_music("pacman-death/pacman_death.wav")
-                deathco = self.__pacman.get_coord()
-                self.__map.draw_pacmandeathani(deathco)
-
-        if not (self.__pacman.get_lifes()):
-            self.__gamemode = 5  # no more lifes left: game over
 
         if len(self.__candies) == 0:
             self.__gamemode = 7
 
-        if self.__next:  # Only possible in the next loop
-            print(self.__next, print("next"))
-            for ghost in self.__ghosts:
-                ghost.set_eaten(False)  # Ghosts eaten -> false, ghost not eaten -> still false
-            self.__next = False
-
-        if (self.__ghost_caught):
-            print(self.__ghost_caught, "ghost caught")
+        if self.__ghost_caught:
             self.__ghost_caught = False
-            self.__next = True
             self.__map.draw_candy()
-            for ghost in self.__ghosts:
-                ghost.move()
             pg.display.update()
-            self.music_player.play_music("pacman-eatghost/pacman_eatghost.wav")
             pg.time.delay(1000)
+
+    def reset_pacman_streak(self):
+        self.__pacman.reset_streak()
+
+    def draw_pacman_death(self, coord):
+        self.__map.draw_pacmandeathani(coord)
+
+    def get_candy_amount(self):
+        return self.__map.get_candy_amount()
 
     def __reset_screen(self):
         pg.time.delay(1000)  # wait 1 second
@@ -282,6 +218,9 @@ class Game():
 
         # Event check, quit event check first
         self.__check_quit_events()
+
+    def set_gamemode(self, waarde):
+        self.__gamemode = waarde
 
     def __game_won(self):
         self.__save_highscore()

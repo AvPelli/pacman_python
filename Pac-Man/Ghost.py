@@ -35,7 +35,7 @@ class Ghost(Character):
 
         self.__eaten = False
         self.__movestart = False
-
+        self.start_time_scatter = pg.time.get_ticks()
         self.__scatter_state = 0
         # blinky scattercoordinates
         self.blinky_dict = {0: Coordinate(21, 5), 1: Coordinate(26, 5), 2: Coordinate(26, 1), 3: Coordinate(21, 1)}
@@ -48,7 +48,34 @@ class Ghost(Character):
         self.ghost_scatter_coord = [self.blinky_dict, self.pinky_dict, self.inky_dict, self.clyde_dict]
 
     def imagechooser(self):
+
         self.__image = pg.image.load("res/ghost/" + Ghost.image_names[self.__id] + "/start.png")
+
+    def start_timer_frightend(self):
+        self.start_time_frightened = pg.time.get_ticks()
+        self.__frightened = True
+
+    def move_selector(self):
+        if self.__frightened and not self.__movestart:
+            self._speed = Ghost.frightened_speed
+            self.frightened()
+            self.frightened_timer = pg.time.get_ticks() - self.start_time_frightened
+            frightened_timer_mod = 1 - (250 - self._game.get_candy_amount()) / 500.0
+            if (self.frightened_timer > 10000 * frightened_timer_mod):
+                self.__frightened = False
+                self._game.reset_pacman_streak()
+                self.start_time_scatter = pg.time.get_ticks()
+                self.imagechooser()
+        else:
+            self.scatter_timer = pg.time.get_ticks() - self.start_time_scatter
+            if self.scatter_timer < 7000:
+                self.scatter()
+            # Chase 20 seconds
+            elif self.scatter_timer < 27000:
+                self.move()
+            else:
+                # Reset timer
+                self.start_time_scatter = pg.time.get_ticks()
 
     def move(self):
         if self._moving_between_tiles:
@@ -68,7 +95,7 @@ class Ghost(Character):
             if jump:
                 self._set_on_opposite_side()
             self._moving_between_tiles = True
-            self.check_frightened()
+            # self.check_frightened()
             self._draw_character(self._coord, self.__image)
 
     def scatter(self):
@@ -86,7 +113,7 @@ class Ghost(Character):
             if jump:
                 self._set_on_opposite_side()
             self._moving_between_tiles = True
-            self.check_frightened()
+            # self.check_frightened()
             self._draw_character(self._coord, self.__image)
 
     def frightened(self):
@@ -114,9 +141,7 @@ class Ghost(Character):
         if self._moving_between_tiles:
             self.__move_between_tiles()
         else:
-            check_next_coord, jump = self._calculate_new_coord()
-            if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours():
-                self._direction = self.astar.get_direction(self._coord, self.start_coord)
+            self._direction = self.astar.get_direction(self._coord, self.start_coord)
 
             self._moving_between_tiles = True
             self.go_eyes()
@@ -199,14 +224,17 @@ class Ghost(Character):
     def check_caught(self):
         if self._coord == self._game.get_pacman_coord() and not self.__movestart:
             if not self.__frightened:
+                pg.mixer.Channel(0).stop()
+                pg.time.delay(500)
                 self._game.set_pacman_caught()
             else:
                 if not self.__movestart:
                     self._game.set_ghost_caught()
+                    self._game.music_player.play_music("pacman-eatghost/pacman_eatghost.wav")
                     self.set_eaten(True, self._game.get_pacman().get_streak())
                     # Make the ghost start moving to the center
                     self.__movestart = True
-                    self.set_speed(6)
+
 
     def get_coord(self):
         return self._coord
@@ -225,9 +253,9 @@ class Ghost(Character):
 
     def check_frightened(self):
         if self.__frightened:
-            self.go_frightened()
+            self.frightend_image()
 
-    def go_frightened(self):
+    def frightend_image(self):
         self.__image = pg.image.load("res/pacmanghost/bluepacman{number}.png".format(number=self.__frightenedimg % 4))
         self.ticks += 1
         if self.ticks >= 3:
@@ -237,6 +265,7 @@ class Ghost(Character):
     def go_eyes(self):
         directionimg = self._direction.get_letter()
         self.__image = pg.image.load("res/eyes/" + directionimg + ".png")
+        self._speed = 6
 
     def reset_character(self):
         super().reset_character()
@@ -255,6 +284,7 @@ class Ghost(Character):
             scoreimg = str(score) + ".png"
             self._game.get_pacman().add_score(score)
             self.__image = pg.image.load("res/scores/" + scoreimg)
+            self._speed = 6
             print(scoreimg)
 
     def is_frightened(self):
