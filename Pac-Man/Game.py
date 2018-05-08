@@ -15,17 +15,26 @@ clock = pg.time.Clock()
 
 
 class Game():
-    # Constructor of Game
+    """
+    Constructor of Game\n
+    This class is the core of the game
+    """
     def __init__(self):
-        # Init of pygame
+        """
+        Initialises the Pygame module and the pacman game
+        """
         pg.init()
         pg.display.set_caption('Pac-Man')
         # Game variables
         self.__game_display = pg.display.set_mode(resolution)
         self.__init_game()
 
-    # Initialise the game. It can also be used to reset the game!
     def __init_game(self, old_score=0):
+        """
+        Initialise the game. It can also be used to reset the game!\n
+        :param old_score: Remembers the old score of the past level\n
+        :return: void
+        """
         # when resetting the game, it is important to know if we have advanced to the next level or not (in that case,
         # the starting screen won't be shown). this is done by checking if we already have a score
         self.__gamemode = 1 if old_score == 0 else 2
@@ -71,6 +80,10 @@ class Game():
             self.__max_digits_score = 0
 
     def __gamemode_handler(self):
+        """
+        Checks which game mode it needs to activate\n
+        :return: void
+        """
         if self.__gamemode == 1:
             self.__start_screen()
         elif self.__gamemode == 2:
@@ -86,8 +99,11 @@ class Game():
         elif self.__gamemode == 7:
             self.__game_won()
 
-    # Startscreen mode - game displays startscreen
     def __start_screen(self):
+        """
+        Startscreen mode - game displays startscreen\n
+        :return: void
+        """
         startscreen_image = pg.image.load("res/startscreen/startscreen.jpg")
         self.__game_display.blit(startscreen_image, (0, 125))
         # Print highscore on the screen
@@ -104,8 +120,11 @@ class Game():
         self.__check_x_event()
         self.__check_quit_events()
 
-    # Setting up the game - press a  KEY to start
     def __ready_screen(self):
+        """
+        Setting up the game - press a  KEY to start\n
+        :return: void
+        """
         # Draw methods, be aware of the sequence!
         self.__maze.draw_mapwithcandy()
         self.__pacman.draw_startpacman()
@@ -127,6 +146,10 @@ class Game():
 
     # Gaming
     def __play_screen(self):
+        """
+        The playing screen.\n
+        :return: void
+        """
         self.__game_display.fill(black)
         self.__maze.draw_candy()
         self.draw_score()
@@ -165,15 +188,31 @@ class Game():
             pg.time.delay(1000)
 
     def reset_pacman_streak(self):
+        """
+        Resets pac-man's score\n
+        :return:  void
+        """
         self.__pacman.reset_streak()
 
     def draw_pacman_death(self, coord):
+        """
+        When pac-man dies, it will display a dead animation\n
+        :param coord: type Coordinate\n
+        :return: void
+        """
         self.__maze.draw_pacmandeathani(coord)
 
     def get_candy_amount(self):
+        """
+         Getter\n
+         :return: int
+        """
         return self.__maze.get_candy_amount()
 
     def __reset_screen(self):
+        """
+        :return: void
+        """
         pg.time.delay(1000)  # wait 1 second
 
         # pacman back to the starting position
@@ -184,6 +223,11 @@ class Game():
         self.__gamemode = 3
 
     def __gameover_screen(self, wait=False):
+        """
+        When pac-man loses all his lifes, the game will be over.\n
+        :param wait: By default False\n
+        :return: void
+        """
         if not wait:
             pg.time.delay(1000)
             self.__game_display.fill(black)
@@ -220,9 +264,18 @@ class Game():
         self.__check_quit_events()
 
     def set_gamemode(self, waarde):
+        """
+         Choose a game mode\n
+        :param waarde: type: int
+        :return: void
+        """
         self.__gamemode = waarde
 
     def __game_won(self):
+        """
+        The winning screen\n
+        :return: void
+        """
         self.__save_highscore()
         score = self.__read_highscores()
         if len(score) != 0:
@@ -387,6 +440,5 @@ class Game():
         pg.quit()
         quit()
 
-
-game = Game()
+game=Game()
 game.run()
