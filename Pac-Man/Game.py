@@ -1,7 +1,6 @@
 from copy import deepcopy
 
 import pygame as pg  # Importeren van pg module
-
 from Direction import Direction
 from Ghost import Ghost
 from Maze import Maze
@@ -19,10 +18,12 @@ class Game():
     Constructor of Game\n
     This class is the core of the game
     """
+
     def __init__(self):
         """
         Initialises the Pygame module and the pacman game
         """
+
         pg.init()
         pg.display.set_caption('Pac-Man')
         # Game variables
@@ -43,6 +44,7 @@ class Game():
         self.__pacman_caught = False
         self.__ghost_caught = False
         self.__next = False
+        self.__won_counter = 0
 
         self.__first_time_loop = True
         self.start_time_scatter = pg.time.get_ticks()
@@ -440,5 +442,6 @@ class Game():
         pg.quit()
         quit()
 
-game=Game()
+
+game = Game()
 game.run()

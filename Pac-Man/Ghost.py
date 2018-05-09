@@ -2,7 +2,6 @@ import random
 from copy import deepcopy
 
 import pygame as pg
-
 from Astar import Astar
 from Character import Character
 from Coordinate import Coordinate

@@ -59,7 +59,7 @@ class Maze():
     def draw_extra(self):
         self.draw_lifes()
         self.draw_text("HIGHSCORE", 9, 0, (0, 255, 0))
-        self.draw_grid()
+        #self.draw_grid()
         self.draw_score()
 
     # Method for drawing the amount of lives pacman has left
