@@ -28,6 +28,7 @@ class Game():
         pg.display.set_caption('Pac-Man')
         # Game variables
         self.__game_display = pg.display.set_mode(resolution)
+        self.__won_counter = 0
         self.__init_game()
 
     def __init_game(self, old_score=0):
@@ -44,7 +45,7 @@ class Game():
         self.__pacman_caught = False
         self.__ghost_caught = False
         self.__next = False
-        self.__won_counter = 0
+
 
         self.__first_time_loop = True
         self.start_time_scatter = pg.time.get_ticks()
