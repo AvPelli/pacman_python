@@ -6,13 +6,13 @@ class Candy:
     def __init__(self, game_Display, coordinate):
         self._game_Display = game_Display
         self._coord = coordinate
-        self.__image = pg.image.load("res/candy/candy {number}.gif".format(number=0))
+        self._image = pg.image.load("res/candy/candy {number}.gif".format(number=0))
 
 
     # Draws the candy on a give coordinate
     def draw(self, coordinate):
         (xPixels, yPixels) = (coordinate.get_pixel_tuple())
-        self._game_Display.blit(self.__image, (xPixels, yPixels))
+        self._game_Display.blit(self._image, (xPixels, yPixels))
 
     """Getters"""
 

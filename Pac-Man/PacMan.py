@@ -31,6 +31,7 @@ class PacMan(Character):
         self.__change_direction = None
 
         self.supercandy_eaten = False
+        self.__candies_to_eat = 244
         self.__streak = 0
 
     # draw pacman on that coordinate
@@ -117,6 +118,7 @@ class PacMan(Character):
     # Also the first time this method gets used it will load the music of eating fruit
     def __eat_candy(self):
         candies = self._game.get_map().get_candy_dict()
+        self.__candies_to_eat = len(candies)
         if self._coord in candies.keys():
             candy = candies[self._coord]
             if isinstance(candy, SuperCandy):
@@ -205,6 +207,9 @@ class PacMan(Character):
         return pg.image.load(
             self.dict[direction.get_letter()][self.__number]) if direction is not None else pg.image.load(
             "res/pacmandeath/1.png")
+
+    def get_candies_to_eat(self):
+        return self.__candies_to_eat
 
     """"Initialize methods """
 

@@ -6,6 +6,7 @@ from Ghost import Ghost
 from Maze import Maze
 from MusicPlayer import MusicPlayer
 from PacMan import PacMan
+from FruitSelector import FruitSelector
 
 black = (0, 0, 0)
 tile_size = 16
@@ -67,6 +68,7 @@ class Game():
         self.clock = pg.time.Clock()
         self.__candies = self.__maze.get_candy_dict()
         self.__pacman = PacMan(self, self.__maze.get_pacman_start(), self.__maze.get_coord_dict(), old_score)
+        self.fruitselector = FruitSelector(self.__game_display)
 
         self.__ghosts = []
         starting_positions = self.__maze.get_ghosts_start()
@@ -169,6 +171,7 @@ class Game():
             ghost.move_selector()
 
         self.__maze.draw_oneup()
+        self.fruitselector.calc_until_fruit(self.__pacman.get_candies_to_eat())
         self.clock.tick(50)
         pg.display.update()
         self.music_player.play_background_music()
