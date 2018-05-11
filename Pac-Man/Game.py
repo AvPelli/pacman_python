@@ -68,7 +68,7 @@ class Game():
         self.clock = pg.time.Clock()
         self.__candies = self.__maze.get_candy_dict()
         self.__pacman = PacMan(self, self.__maze.get_pacman_start(), self.__maze.get_coord_dict(), old_score)
-        self.fruitselector = FruitSelector(self.__game_display)
+        self.fruitselector = FruitSelector(self.__game_display, self, self.__won_counter)
 
         self.__ghosts = []
         starting_positions = self.__maze.get_ghosts_start()
@@ -159,6 +159,7 @@ class Game():
         self.__maze.draw_candy()
         self.draw_score()
 
+        self.fruitselector.calc_until_fruit()
         self.__pacman.move()
 
         if self.__pacman.is_super_candy_eaten():
@@ -171,7 +172,7 @@ class Game():
             ghost.move_selector()
 
         self.__maze.draw_oneup()
-        self.fruitselector.calc_until_fruit(self.__pacman.get_candies_to_eat())
+
         self.clock.tick(50)
         pg.display.update()
         self.music_player.play_background_music()
@@ -308,6 +309,9 @@ class Game():
         for ghost in self.__ghosts:
             ghost.reset_character()
 
+    def update_fruit_selector(self):
+        self.fruitselector.update_candies_active()
+
     def __save_highscore(self):
         score = []
         score.append(self.__pacman.get_score())
@@ -368,6 +372,9 @@ class Game():
 
     def get_ghosts(self):
         return self.__ghosts
+
+    def get_fruit_selector(self):
+        return self.fruitselector
 
     """"Events"""
 

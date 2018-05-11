@@ -31,7 +31,7 @@ class PacMan(Character):
         self.__change_direction = None
 
         self.supercandy_eaten = False
-        self.__candies_to_eat = 244
+        self.__candies_to_eat = game.get_map().get_candy_amount()
         self.__streak = 0
 
     # draw pacman on that coordinate
@@ -80,6 +80,7 @@ class PacMan(Character):
             # Moves to the new coordinate
             # Checks if there is candy to eat on the new coordinate
             self.__eat_candy()
+            self.__eat_fruit()
 
     # Function that is used while pacman is moving form one coordinate to another
     def __move_between_tiles(self):
@@ -124,8 +125,17 @@ class PacMan(Character):
             if isinstance(candy, SuperCandy):
                 self.supercandy_eaten = True
             self.__score += candy.get_score()
+            self._game.update_fruit_selector()
             pg.mixer.Channel(1).play(pg.mixer.Sound("res/files/music/pacman-chomp/pacman-wakawaka.wav"))
             del self._game.get_map().get_candy_dict()[self._coord]
+
+    def __eat_fruit(self):
+        coordtuple = self._coord.get_x(), self._coord.get_y()
+        fruit_coordt = self._game.get_fruit_selector().get_fruit_coord_tuple()
+        if (coordtuple[0] == fruit_coordt[0] or coordtuple[0] == fruit_coordt[0] + 1) and coordtuple[1] == fruit_coordt[1]:
+            selector = self._game.get_fruit_selector()
+            if selector.fruit_active():
+                self.add_score(selector.get_score())
 
     # When pacman is moving between tiles, he should still be able to immediately turn around instead of finishing moving to the next tile 1st,
     # This method will check if an opposite key has been pressed and sets the variable __turnaround
