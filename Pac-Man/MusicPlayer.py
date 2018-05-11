@@ -13,3 +13,6 @@ class MusicPlayer():
     def play_background_music(self):
         if not pg.mixer.Channel(0).get_busy():
             pg.mixer.Channel(0).play(pg.mixer.Sound("res/files/music/pacman-siren/Pacman_Siren.wav"))
+
+    def stop_background_music(self):
+        pg.mixer.Channel(0).stop()

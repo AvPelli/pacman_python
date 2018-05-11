@@ -235,6 +235,7 @@ class Game():
         :param wait: By default False\n
         :return: void
         """
+        self.music_player.stop_background_music();
         if not wait:
             pg.time.delay(1000)
             self.__game_display.fill(black)
