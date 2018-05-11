@@ -1,17 +1,12 @@
-import pygame as pg
-
-from Character import Character
 from Coordinate import Coordinate
-from Direction import Direction
-from Candy import Candy
 from Fruit import Fruit
 
 
 class FruitSelector:
-    fruit_location = Coordinate(13,17)
+    fruit_location = Coordinate(13, 17)
 
-    def __init__(self, game_Display, game, won_counter):
-        self._game_Display = game_Display
+    def __init__(self, game_display, game, won_counter):
+        self._game_Display = game_display
         self.__game = game
         self.__names = {"Cherry": 60, "Apple": 90, "Strawberry": 120, "Orange": 150, "Green Melon": 180}
         self.__images = {}
@@ -21,11 +16,10 @@ class FruitSelector:
         self.__time = 0
         self.reset_per_level(won_counter)
 
-
-    #nog self.__fruits aanpassen per lvl
+    # nog self.__fruits aanpassen per lvl
     def reset_per_level(self, level=0):
         self.__candies_left = self.__game.get_map().get_candy_amount()
-        self.__fruits = (Fruit(self._game_Display, FruitSelector.fruit_location , self, "Cherry"),
+        self.__fruits = (Fruit(self._game_Display, FruitSelector.fruit_location, self, "Cherry"),
                          Fruit(self._game_Display, FruitSelector.fruit_location, self, "Cherry"))
 
     def calc_until_fruit(self, level=0):
@@ -36,7 +30,7 @@ class FruitSelector:
             self.__fruits[1].draw()
 
     def get_fruitbonus(self, fruitname):
-            return self.__names[fruitname]
+        return self.__names[fruitname]
 
     def get_score(self):
         if 180 > self.__candies_left > 140:

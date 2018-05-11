@@ -82,6 +82,7 @@ class PacMan(Character):
             self.__eat_candy()
             self.__eat_fruit()
 
+
     # Function that is used while pacman is moving form one coordinate to another
     def __move_between_tiles(self):
         if not self.__turnaround:
@@ -175,6 +176,7 @@ class PacMan(Character):
     # If the following coorinate (if you follows the given direction) is a wall
     # It will put the given direction in the change_direction variable (More info in __direction_changer methode)
     def set_direction(self, direction):
+        # print("Pacmancoord: " + self._coord.__str__())
         x, y = self._coord.get_x() + direction.x, self._coord.get_y() + direction.y
         if (x, y) not in self.__coord_dict.keys() or self.__coord_dict.get((x, y)).is_wall():
             self.__change_direction = direction

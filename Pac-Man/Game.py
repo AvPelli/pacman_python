@@ -1,12 +1,13 @@
 from copy import deepcopy
 
 import pygame as pg  # Importeren van pg module
+
 from Direction import Direction
+from FruitSelector import FruitSelector
 from Ghost import Ghost
 from Maze import Maze
 from MusicPlayer import MusicPlayer
 from PacMan import PacMan
-from FruitSelector import FruitSelector
 
 black = (0, 0, 0)
 tile_size = 16
@@ -93,6 +94,7 @@ class Game():
             self.__start_screen()
         elif self.__gamemode == 2:
             self.__ready_screen()
+            self.initialize_timer_scatter()
         elif self.__gamemode == 3:
             self.__play_screen()
         elif self.__gamemode == 4:
@@ -430,6 +432,10 @@ class Game():
         score = self.__read_highscores()
         if len(score) != 0:
             self.__maze.draw_text(score[0], 11, 1)
+
+    def initialize_timer_scatter(self):
+        for ghost in self.__ghosts:
+            ghost.init_start_scatter()
 
     """"Main method"""
 

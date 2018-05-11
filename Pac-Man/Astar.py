@@ -18,7 +18,8 @@ class Astar():
         self.dictionary = {"S": Direction.DOWN, "W": Direction.LEFT, "E": Direction.RIGHT, "N": Direction.UP,
                            "B": Direction.BLOCK}
         self.reverse_dict = {v: k for k, v in self.dictionary.items()}
-
+        # self.print_maze()
+        # print("-----------------------------------------------------------------")
 
     # Makes a maze of the given file
     # A 1 stands for a wall or something pacman can't move through
@@ -31,7 +32,7 @@ class Astar():
             check = line_string.replace("0", "")
             # Filters whole lines of 0's, so only the real map (walls and walkable places) are into the maze
             if len(check) > 0:
-                maze.append([0 if letter in "f0gDG" or "t" in letter else 1 for letter in line])
+                maze.append([0 if letter in "f0gPDG" or "t" in letter else 1 for letter in line])
         return maze
 
     # Makes a graph of the maze that was made in the method above
@@ -104,9 +105,9 @@ class Astar():
                 try:
                     for direction, neighbour in self.graph[current_cell]:
                         heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1,
-                                        path + direction, neighbour))
+                                            path + direction, neighbour))
                 except:
-                    print()
+                    print("ERRRRRRORRRR")
         return "NO PATH"
 
     def get_closest_tile(self, coord):

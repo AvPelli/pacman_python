@@ -1,7 +1,9 @@
+import math
 import random
 from copy import deepcopy
 
 import pygame as pg
+
 from Astar import Astar
 from Character import Character
 from Coordinate import Coordinate
@@ -34,8 +36,8 @@ class Ghost(Character):
 
         self.__eaten = False
         self.__movestart = False
-        self.start_time_scatter = pg.time.get_ticks()
-        self.__scatter_state = 0
+        self.start_time_scatter = 0
+        self.__scatter_state = None
         # blinky scattercoordinates
         self.blinky_dict = {0: Coordinate(21, 5), 1: Coordinate(26, 5), 2: Coordinate(26, 1), 3: Coordinate(21, 1)}
         # pinky scattercoordinates
@@ -57,7 +59,7 @@ class Ghost(Character):
     def move_selector(self):
         if self.__movestart:
             self.move_to_start()
-        elif self.__frightened and not self.__movestart:
+        elif self.__frightened:
             self._speed = Ghost.frightened_speed
             self.frightened_timer = pg.time.get_ticks() - self.start_time_frightened
             self.frightened_timer_mod = (1 - (250 - self._game.get_candy_amount()) / 500.0) * 10000
@@ -70,10 +72,13 @@ class Ghost(Character):
                 self.imagechooser()
         else:
             self.scatter_timer = pg.time.get_ticks() - self.start_time_scatter
+            # print(Ghost.image_names[self.__id]  + str(self.scatter_timer))
             if self.scatter_timer < 7000:
+                self.check_scatter_state()
                 self.scatter()
             # Chase 20 seconds
             elif self.scatter_timer < 27000:
+                self.__scatter_state = None
                 self.move()
             else:
                 # Reset timer
@@ -86,12 +91,8 @@ class Ghost(Character):
             check_next_coord, jump = self._calculate_new_coord()
             if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours():
                 self.__update_target_tile()
-                if random.random() < 0.90:
-                    self._direction = self.astar.get_direction(self._coord,
-                                                               self.astar.get_closest_tile(self.__update_target_tile()))
-                else:
-                    self._direction = self.astar.choose_random(self._coord)
-
+                self._direction = self.astar.get_direction(self._coord,
+                                                           self.astar.get_closest_tile(self.__update_target_tile()))
             if jump:
                 self._set_on_opposite_side()
             self._moving_between_tiles = True
@@ -160,13 +161,12 @@ class Ghost(Character):
         pac_direction = self._game.get_pacman_direction()
         if self.__id == 0:
             self.__target_tile = pac_coord
-
+            return self.__target_tile
         elif self.__id == 1:
             if self.astar.manhattan_distance(self._coord.get_coord_tuple(), pac_coord.get_coord_tuple()) > 3:
                 for i in range(4):
                     pac_coord.update_coord(pac_direction)
             self.__target_tile = pac_coord
-
         elif self.__id == 2:
             for i in range(2):
                 pac_coord.update_coord(pac_direction)
@@ -175,10 +175,10 @@ class Ghost(Character):
             blinky_x, blinky_y = blinky_coord.get_coord_tuple()
             x_diff, y_diff = pac_x - blinky_x, pac_y - blinky_y
             # aanpassen als move en calculate_direction beter geschreven zijn maar voor nu:
-
             self.__target_tile = Coordinate(blinky_x + 2 * x_diff, blinky_y + 2 * y_diff)
         else:
-            if self.astar.manhattan_distance(pac_coord.get_coord_tuple(), self._coord.get_coord_tuple()) < 10:
+            distance = self.astar.manhattan_distance(pac_coord.get_coord_tuple(), self._coord.get_coord_tuple())
+            if distance < 10 and distance > 2:
                 self.__target_tile = Coordinate(pac_coord.get_x() + random.randint(-10, 10),
                                                 pac_coord.get_y() + random.randint(-10, 10))
             else:
@@ -249,6 +249,9 @@ class Ghost(Character):
         if self.__frightened:
             self.frightend_image()
 
+    def init_start_scatter(self):
+        self.start_time_scatter = pg.time.get_ticks()
+
     def frightend_image(self):
         self.__image = pg.image.load("res/pacmanghost/bluepacman{number}.png".format(number=self.__frightenedimg % 4))
         time_remaining = self.frightened_timer_mod - self.frightened_timer
@@ -295,3 +298,16 @@ class Ghost(Character):
 
     def get_movestart(self):
         return self.__movestart
+
+    def check_scatter_state(self):
+        if self.__scatter_state is not None:
+            return
+        best_option = -1
+        closest_coord = math.inf
+        dict = self.ghost_scatter_coord[self.__id]
+        for state, coord in dict.items():
+            distance = self.astar.manhattan_distance(self._coord.get_coord_tuple(), coord.get_coord_tuple())
+            if (distance < closest_coord):
+                closest_coord = distance
+                best_option = state
+        self.__scatter_state = best_option
