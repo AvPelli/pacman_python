@@ -33,3 +33,10 @@ Datum,Start,Einde,Duur,Plaats,Omschrijving
 23/04/2018,19:00,21:00,2:00,Kot   ,Hoekjes bug gefixt + code herschrijven
 27/04/2018,23:00,1:00 ,2:00,Thuis ,Aanpassen dat Coordinaat weet of er een wall op hem staat of niet en dynamischer maken van de code + schrappen van sommige code
 28/04/2018,15:30,16:30,1:00,Thuis ,Herschrijven van code en efficienter maken van bereken buren code en wat kleine dingen aanpassen
+30/04/2018,11:30,11:40,0:10,Thuis ,Kleine bug van Gates fixen
+5/05/2018 ,13:20,14:10,0:50,Thuis ,Bug hoekjes gefixt +kleine aanpassingen van  A* en ghost frightend mode is nu met gekleurde afwisselde afbeeldingen + scatter methode draait nu volledig rond
+6/05/2018 ,18:00,19:30,1:30,Thuis ,Code herschrijven (korter en bondiger maken) + Toevoegen van MusicPlayer klasse + frightend mode slimmer gemaakt ect
+7/05/2018 ,13:30,17:45,4:15,Campus,Play screen methode verbeterd en functionaliteit van Game naar Ghost verhuisd
+7/05/2018 ,23:00,23:30,0:30,Kot   ,Aanpassen kleine bug + images
+12/05/2018,0:00 ,2:00 ,2:00,Thuis ,Bug vinden en fix van red ghost + bug in graph gefixt  + scatter slimmer gemaakt ( scatter_state)
+12/05/2018,10:30,12:30,2:00,Thuis ,Fixen van oogjes + score van ghost en scatter methode beter gemaakt door nieuwe betere coordinaten te kiezen (ook meerdere) + Easter egg geadd en wat code verbeterd
