@@ -90,7 +90,6 @@ class Ghost(Character):
             self.frightened()
             if (self.frightened_timer > self.frightened_timer_mod):
                 self.__frightened = False
-                self._game.reset_pacman_streak()
                 self._speed = self._normal_speed
                 self.start_time_scatter = pg.time.get_ticks()
                 self.imagechooser()
