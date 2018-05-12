@@ -1,6 +1,7 @@
 from copy import deepcopy
 
 import pygame as pg  # Importeren van pg module
+
 from Direction import Direction
 from FruitSelector import FruitSelector
 from Ghost import Ghost
@@ -46,7 +47,6 @@ class Game():
         self.__pacman_caught = False
         self.__ghost_caught = False
         self.__next = False
-
 
         self.__first_time_loop = True
         self.start_time_scatter = pg.time.get_ticks()
@@ -194,7 +194,7 @@ class Game():
             self.__ghost_caught = False
             self.__maze.draw_candy()
             pg.display.update()
-            pg.time.delay(1000)
+            pg.time.delay(200)
 
     def reset_pacman_streak(self):
         """

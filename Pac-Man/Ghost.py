@@ -3,6 +3,7 @@ import random
 from copy import deepcopy
 
 import pygame as pg
+
 from Astar import Astar
 from Character import Character
 from Coordinate import Coordinate
@@ -42,9 +43,9 @@ class Ghost(Character):
         # pinky scattercoordinates
         self.pinky_dict = {0: Coordinate(6, 5), 1: Coordinate(6, 1), 2: Coordinate(1, 1), 3: Coordinate(1, 5)}
         # inky scattercoordinates
-        self.inky_dict = {0: Coordinate(19, 23), 1: Coordinate(26, 29), 2: Coordinate(16, 29)}
+        self.inky_dict = {0: Coordinate(21, 23), 1: Coordinate(26, 28), 2: Coordinate(21, 29), 3: Coordinate(15, 29)}
         # clyde scattercoordinates
-        self.clyde_dict = {0: Coordinate(7, 23), 1: Coordinate(1, 29), 2: Coordinate(12, 29)}
+        self.clyde_dict = {0: Coordinate(6, 23), 1: Coordinate(1, 29), 2: Coordinate(6, 29), 3: Coordinate(12, 29)}
         self.ghost_scatter_coord = [self.blinky_dict, self.pinky_dict, self.inky_dict, self.clyde_dict]
 
     def imagechooser(self):
@@ -137,7 +138,7 @@ class Ghost(Character):
             self._direction = self.astar.get_direction(self._coord, self.start_coord)
 
             self._moving_between_tiles = True
-            self.display_eyes()
+            self.display_eyes_score()
             self._draw_character(self._coord, self.__image)
 
             if self._coord == self.start_coord:
@@ -217,7 +218,6 @@ class Ghost(Character):
         if self._coord == self._game.get_pacman_coord() and not self.__movestart:
             if not self.__frightened:
                 pg.mixer.Channel(0).stop()
-                pg.time.delay(500)
                 self._game.set_pacman_caught()
             else:
                 if not self.__movestart:
@@ -261,10 +261,12 @@ class Ghost(Character):
         else:
             self.__frightenedimg = self.__frightenedimg + 2
 
-    def display_eyes(self):
-        directionimg = self._direction.get_letter()
-        self.__image = pg.image.load("res/eyes/" + directionimg + ".png")
-        self._speed = 6
+    def display_eyes_score(self):
+        time_score = pg.time.get_ticks() - self.__score_time
+        if time_score > 380:
+            directionimg = self._direction.get_letter()
+            self.__image = pg.image.load("res/eyes/" + directionimg + ".png")
+            self._speed = 6
 
     def reset_character(self):
         super().reset_character()
@@ -284,6 +286,7 @@ class Ghost(Character):
             scoreimg = str(score) + ".png"
             self._game.get_pacman().add_score(score)
             self.__image = pg.image.load("res/scores/" + scoreimg)
+            self.__score_time = pg.time.get_ticks()
             self._speed = 6
             print(scoreimg)
 

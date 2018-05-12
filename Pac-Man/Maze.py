@@ -4,8 +4,7 @@ from Candy import Candy
 from Coordinate import Coordinate
 from Gate import Gate
 from SuperCandy import SuperCandy
-from Fruit import Fruit
-from FruitSelector import FruitSelector
+
 
 class Maze():
 
@@ -114,7 +113,6 @@ class Maze():
             pg.draw.line(self.__game_display, (169, 169, 169), (0, self.__tile_size * y),
                          (self.__width, self.__tile_size * y))
 
-
     # Draws Pacman his death animation
     def draw_pacmandeathani(self, deadco):
         imagefolder = "res/pacmandeath/"
@@ -133,7 +131,7 @@ class Maze():
         for candy in self.__candy_dict.values():
             candy.draw(candy.get_coord())
 
-        #self.__game_display.blit(pg.image.load("res/candy/superdot.png"), (216, 320))
+        # self.__game_display.blit(pg.image.load("res/candy/superdot.png"), (216, 320))
 
     def draw_mapwithcandy(self):
         self.draw_map()

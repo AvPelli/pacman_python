@@ -1,5 +1,4 @@
 import pygame as pg
-from Candy import Candy
 
 
 class Fruit:
@@ -29,4 +28,3 @@ class Fruit:
 
     def get_eaten(self):
         return self.__eaten
-

@@ -8,7 +8,6 @@ class Candy:
         self._coord = coordinate
         self._image = pg.image.load("res/candy/candy {number}.gif".format(number=0))
 
-
     # Draws the candy on a give coordinate
     def draw(self, coordinate):
         (xPixels, yPixels) = (coordinate.get_pixel_tuple())
