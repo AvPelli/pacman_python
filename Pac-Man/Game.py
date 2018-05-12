@@ -31,6 +31,7 @@ class Game():
         # Game variables
         self.__game_display = pg.display.set_mode(resolution)
         self.__won_counter = 0
+        self.__extreme_mode = False
         self.__init_game()
 
     def __init_game(self, old_score=0):
@@ -426,6 +427,13 @@ class Game():
         """
         return self.fruitselector
 
+    def get_extreme_mode(self):
+        """
+        Getter: returns if extreme mode is activated
+        :return self.__extreme_mode:
+        """
+        return self.__extreme_mode
+
     """"Events"""
 
     def __check_quit_events(self):
@@ -477,7 +485,8 @@ class Game():
         :return: void
         """
         for event in pg.event.get(pg.KEYDOWN):
-            if event.key == pg.K_x:
+            if event.key == pg.K_x or event.key == pg.K_e:
+                self.__extreme_mode = True if event.key == pg.K_e else False
                 if not reset:
                     self.__gamemode = 2
                 else:

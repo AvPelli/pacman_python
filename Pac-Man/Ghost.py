@@ -34,6 +34,8 @@ class Ghost(Character):
         self.__frightenedimg = 0
         self.ticks = 0
 
+        self.__extreme_mode = self._game.get_extreme_mode()
+
         self.__eaten = False
         self.__movestart = False
         self.start_time_scatter = 0
@@ -89,7 +91,12 @@ class Ghost(Character):
             self.__move_between_tiles()
         else:
             check_next_coord, jump = self._calculate_new_coord()
-            if self.__coord_dict.get(check_next_coord).is_wall() or self.__check_neighbours():
+            if (self.__coord_dict.get(
+                    check_next_coord).is_wall() or self.__check_neighbours()) and not self.__extreme_mode:
+                self.__update_target_tile()
+                self._direction = self.astar.get_direction(self._coord,
+                                                           self.astar.get_closest_tile(self.__update_target_tile()))
+            elif self.__extreme_mode:
                 self.__update_target_tile()
                 self._direction = self.astar.get_direction(self._coord,
                                                            self.astar.get_closest_tile(self.__update_target_tile()))
