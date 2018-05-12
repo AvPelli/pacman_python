@@ -34,7 +34,7 @@ class Ghost(Character):
         self.__frightenedimg = 0
         self.ticks = 0
 
-        self.__extreme_mode = self._game.get_extreme_mode()
+        self.__extreme_mode = False
 
         self.__eaten = False
         self.__movestart = False
@@ -72,7 +72,7 @@ class Ghost(Character):
                 self._speed = self._normal_speed
                 self.start_time_scatter = pg.time.get_ticks()
                 self.imagechooser()
-        else:
+        elif not self.__extreme_mode:
             self.scatter_timer = pg.time.get_ticks() - self.start_time_scatter
             # print(Ghost.image_names[self.__id]  + str(self.scatter_timer))
             if self.scatter_timer < 7000:
@@ -85,6 +85,8 @@ class Ghost(Character):
             else:
                 # Reset timer
                 self.start_time_scatter = pg.time.get_ticks()
+        else:
+            self.move()
 
     def move(self):
         if self._moving_between_tiles:
@@ -248,6 +250,9 @@ class Ghost(Character):
 
     def set_speed(self, sp):
         self._speed = sp
+
+    def set_extreme(self, bool):
+        self.__extreme_mode = bool
 
     def check_frightened(self):
         if self.__frightened:

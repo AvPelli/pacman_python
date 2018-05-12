@@ -487,6 +487,8 @@ class Game():
         for event in pg.event.get(pg.KEYDOWN):
             if event.key == pg.K_x or event.key == pg.K_e:
                 self.__extreme_mode = True if event.key == pg.K_e else False
+                for ghost in self.__ghosts:
+                    ghost.set_extreme(self.__extreme_mode)
                 if not reset:
                     self.__gamemode = 2
                 else:
