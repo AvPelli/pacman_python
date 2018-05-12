@@ -5,7 +5,7 @@ import pygame as pg
 from Character import Character
 from Direction import Direction
 from SuperCandy import SuperCandy
-
+from copy import deepcopy
 
 class PacMan(Character):
     # Constructor of PacMan
@@ -79,7 +79,6 @@ class PacMan(Character):
             self._draw_character(self._coord, self.__image)
             # Moves to the new coordinate
             # Checks if there is candy to eat on the new coordinate
-            self.__eat_candy()
             self.__eat_fruit()
 
 
@@ -89,6 +88,8 @@ class PacMan(Character):
             # Proceed to the next tile
             self.__image = self.__get_image_direction(self._direction)
             super()._move_between_tiles()
+            if 10 <= self._moving_pos <= 13:
+                self.__eat_candy()
         # However if turnaround has been set (see check_turnaround), pacman will have to move back to the beginning his original tile 1st
         # Once there he'll set himself ready for the next iteration (and its coordinate will NOT be updated)
         # To solve issues bug-wise, number will be set on 0 once it has moved back, so its beak is closed at the end, as usual
@@ -121,14 +122,16 @@ class PacMan(Character):
     def __eat_candy(self):
         candies = self._game.get_map().get_candy_dict()
         self.__candies_to_eat = len(candies)
-        if self._coord in candies.keys():
-            candy = candies[self._coord]
+        next_coord = deepcopy(self._coord)
+        next_coord.update_coord(self._direction)
+        if  next_coord in candies.keys():
+            candy = candies[next_coord]
             if isinstance(candy, SuperCandy):
                 self.supercandy_eaten = True
             self.__score += candy.get_score()
             self._game.update_fruit_selector()
             pg.mixer.Channel(1).play(pg.mixer.Sound("res/files/music/pacman-chomp/pacman-wakawaka.wav"))
-            del self._game.get_map().get_candy_dict()[self._coord]
+            del self._game.get_map().get_candy_dict()[next_coord]
 
     def __eat_fruit(self):
         coordtuple = self._coord.get_x(), self._coord.get_y()
@@ -136,6 +139,7 @@ class PacMan(Character):
         if (coordtuple[0] == fruit_coordt[0] or coordtuple[0] == fruit_coordt[0] + 1) and coordtuple[1] == fruit_coordt[1]:
             selector = self._game.get_fruit_selector()
             if selector.fruit_active():
+                pg.mixer.Channel(1).play(pg.mixer.Sound("res/files/music/pacman-eatfruit/pacman_eatfruit.wav"))
                 self.add_score(selector.get_score())
 
     # When pacman is moving between tiles, he should still be able to immediately turn around instead of finishing moving to the next tile 1st,
@@ -165,7 +169,7 @@ class PacMan(Character):
 
     # Return
     def get_coord(self):
-        return self._coord
+        return deepcopy(self._coord)
 
     def get_streak(self):
         return self.__streak

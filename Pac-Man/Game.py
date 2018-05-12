@@ -175,7 +175,7 @@ class Game():
             ghost.move_selector()
 
         self.__maze.draw_oneup()
-
+        self.fruitselector.draw_eaten_fruits()
         self.clock.tick(50)
         pg.display.update()
         self.music_player.play_background_music()

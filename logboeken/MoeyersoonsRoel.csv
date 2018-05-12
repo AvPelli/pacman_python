@@ -25,4 +25,6 @@ Datum,Start,Einde,Plaats,Omschrijving
 27/04/2018,23:30,1:30,Thuis,Geluid aanpassen
 05/05/2018,14:30,17:30,Thuis,Details zoals ghost speed tijdens frightened aanpassen + algoritmes proberen bijschaven
 06/05/2018,16:30,17:00,Thuis,Pacman death animation aangepast voor elke keer als je dood gaat
+07/05/2018,13:30,17:45,Campus,Bugs fixen die te maken hebben met scatter/move...
 11/05/2018,15:40,17:20,Thuis,Fruit collision implementeren
+12/05/2018,14:20,16:00,Thuis,Fruitselector volledig afwerken + commentaar aan fruit/fruitselector toevoegen
