@@ -1,7 +1,6 @@
 from copy import deepcopy
 
 import pygame as pg  # Importeren van pg module
-
 from Direction import Direction
 from FruitSelector import FruitSelector
 from Ghost import Ghost
@@ -165,6 +164,7 @@ class Game():
         self.__pacman.move()
 
         if self.__pacman.is_super_candy_eaten():
+            self.__pacman.reset_streak()
             for ghost in self.__ghosts:
                 ghost.start_timer_frightend()
             # Reset to False, this if-block only has to be run once every supercandy

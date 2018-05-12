@@ -3,7 +3,6 @@ import random
 from copy import deepcopy
 
 import pygame as pg
-
 from Astar import Astar
 from Character import Character
 from Coordinate import Coordinate
@@ -96,7 +95,6 @@ class Ghost(Character):
             if jump:
                 self._set_on_opposite_side()
             self._moving_between_tiles = True
-            # self.check_frightened()
             self._draw_character(self._coord, self.__image)
 
     def scatter(self):
@@ -111,7 +109,6 @@ class Ghost(Character):
             if jump:
                 self._set_on_opposite_side()
             self._moving_between_tiles = True
-            # self.check_frightened()
             self._draw_character(self._coord, self.__image)
 
     def frightened(self):
