@@ -110,6 +110,11 @@ class Ghost(Character):
             self.move()
 
     def move(self):
+        """
+        Handles how the Ghost moves in its normal state\n
+        In extreme mode the Ghosts can move direction at any time, instead of only switching directions at intersections
+        :return: void
+        """
         if self._moving_between_tiles:
             self.__move_between_tiles()
         else:
@@ -129,6 +134,11 @@ class Ghost(Character):
             self._draw_character(self._coord, self.__image)
 
     def scatter(self):
+        """
+        Handles how the Ghost moves in scatter state \n
+        Each Ghost loops through its respective scatter coordinates which form a circle in a specific corner of the Maze
+        :return: void
+        """
         if self._moving_between_tiles:
             self.__move_between_tiles()
         else:
@@ -143,6 +153,11 @@ class Ghost(Character):
             self._draw_character(self._coord, self.__image)
 
     def frightened(self):
+        """
+        Handles how the Ghost moves in frightened state \n
+        In this state Ghost's speed is decreased and moves randomly
+        :return: void
+        """
         if self._moving_between_tiles:
             self.__move_between_tiles()
         else:
@@ -160,8 +175,12 @@ class Ghost(Character):
             self._draw_character(self._coord, self.__image)
 
     def move_to_start(self):
-        # Unlike scatter(), frightened() and move(); move_to_start() doesn't have to check for "jump"
-        # because the shortest path to start never requires going through the sides of the game (aka the gates)
+        """
+        Handles Ghost movement to starting position, for example after being eaten\n
+        Note: Unlike scatter(), frightened() and move(); move_to_start() doesn't have to check for "jump"
+        because the shortest path to start never requires going through the sides of the game (aka the gates)
+        :return: void
+        """
         if self._moving_between_tiles:
             self.__move_between_tiles()
         else:
@@ -175,16 +194,31 @@ class Ghost(Character):
                 self.reset_character()
 
     def _draw_character(self, coordinate, image):
+        """
+        Ghost gets drawn on coordinate, the image is dependent on the state of the Ghost
+        :param coordinate: Coordinate where Ghost should be drawn
+        :param image: Visual display of the Ghost
+        :return: void
+        """
         self.check_caught()
         super()._draw_character(coordinate, image)
         self.check_caught()
 
     def __move_between_tiles(self):
-        # Proceed to the next tile
+        """
+        Proceed to the next tile.
+        Handles movement between 2 tiles, this takes into account the Ghost's speed.
+        :return: void
+        """
         super()._move_between_tiles()
         self._draw_character(self._coord, self.__image)
 
     def __update_target_tile(self):
+        """
+        Implements the Ghost's chase behaviour:
+        based on the Ghost's id, a different tile gets chosen as new target tile
+        :return: void
+        """
         pac_coord = self._game.get_pacman_coord()
         pac_direction = self._game.get_pacman_direction()
         if self.__id == 0:
@@ -216,9 +250,12 @@ class Ghost(Character):
         return self.__target_tile
 
     def __update_target_tile_scatter(self, next_coord):
-        # the _moving_between_tiles boolean makes the ghost recalculate position to quickly, this function has to slow it down
-        # so the ghost doesnt move back and forth without going in a circle
-        # this is done by checking if manhattan distance to the target tile is < 1.
+        """
+        The _moving_between_tiles boolean makes the ghost recalculate position to quickly, this function has to slow it down
+        so the ghost doesnt move back and forth without going in a circle
+        this is done by checking if manhattan distance to the target tile is < 1.
+        :return: void
+        """
         dictionary = self.ghost_scatter_coord[self.__id]
         self.__target_tile = dictionary.get(self.__scatter_state)
         if (self.astar.manhattan_distance(next_coord,
@@ -228,6 +265,10 @@ class Ghost(Character):
         return self.__target_tile
 
     def __check_neighbours(self):
+        """
+        Checks the surrounding tiles to see if there are any walls and returns their coordinates.
+        :return: tuple (int,int)
+        """
         horizontal = False
         vertical = False
         x, y = self._coord.get_coord_tuple()
@@ -245,6 +286,10 @@ class Ghost(Character):
         return Ghost.neighbours_map.get((x, y))
 
     def check_caught(self):
+        """
+        Checks if the Ghost is caught, which means that pacman's coordinate is the same as the Ghost's.
+        :return: void
+        """
         if self._coord == self._game.get_pacman_coord() and not self.__movestart:
             if not self.__frightened:
                 pg.mixer.Channel(0).stop()
@@ -302,6 +347,10 @@ class Ghost(Character):
             self._speed = 6
 
     def reset_character(self):
+        """
+        Resets the Ghost to default values and start coordinate
+        :return: void
+        """
         super().reset_character()
         self.__movestart = False
         self._speed = self._normal_speed
@@ -313,6 +362,12 @@ class Ghost(Character):
         self._draw_character(self.start_coord, self.__image)
 
     def set_eaten(self, value, streak=0):
+        """
+        Set Ghost to eaten state
+        :param value:
+        :param streak: The streak defines how many points are awarded for eating the Ghost
+        :return: void
+        """
         self.__eaten = value
         if (self.__eaten):
             score = (2 ** streak) * 100
@@ -324,15 +379,31 @@ class Ghost(Character):
             print(scoreimg)
 
     def is_frightened(self):
+        """
+        Returns True if Ghost is frightened
+        :return: boolean
+        """
         return self.__frightened
 
     def is_eaten(self):
+        """
+        Returns True if Ghost is eaten
+        :return: boolean
+        """
         return self.__eaten
 
     def get_movestart(self):
+        """
+        Returns True if the Ghost has to move back to start position
+        :return: boolean
+        """
         return self.__movestart
 
     def check_scatter_state(self):
+        """
+        Handles which coordinate in the scatter dictionary the Ghost will move to first
+        :return: void
+        """
         if self.__scatter_state is not None:
             return
         best_option = -1
