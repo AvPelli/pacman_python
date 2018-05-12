@@ -309,13 +309,25 @@ class Game():
         self.__check_quit_events()
 
     def reset_ghosts(self):
+        """
+        Reset all ghosts to start position
+        :return: void
+        """
         for ghost in self.__ghosts:
             ghost.reset_character()
 
     def update_fruit_selector(self):
+        """
+        Decrements amount of candies left, which is used to determine when special fruit should appear
+        :return: void
+        """
         self.fruitselector.update_candies_active()
 
     def __save_highscore(self):
+        """
+        Saves the current score into a txt-file when called
+        :return: void
+        """
         score = []
         score.append(self.__pacman.get_score())
         filename = "res/files/highscore.txt"
@@ -341,6 +353,11 @@ class Game():
         file.close()
 
     def __read_highscores(self):
+        """
+         Choose a game mode\n
+        :param waarde: type: int
+        :return: void
+        """
         scores = []
         filename = "res/files/highscore.txt"
         for line in open(filename, "r"):
@@ -348,44 +365,84 @@ class Game():
         return scores
 
     def __reset_highscore(self):
+        """
+        Clears the hiscore file
+        :return: void
+        """
         filename = "res/files/highscore.txt"
         open(filename, "w")
 
     """"Getters"""
 
     def get_game_display(self):
+        """
+        Getter
+        :return: self.__game_display
+        """
         return self.__game_display
 
-    # Getter: returns max amount of colums and rows
     def get_max(self):
+        """
+        Getter: returns max amount of colums and rows
+        :return: int,int
+        """
         return self.__maze.get_tiles_horiz_size() - 1, self.__maze.get_tiles_vert_size() - 1
 
-    # Getters: return map
     def get_map(self):
+        """
+        Getter: return maze
+        :return: Maze
+        """
         return self.__maze
 
     def get_pacman(self):
         return self.__pacman
 
     def get_pacman_coord(self):
+        """
+        Getter: returns deepcopy of current pacman coordinate
+        :return: Coordinate
+        """
         return deepcopy(self.__pacman.get_coord())
 
     def get_pacman_direction(self):
+        """
+        Getter: returns deepcopy of current direction
+        :return: Direction
+        """
         return deepcopy(self.__pacman.get_direction())
 
     def get_ghosts(self):
+        """
+        Getter: returns the array of Ghosts
+        :return: Ghost[]
+        """
         return self.__ghosts
 
     def get_fruit_selector(self):
+        """
+        Getter: returns the fruitselector which handles the fruit spawning
+        :return: FruitSelector
+        """
         return self.fruitselector
 
     """"Events"""
 
     def __check_quit_events(self):
+        """
+        Provides a check to see if window is closed by the user
+        :return: void
+        """
         for event in pg.event.get(pg.QUIT):
             self.__game_exit = True
 
     def __check_move_events(self):
+        """
+        Checks for user input:\n
+        Arrow keys = change direction \n
+        P = Pause game
+        :return: void
+        """
         for event in pg.event.get(pg.KEYDOWN):
             # Pauze button: p
             if event.key == pg.K_p:
@@ -402,11 +459,23 @@ class Game():
                 self.__pacman.set_direction(Direction.DOWN)
 
     def __check_beginningmusic_events(self):
+        """
+        Checks if intro song is still playing and starts the game when the song stops
+        :return: void
+        """
         for event in pg.event.get(self.SONG_END):
             self.__gamemode = 3
             self.__maze.draw_text('', 11, 20)
 
     def __check_x_event(self, reset=False, won=False):
+        """
+        Handles the event that happens when "X" is pressed:\n
+        :param reset: True = start a fresh map
+        :param won:
+        When the game is won: Keep the current score \n
+        When the game is lost: Reset score to 0
+        :return: void
+        """
         for event in pg.event.get(pg.KEYDOWN):
             if event.key == pg.K_x:
                 if not reset:
@@ -422,18 +491,35 @@ class Game():
 
     # Setters that act like events, are triggered in other classes
     def set_pacman_caught(self):
+        """
+        Is true when pacman is caught by a ghost
+        :return: void
+        """
         self.__pacman_caught = True
 
     def set_ghost_caught(self):
+        """
+        Ghost is caught and increment pacman streak (consecutively eating ghosts gives more points)
+        :return: void
+        """
         self.__pacman.set_streak(1)  # adds 1 to the streak
         self.__ghost_caught = True
 
     def draw_score(self):
+        """
+        Draw the current hiscore in the top middle of the screen
+        :return: void
+        """
         score = self.__read_highscores()
         if len(score) != 0:
             self.__maze.draw_text(score[0], 11, 1)
 
     def initialize_timer_scatter(self):
+        """
+        Calls init_start_scatter() method in Ghost, which stores current game time and will be used later to check time passed. \n
+        In turn, the time passed is needed to know when to change Ghost's behaviour (Scatter,Frightened,Normal)
+        :return: void
+        """
         for ghost in self.__ghosts:
             ghost.init_start_scatter()
 
@@ -443,6 +529,10 @@ class Game():
     # It catches every input from the keyboard
     # Also it functions as a kind of timeline everything in the while loop will be exectued as long as the game hasn't stopped
     def run(self):
+        """
+        Runs the game, uses the gamemode handler and does event checks until the game gets stopped
+        :return: void
+        """
         while not self.__game_exit:
             # If the game is not paused, the game wil continue
             if not (self.__pauze):
