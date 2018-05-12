@@ -559,7 +559,6 @@ class Game():
             self.__check_quit_events()
 
         pg.quit()
-        quit()
 
 
 game = Game()
