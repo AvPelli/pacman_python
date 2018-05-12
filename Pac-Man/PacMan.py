@@ -1,21 +1,21 @@
 import random
+from copy import deepcopy
 
 import pygame as pg
-
 from Character import Character
 from Direction import Direction
 from SuperCandy import SuperCandy
-from copy import deepcopy
+
 
 class PacMan(Character):
     # Constructor of PacMan
-    def __init__(self, game, coordinate, coord_dict, old_score):
+    def __init__(self, game, coordinate, coord_dict, old_score, lifes):
         # Start variables
         super().__init__(PIXELSIZE=16, speed=2, moving_pos=-8,
                          direction=Direction.RIGHT, game=game,
                          coordinate=coordinate)
         self.__score = old_score
-        self.lifes = 4
+        self.__lifes = lifes
         self.__turnaround = False
 
         # Variables for cosmetics
@@ -81,7 +81,6 @@ class PacMan(Character):
             # Checks if there is candy to eat on the new coordinate
             self.__eat_fruit()
 
-
     # Function that is used while pacman is moving form one coordinate to another
     def __move_between_tiles(self):
         if not self.__turnaround:
@@ -124,7 +123,7 @@ class PacMan(Character):
         self.__candies_to_eat = len(candies)
         next_coord = deepcopy(self._coord)
         next_coord.update_coord(self._direction)
-        if  next_coord in candies.keys():
+        if next_coord in candies.keys():
             candy = candies[next_coord]
             if isinstance(candy, SuperCandy):
                 self.supercandy_eaten = True
@@ -136,7 +135,8 @@ class PacMan(Character):
     def __eat_fruit(self):
         coordtuple = self._coord.get_x(), self._coord.get_y()
         fruit_coordt = self._game.get_fruit_selector().get_fruit_coord_tuple()
-        if (coordtuple[0] == fruit_coordt[0] or coordtuple[0] == fruit_coordt[0] + 1) and coordtuple[1] == fruit_coordt[1]:
+        if (coordtuple[0] == fruit_coordt[0] or coordtuple[0] == fruit_coordt[0] + 1) and coordtuple[1] == fruit_coordt[
+            1]:
             selector = self._game.get_fruit_selector()
             if selector.fruit_active():
                 pg.mixer.Channel(1).play(pg.mixer.Sound("res/files/music/pacman-eatfruit/pacman_eatfruit.wav"))
@@ -161,7 +161,7 @@ class PacMan(Character):
 
     # Returns the amount of lifes left
     def get_lifes(self):
-        return self.lifes
+        return self.__lifes
 
     # Returns the score
     def get_score(self):
@@ -194,7 +194,7 @@ class PacMan(Character):
 
     # Setter for pacman lifes, to access the pacmanlifes in the Game class
     def set_lifes(self, lifes):
-        self.lifes = lifes
+        self.__lifes = lifes
 
     def set_coord(self, coordinate):
         self._coord = coordinate
@@ -206,14 +206,14 @@ class PacMan(Character):
         self.__streak = 0
 
     def decrease_lifes(self):
-        self.lifes -= 1
-        if self.lifes <= 0:
+        self.__lifes -= 1
+        self._game.set_lifes(self.__lifes)
+        if self.__lifes <= 0:
             self._game.set_gamemode(5)
         else:
             self._game.set_gamemode(4)
             self._game.music_player.play_music("pacman-death/pacman_death.wav")
             self._game.draw_pacman_death(self._coord)
-
 
     """"Getters"""
 

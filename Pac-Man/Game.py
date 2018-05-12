@@ -1,7 +1,6 @@
 from copy import deepcopy
 
 import pygame as pg  # Importeren van pg module
-
 from Direction import Direction
 from FruitSelector import FruitSelector
 from Ghost import Ghost
@@ -32,6 +31,7 @@ class Game():
         self.__game_display = pg.display.set_mode(resolution)
         self.__won_counter = 0
         self.__extreme_mode = False
+        self.__lifes = 4
         self.__init_game()
 
     def __init_game(self, old_score=0):
@@ -68,7 +68,8 @@ class Game():
         self.__maze = Maze(self, resolution[0], resolution[1], tile_size)
         self.clock = pg.time.Clock()
         self.__candies = self.__maze.get_candy_dict()
-        self.__pacman = PacMan(self, self.__maze.get_pacman_start(), self.__maze.get_coord_dict(), old_score)
+        self.__pacman = PacMan(self, self.__maze.get_pacman_start(), self.__maze.get_coord_dict(), old_score,
+                               self.__lifes)
         self.fruitselector = FruitSelector(self.__game_display, self, self.__won_counter)
 
         self.__ghosts = []
@@ -515,6 +516,13 @@ class Game():
         """
         self.__pacman.set_streak(1)  # adds 1 to the streak
         self.__ghost_caught = True
+
+    def set_lifes(self, lifes):
+        """
+        Set lifes of pacman for a possible next level of the game
+        :return void:
+        """
+        self.__lifes = lifes
 
     def draw_score(self):
         """
