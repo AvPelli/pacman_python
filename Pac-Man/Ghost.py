@@ -17,6 +17,15 @@ class Ghost(Character):
     image_names = ["blinky", "pinky", "inky", "clyde"]
 
     def __init__(self, game, coordinate, coord_dict):
+        """
+        Creates Ghost object.\n
+        Each ghost has a unique id, boolean values for each state (frightened/eaten/scatter),
+        its own pathfinder (Astar algorithm) and scatter coordinates.
+        :param game: The game object that runs the Ghost
+        :param coordinate: The startcoordinate of the Ghost
+        :param coord_dict: Dictionary that maps tuple -> Coordinate, this dictionary contains information about walls
+        :return: void
+        """
         # Start variables
         super().__init__(PIXELSIZE=16, speed=2, moving_pos=0, direction=Direction.UP, game=game, coordinate=coordinate)
 
@@ -51,14 +60,27 @@ class Ghost(Character):
         self.ghost_scatter_coord = [self.blinky_dict, self.pinky_dict, self.inky_dict, self.clyde_dict]
 
     def imagechooser(self):
+        """
+        Chooses the appropriate image for each ghost, based on the ghost's id
+        :return: void
+        """
         self.__image = pg.image.load("res/ghost/" + Ghost.image_names[self.__id] + "/start.png")
 
     def start_timer_frightend(self):
+        """
+        Starts the timer for frightened mode by saving current gametime and checking time difference later on
+        :return: void
+        """
         self.start_time_frightened = pg.time.get_ticks()
         self.__frightenedimg = 0
         self.__frightened = True
 
     def move_selector(self):
+        """
+        Handles how the Ghost moves, this is different for each state (Scatter,Frightened,Eaten)\n
+        This method uses the timers for each state to switch between states.
+        :return: void
+        """
         if self.__movestart:
             self.move_to_start()
         elif self.__frightened:
