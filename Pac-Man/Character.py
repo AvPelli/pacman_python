@@ -31,7 +31,6 @@ class Character(ABC):
         :return: void
         """
         (xPixels, yPixels) = (coordinate.get_pixel_tuple())
-        # self.check_reset()
         if self._direction is not None:
             xPixels += self._direction.value[0] * self._moving_pos
             yPixels += self._direction.value[1] * self._moving_pos
@@ -39,6 +38,10 @@ class Character(ABC):
 
     @abstractmethod
     def move(self):
+        """
+        Abstract method move, subclasses will have its own implementation of this method
+        :return: void
+        """
         pass
 
     def _move_between_tiles(self):
@@ -73,40 +76,51 @@ class Character(ABC):
         """
         Calculates the next coordinate also this method checks if it is a "teleporter"
         which will perform __set_on_opposite_side() in move() method
-        :return: Coordinate
+        :return: Coordinate, boolean
         """
-        (maxX, maxY) = self._game.get_max()
+        (max_x, max_y) = self._game.get_max()
         (x, y) = (self._coord.get_coord_tuple())
-        addX, addY = self._direction.value
-        newX, newY = x + addX, y + addY
+        add_x, add_y = self._direction.value
+        new_x, new_y = x + add_x, y + add_y
         jump = False
-        if newX < 0 or newX > maxX or newX > 0 and x == 0 or newX < maxX and x == maxX:
+        if new_x < 0 or new_x > max_x or new_x > 0 and x == 0 or new_x < max_x and x == max_x:
             jump = True
-            newX, newY = 0, 0
-        return (newX, newY), jump
+            new_x, new_y = 0, 0
+        return (new_x, new_y), jump
 
     def reset_character(self):
         """
         Base model of a method that reset the character to the begin status
         :return: void
         """
-        # deepcopy, or else the attribute __coord will be a reference to the attribute start_coord
-        # this way when pacman gets caught the second time, it will "reset" to the coordinate it already stands on
+        # Deepcopy, or else the attribute __coord will be a reference to the attribute start_coord
+        # This way when pacman gets caught the second time, it will "reset" to the coordinate it already stands on
         self._coord = deepcopy(self.start_coord)
+
+    """Getters"""
 
     def get_coord(self):
         """
-        Getter
+        Returns the coordinate of the Character
         :return: Coordinate
         """
+        # Deepcopy, for elimination of a privacy leak
         return deepcopy(self._coord)
 
     def get_direction(self):
         """
-        Getter
+        Returns the direction the character is going in
         :return: Direction
         """
+        # Deepcopy, for elimination of a privacy leak
         return deepcopy(self._direction)
 
+    """Setters"""
+
     def set_speed(self, speedvalue):
+        """
+        Sets the speed of the character to the given speedvalue
+        :param speedvalue:
+        :return: void
+        """
         self._speed = speedvalue

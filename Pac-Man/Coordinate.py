@@ -21,38 +21,38 @@ class Coordinate:
 
     def is_wall(self):
         """
-        Checks if Coordinate is a wall
+        Returns if this coordinate is a wall
         :return: boolean
         """
         return self.__is_wall
 
     def get_x(self):
         """
-        Getter
+        Returns x value of this coordinate
         :return: x Coordinate
         """
         return self.__x
 
     def get_y(self):
         """
-        Getter
+        Returns y value of this coordinate
         :return: y Coordinate
         """
         return self.__y
 
     def get_pixel_tuple(self):
         """
-        Getter
-        :return: tuple (Pixel x, Pixel y)
+        Returns a tuple of the pixels of this coordinate (Pixel x, Pixel y)
+        :return: tuple
         """
-        # Formule voor van coord systeem --> naar pixels
+        # Formula to go from the coord system to pixel system (x, y) --> (pixel_x, pixel_y)
         return int((self.__x * self.__PIXELSIZE)), int(
             (self.__y * self.__PIXELSIZE) + 3 * self.__PIXELSIZE)
 
     def get_coord_tuple(self):
         """
-        Getter
-        :return: tuple (Coordinate X, Coordinate Y)
+        Returns a tuple of the x, y -value of this coordinate (x, y)
+        :return: tuple
         """
         return self.__x, self.__y
 
@@ -60,8 +60,8 @@ class Coordinate:
 
     def __eq__(self, other):
         """
-        Override the equal methode 2 Coordinate objects are the same if x and y of both objects are the same
-        :return: string
+        Override the equal method 2 Coordinate objects are the same if x and y of both objects are the same
+        :return: int (boolean)
         """
         if not isinstance(other, Coordinate):
             return False
