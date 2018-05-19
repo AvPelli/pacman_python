@@ -44,7 +44,6 @@ class Maze():
         self.__candy_dict = {}
         self.__ghosts_coord = list()
         self.__init_items()
-        self.__transp_list = list()
 
         # Pacman himself
         self.__pacman = None
@@ -71,7 +70,7 @@ class Maze():
 
     def draw_extra(self):
         """
-        Draws all the 'extras', like Pacman's lifes, and it's score
+        Draws all the 'extras', like Pacman's lifes, and it's score. Uses the other drawing methods
         :return: void
         """
         self.draw_lifes()
@@ -157,7 +156,7 @@ class Maze():
     # Draws Pacman his death animation
     def draw_pacmandeathani(self, deadco):
         """
-        Draws Pacman's death animation on screen and stops the current music
+        Draws Pacman's death animation on screen
         :param deadco: the coordinate where pacman has been eaten
         :return: void
         """
@@ -173,6 +172,10 @@ class Maze():
     # This method redraws some items like:
     # All the remaining candy and the maze itself
     def draw_candy(self):
+        """
+        Draws all candies left on screen by iterating over it's candy list
+        :return: void
+        """
         self.draw_maze()
         for candy in self.__candy_dict.values():
             candy.draw(candy.get_coord())
@@ -180,20 +183,38 @@ class Maze():
         # self.__game_display.blit(pg.image.load("res/candy/superdot.png"), (216, 320))
 
     def draw_mazewithcandy(self):
+        """
+        Draws both the walls and the candies, uses the other drawing methods
+        :return: void
+        """
         self.draw_maze()
         self.draw_candy()
 
     def draw_allsteadyparts(self):
+        """
+        Draws both the maze and all the text by using the other drawing methods
+        :return: void
+        """
         self.draw_mazewithcandy()
         self.draw_score()
         self.draw_oneup()
 
-    # Updates the parts that are blit to the screen parts  of the screen for software displays
+    # Updates the parts that are blit to the screen parts of the screen for software displays
     def draw_todisplay(self):
+        """
+        Updates the current screen, draws everything that has been blit up until now
+        :return: void
+        """
         pg.display.update()
 
     # This method will change the color of the walls
     def change_wall_color(self, won=True):
+        """
+        Changes the current color in which the walls are drawn, by loading a different image instead
+        of the normal blue image
+        :param won: boolean, use a white variant of the walls
+        :return: void
+        """
         filename = "res/files/tile_codering.txt"
         for line in open(filename, 'r'):
             sign_tilename = line.strip().split(" : ")
@@ -211,6 +232,13 @@ class Maze():
     # *   Initialise PacMan start coordinate
     # *   Makes a list of coordinates where there are walls
     def __init_items(self):
+        """
+        Initializes most of the data-structures the Maze will hold, is called in __init__
+        It will process the contents of the text file and decode every char into the right object,
+        while also filling it's coord dictionary, which projects every (x,y) tuple onto the coordinate-object
+        with that location
+        :return: void
+        """
         maze_noborders = self.__maze[3:]
         self.__gates_dict = {}
         self.gate_list = list()
@@ -237,6 +265,10 @@ class Maze():
 
     # Initialization of a dictionary, every sign is equivalent to a tile image
     def __init_tiles(self):
+        """
+        Initializes a dictionary that projects every character onto the right tile image, is needed for init_tiles
+        :return: void
+        """
         filename = "res/files/tile_codering.txt"
         for line in open(filename, 'r'):
             sign_tilename = line.strip().split(" : ")
@@ -246,33 +278,61 @@ class Maze():
     """Getters"""
 
     def get_coord_dict(self):
+        """
+        Returns the coord dictionary, which holds every coordinate of the map.
+        :return: coord_dict
+        """
         return self.__coord_dict
 
     # Getter: returns a copy of pacman his start coordinate
     def get_pacman_start(self):
+        """
+        Returns pacman's start-coordinate
+        :return: coordinate
+        """
         return self.__pacman_coord
 
     def get_ghosts_start(self):
+        """
+        Returns the ghosts' starting coordinates
+        :return: list
+        """
         return self.__ghosts_coord
 
     # Getter: returns the dictionary, Coordinates mapped on a Candy Object
     def get_candy_dict(self):
+        """
+        Returns the whole candy dictionary, containing every candy that has not been eaten by now
+        :return: dictionary
+        """
         return self.__candy_dict
 
-    # Getter: returns list of transporters
-    def get_transporters(self):
-        return self.__transp_list
-
     def get_gates(self):
+        """
+        Returns all gates as a list, not as a dictionary
+        :return: list
+        """
         return self.gate_list
 
     def get_tiles_horiz_size(self):
+        """
+        Returns how many tiles across (horizontally) the map is
+        :return: int
+        """
         return self.__tiles_horiz_size
 
     def get_tiles_vert_size(self):
+        """
+        Returns how many tiles across (vertically) the map is
+        :return: int
+        """
         return self.__tiles_vert_size
 
     def get_candy_amount(self):
+        """
+        Returns how many candies are currently left on the map
+        :return: int
+        """
         return len(self.__candy_dict)
 
     """Setters"""
@@ -280,13 +340,28 @@ class Maze():
     # Setter: sets the pacman object
 
     def set_pacman(self, p):
+        """
+        Give the map this Pacman object to track, is used to get this Pacman's lives and score so it can draw them
+        :param p: Pacman
+        :return: void
+        """
         self.__pacman = p
 
     def add_gate(self, gate_number, coordinate):
+        """
+        Add a gate to the right list in the gate dictionary, the dictionary's used to know which gates work together
+        :param gate_number: the gate couple's ID
+        :param coordinate: where this gate is on the map
+        :return:
+        """
         if len(self.__gates_dict.keys()) == 0 or gate_number not in self.__gates_dict.keys():
             self.__gates_dict[gate_number] = list()
         self.__gates_dict[gate_number].append(coordinate)
 
     def make_gate_list(self):
+        """
+        Forms a separate list of the existing gates, rather than having them in separate lists in a dictionary
+        :return: void
+        """
         for gate_number in self.__gates_dict:
             self.gate_list.append(Gate(self.__gates_dict[gate_number][0], self.__gates_dict[gate_number][1]))
