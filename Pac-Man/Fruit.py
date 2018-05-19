@@ -8,8 +8,8 @@ class Fruit:
         A fruit is a special kind of food that can be eaten for extra points, but it only occurs within a specific
         time window on every level. For more information about this, see FruitSelector.
         :param game_display: The display to which the fruit object is drawn.
-        :param coordinate: Where the fruit is drawn
-        :param fruitselector: The FruitSelector that manages this Fruit
+        :param coordinate: type: Coordinate: Where the fruit is drawn
+        :param fruitselector: type: FruitSelector: The FruitSelector that manages this Fruit
         :param fruittype: Which kind of fruit this is.
         """
         self.__game_display = game_display

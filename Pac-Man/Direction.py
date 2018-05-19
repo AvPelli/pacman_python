@@ -17,8 +17,8 @@ class Direction(Enum):
     def __init__(self, x, y):
         """
         Constructor: x and y value, these values sums up a direction
-        :param x:
-        :param y:
+        :param x: type: int
+        :param y: type: int
         """
         self.x = x
         self.y = y

@@ -5,9 +5,9 @@ class Candy:
     # Constructor for candy
     def __init__(self, game_display, coordinate):
         """
-        Constructor of Candy
+        Constructor of Candy\n
         :param game_display:
-        :param coordinate:
+        :param coordinate: type: Coordinate
         """
         self._game_Display = game_display
         self._coord = coordinate
@@ -18,7 +18,7 @@ class Candy:
     def draw(self, coordinate):
         """
         Draws this object (Candy) on the given coordinate
-        :param coordinate:
+        :param coordinate: type: Coordinate
         :return: void
         """
         (xPixels, yPixels) = (coordinate.get_pixel_tuple())
@@ -46,7 +46,7 @@ class Candy:
         """
         Override the equals method
         2 Candy object are the same if they are located on the same coordinate
-        :param other:
+        :param other: type: Coordinate
         :return: int (boolean)
         """
         if other is None or not isinstance(other, Candy):

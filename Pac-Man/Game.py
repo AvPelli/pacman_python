@@ -273,13 +273,13 @@ class Game():
         # Event check, quit event check first
         self.__check_quit_events()
 
-    def set_gamemode(self, waarde):
+    def set_gamemode(self, value):
         """
          Choose a game mode\n
-        :param waarde: type: int
+        :param value: type: int
         :return: void
         """
-        self.__gamemode = waarde
+        self.__gamemode = value
 
     def __game_won(self):
         """
@@ -354,8 +354,7 @@ class Game():
 
     def __read_highscores(self):
         """
-         Choose a game mode\n
-        :param waarde: type: int
+        Reads the highscore file\n
         :return: void
         """
         scores = []
@@ -384,7 +383,7 @@ class Game():
     def get_max(self):
         """
         Get the max amount of colums and rows\n
-        :return: int,int
+        :return: int, int
         """
         return self.__maze.get_tiles_horiz_size() - 1, self.__maze.get_tiles_vert_size() - 1
 

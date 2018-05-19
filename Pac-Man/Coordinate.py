@@ -3,9 +3,9 @@ class Coordinate:
     def __init__(self, x, y, is_wall=False):
         """
         Creates Coordinate object, each coordinate also holds a boolean that tells if the coordinate is a wall or not.
-        :param: x (Coordinate)
-        :param: y (Coordinate)
-        :param: is_wall : boolean
+        :param: x (Coordinate): type: int
+        :param: y (Coordinate): type: int
+        :param: is_wall: type: boolean
         :return: void
         """
         self.__x = x
@@ -14,6 +14,11 @@ class Coordinate:
         self.__is_wall = is_wall
 
     def update_coord(self, direction):
+        """
+        Update the coordinate with a given direction
+        :param direction: type: Direction
+        :return:
+        """
         self.__x += direction.value[0]
         self.__y += direction.value[1]
 
@@ -61,6 +66,7 @@ class Coordinate:
     def __eq__(self, other):
         """
         Override the equal method 2 Coordinate objects are the same if x and y of both objects are the same
+        :param other: type: Coordinate
         :return: int (boolean)
         """
         if not isinstance(other, Coordinate):
