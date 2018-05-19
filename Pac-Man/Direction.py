@@ -31,7 +31,8 @@ class Direction(Enum):
         This method is used for the different movement images for pacman and ghosts
         :return: char
         """
-        letters_dict = {Direction.LEFT: "l", Direction.RIGHT: "r", Direction.DOWN: "d", Direction.UP: "u"}
+        letters_dict = {Direction.LEFT: "l", Direction.RIGHT: "r", Direction.DOWN: "d", Direction.UP: "u",
+                        Direction.BLOCK: "r"}
         return letters_dict[self]
 
     def get_reverse(self):

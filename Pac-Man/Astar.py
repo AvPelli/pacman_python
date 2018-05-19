@@ -9,6 +9,14 @@ class Astar():
 
     # Constructor for Astar algorithm
     def __init__(self, gates, pacman, file="res/files/maze2.txt"):
+        """
+        Constructor of Astar\n
+        Gates are used to see if there is a gate/transporter\n
+        Pacman is used to use his coordinate if needed\n
+        :param gates: type: Gate
+        :param pacman: type: Pacman
+        :param file: type: String
+        """
         self.__file = file
         self.gates = gates
         self.pacman = pacman
@@ -18,8 +26,6 @@ class Astar():
         self.dictionary = {"D": Direction.DOWN, "L": Direction.LEFT, "R": Direction.RIGHT, "U": Direction.UP,
                            "B": Direction.BLOCK}
         self.reverse_dict = {v: k for k, v in self.dictionary.items()}
-        # self.print_maze()
-        # print("-----------------------------------------------------------------")
 
     # Makes a maze of the given file
     # A 1 stands for a wall or something pacman can't move through
@@ -124,21 +130,14 @@ class Astar():
 
     # Gives the first direction from the calculated path
     def get_direction(self, start, goal):
-        pacCoord = self.pacman.get_coord()
-        if (start == goal and goal != pacCoord):
-            return self.choose_random(start)
+        # pacCoord = self.pacman.get_coord()
+        # if (start == goal and goal != pacCoord):
+        #     return self.choose_random(start)
         path = self.find_path(start, goal)
         if path is "":
             return self.choose_random(start)
         return self.dictionary[path[0]]
 
-    def get_direction_scatter(self, start, goal):
-        if (start == goal):
-            return
-        path = self.find_path(start, goal)
-        if path is "":
-            return self.choose_random(start)
-        return self.dictionary[path[0]]
 
     def choose_random(self, coord):
         directions = self.get_possible_dir(coord)

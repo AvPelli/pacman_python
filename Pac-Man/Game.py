@@ -525,8 +525,6 @@ class Game():
                         self.__won_counter += 1
                         self.__init_game(self.__pacman.get_score())
                         self.__init_game()
-                    else:
-                        pass
 
     """Draw Methods"""
 
