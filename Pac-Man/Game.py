@@ -1,6 +1,7 @@
 from copy import deepcopy
 
 import pygame as pg  # Importeren van pg module
+
 from Direction import Direction
 from FruitSelector import FruitSelector
 from Ghost import Ghost
@@ -42,10 +43,10 @@ class Game():
         # when resetting the game, it is important to know if we have advanced to the next level or not (in that case,
         # the starting screen won't be shown). this is done by checking if we already have a score
         if old_score == 0:
-            self.__gamemode=1
+            self.__gamemode = 1
             self.set_lifes(4)
         else:
-            self.__gamemode=2
+            self.__gamemode = 2
         self.__pauze = False
         self.__game_exit = False
         self.__pacman_caught = False
@@ -201,13 +202,6 @@ class Game():
             pg.display.update()
             pg.time.delay(200)
 
-    def reset_pacman_streak(self):
-        """
-        Resets pac-man's score\n
-        :return:  void
-        """
-        self.__pacman.reset_streak()
-
     def draw_pacman_death(self, coord):
         """
         When pac-man dies, it will display a dead animation\n
@@ -243,7 +237,7 @@ class Game():
         :param wait: type:Boolean. If true the screen maze wil blink between gray and blue. By default False\n
         :return: void
         """
-        self.music_player.stop_background_music();
+        self.music_player.stop_background_music()
         if not wait:
             pg.time.delay(1000)
             self.__game_display.fill(black)
@@ -436,12 +430,37 @@ class Game():
         """
         return self.fruitselector
 
-    def get_extreme_mode(self):
+    def get_won_counter(self):
         """
-        If extrememode is true than it will get the extreme mode\n
-        :return self.__extreme_mode:
+        Get the amount of games that the player has won
+        :return: int
         """
-        return self.__extreme_mode
+        return self.__won_counter
+
+    """Setters"""
+
+    # Setters that act like events, are triggered in other classes
+    def set_pacman_caught(self):
+        """
+        Is true when pacman is caught by a ghost\n
+        :return: void
+        """
+        self.__pacman_caught = True
+
+    def set_ghost_caught(self):
+        """
+        Ghost is caught and increment pacman streak (consecutively eating ghosts gives more points)\n
+        :return: void
+        """
+        self.__pacman.set_streak(1)  # adds 1 to the streak
+        self.__ghost_caught = True
+
+    def set_lifes(self, lifes):
+        """
+        Set lifes of pacman for a possible next level of the game\n
+        :return void:
+        """
+        self.__lifes = lifes
 
     """"Events"""
 
@@ -506,31 +525,11 @@ class Game():
                     if won:
                         self.__won_counter += 1
                         self.__init_game(self.__pacman.get_score())
-                    else:
                         self.__init_game()
+                    else:
+                        pass
 
-    # Setters that act like events, are triggered in other classes
-    def set_pacman_caught(self):
-        """
-        Is true when pacman is caught by a ghost\n
-        :return: void
-        """
-        self.__pacman_caught = True
-
-    def set_ghost_caught(self):
-        """
-        Ghost is caught and increment pacman streak (consecutively eating ghosts gives more points)\n
-        :return: void
-        """
-        self.__pacman.set_streak(1)  # adds 1 to the streak
-        self.__ghost_caught = True
-
-    def set_lifes(self, lifes):
-        """
-        Set lifes of pacman for a possible next level of the game\n
-        :return void:
-        """
-        self.__lifes = lifes
+    """Draw Methods"""
 
     def draw_score(self):
         """
@@ -540,6 +539,8 @@ class Game():
         score = self.__read_highscores()
         if len(score) != 0:
             self.__maze.draw_text(score[0], 11, 1)
+
+    """Initialize methods"""
 
     def initialize_timer_scatter(self):
         """

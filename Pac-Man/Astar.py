@@ -107,7 +107,8 @@ class Astar():
                         heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1,
                                             path + direction, neighbour))
                 except:
-                    print("ERRRRRRORRRR")
+                    # Normaly, this doesn't appear. But when it does it will just skip it and recalculate everything the next time
+                    print()
         return "NO PATH"
 
     def get_closest_tile(self, coord):

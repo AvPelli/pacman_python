@@ -1,7 +1,7 @@
-import math
 import random
 from copy import deepcopy
 
+import math
 import pygame as pg
 
 from Astar import Astar
@@ -33,7 +33,8 @@ class Ghost(Character):
         self.__id = Ghost.ghost_id
         Ghost.ghost_id += 1
         Ghost.ghost_id %= 4
-        self._speed = self._normal_speed = (16 - self.__id) / 8.0
+        self._speedfactor = (self._game.get_won_counter() * 0.11) + 1
+        self._speed = self._normal_speed = ((16 - self.__id) / 8.0) * self._speedfactor
         self.astar = Astar(self._game.get_maze().get_gates(), self._game.get_pacman())
         self._direction = Direction.UP
         self.imagechooser()
@@ -341,7 +342,7 @@ class Ghost(Character):
 
     def display_eyes_score(self):
         time_score = pg.time.get_ticks() - self.__score_time
-        if time_score > 380:
+        if time_score > 580:
             directionimg = self._direction.get_letter()
             self.__image = pg.image.load("res/eyes/" + directionimg + ".png")
             self._speed = 6
