@@ -8,21 +8,19 @@ from Direction import Direction
 class Astar():
 
     # Constructor for Astar algorithm
-    def __init__(self, gates, pacman, file="res/files/maze2.txt"):
+    def __init__(self, gates, file="res/files/maze2.txt"):
         """
         Constructor of Astar\n
         Gates are used to see if there is a gate/transporter\n
         Pacman is used to use his coordinate if needed\n
         :param gates: type: Gate
-        :param pacman: type: Pacman
         :param file: type: String
         """
         self.__file = file
-        self.gates = gates
-        self.pacman = pacman
-        self.transporters = self.get_gates_coords_list(gates)
-        self.maze = self.make_maze()
-        self.graph = self.make_graph()
+        self.__gates = gates
+        self.__transporters = self.get_gates_coords_list(gates)
+        self.__maze = self.make_maze()
+        self.__graph = self.make_graph()
         self.dictionary = {"D": Direction.DOWN, "L": Direction.LEFT, "R": Direction.RIGHT, "U": Direction.UP,
                            "B": Direction.BLOCK}
         self.reverse_dict = {v: k for k, v in self.dictionary.items()}
@@ -47,11 +45,11 @@ class Astar():
     # The items in the array are only items that Pac-Man can move to, so walls ect are not included in this graph
     # Example {(1,1) : [('S', (1, 2)), ('E', (2, 1))]}
     def make_graph(self):
-        maze = self.maze
+        maze = self.__maze
         height, width = len(maze), len(maze[0])
         graph = {(j, i): [] for j in range(width) for i in range(height) if not maze[i][j]}
         for x, y in graph.keys():
-            if Coordinate(x, y) not in self.transporters:
+            if Coordinate(x, y) not in self.__transporters:
                 if y < height - 1:
                     if not maze[y + 1][x]:
                         graph[(x, y)].append(("D", (x, y + 1)))
@@ -72,8 +70,8 @@ class Astar():
         return graph
 
     def test_graph(self):
-        for coord in self.graph.keys():
-            print("{coord} ---> {neigbours}".format(coord=coord, neigbours=self.graph[coord]))
+        for coord in self.__graph.keys():
+            print("{coord} ---> {neigbours}".format(coord=coord, neigbours=self.__graph[coord]))
 
     # Function that returns the manhattan distance between cell and goal
     # Cell and goal are both tuples like (1,1), NOT objects of the class Coordinate
@@ -85,7 +83,7 @@ class Astar():
     def heuristic(self, cell, goal):
         minimum = self.manhattan_distance(cell, goal)
         # Checks if it isn't shoter if a gate is used
-        for gate in self.gates:
+        for gate in self.__gates:
             coord1, coord2 = gate.get_coordinates()
             waarde1 = self.manhattan_distance(cell, coord1.get_coord_tuple()) + \
                       self.manhattan_distance(coord2.get_coord_tuple(), goal)
@@ -109,7 +107,7 @@ class Astar():
             if current_cell not in visited:
                 visited.add(current_cell)
                 try:
-                    for direction, neighbour in self.graph[current_cell]:
+                    for direction, neighbour in self.__graph[current_cell]:
                         heappush(pr_queue, (cost + self.heuristic(neighbour, goal), cost + 1,
                                             path + direction, neighbour))
                 except:
@@ -121,7 +119,7 @@ class Astar():
         coord_as_tuple = coord.get_coord_tuple()
         min = 1000
         result = None
-        for tuple in self.graph.keys():
+        for tuple in self.__graph.keys():
             hulp = self.manhattan_distance(coord_as_tuple, tuple)
             if hulp < min:
                 min = hulp
@@ -138,7 +136,6 @@ class Astar():
             return self.choose_random(start)
         return self.dictionary[path[0]]
 
-
     def choose_random(self, coord):
         directions = self.get_possible_dir(coord)
         return directions[random.randint(0, len(directions) - 1)]
@@ -147,7 +144,7 @@ class Astar():
         possible_directions = []
         x, y = coord.get_coord_tuple()
         for dir in Direction:
-            if dir is not Direction.BLOCK and (x + dir.value[0], y + dir.value[1]) in self.graph.keys():
+            if dir is not Direction.BLOCK and (x + dir.value[0], y + dir.value[1]) in self.__graph.keys():
                 possible_directions.append(dir)
         return possible_directions
 
@@ -164,8 +161,8 @@ class Astar():
 
     # Test fucntion, it prints the maze
     def print_maze(self):
-        for x in range(len(self.maze)):
+        for x in range(len(self.__maze)):
             out = ""
-            for y in range(len(self.maze[x])):
-                out += str(self.maze[x][y])
+            for y in range(len(self.__maze[x])):
+                out += str(self.__maze[x][y])
             print(out)

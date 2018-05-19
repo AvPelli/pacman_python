@@ -35,7 +35,7 @@ class Ghost(Character):
         Ghost.ghost_id %= 4
         self._speedfactor = (self._game.get_won_counter() * 0.11) + 1
         self._speed = self._normal_speed = ((16 - self.__id) / 8.0) * self._speedfactor
-        self.astar = Astar(self._game.get_maze().get_gates(), self._game.get_pacman())
+        self.astar = Astar(self._game.get_maze().get_gates())
         self._direction = Direction.UP
         self.imagechooser()
         self.__update_target_tile()

@@ -24,7 +24,6 @@ class Game():
         """
         Initialises the Pygame module and the pacman game
         """
-
         pg.init()
         pg.display.set_caption('Pac-Man')
         # Game variables
@@ -40,8 +39,8 @@ class Game():
         :param old_score: Remembers the old score of the past level\n
         :return: void
         """
-        # when resetting the game, it is important to know if we have advanced to the next level or not (in that case,
-        # the starting screen won't be shown). this is done by checking if we already have a score
+        # When resetting the game, it is important to know if we have advanced to the next level or not (in that case,
+        # The starting screen won't be shown). this is done by checking if we already have a score
         if old_score == 0:
             self.__gamemode = 1
             self.set_lifes(4)
@@ -202,6 +201,13 @@ class Game():
             pg.display.update()
             pg.time.delay(200)
 
+    def reset_pacman_streak(self):
+        """
+        Resets pac-man's score\n
+        :return:  void
+        """
+        self.__pacman.reset_streak()
+
     def draw_pacman_death(self, coord):
         """
         When pac-man dies, it will display a dead animation\n
@@ -224,10 +230,10 @@ class Game():
         """
         pg.time.delay(1000)  # wait 1 second
 
-        # pacman back to the starting position
+        # Pacman back to the starting position
         self.__pacman.reset_character()
 
-        # ghosts back to starting position
+        # Ghosts back to starting position
         self.reset_ghosts()
         self.__gamemode = 3
 
@@ -275,7 +281,7 @@ class Game():
 
     def set_gamemode(self, value):
         """
-         Choose a game mode\n
+        Choose a game mode\n
         :param value: type: int
         :return: void
         """
@@ -297,7 +303,7 @@ class Game():
         self.__maze.change_wall_color()
         self.__maze.draw_maze()
         self.__maze.draw_text("YOU HAVE WON!", 8, 14, (255, 238, 0))
-        self.__maze.draw_text("PRESS X: NEXT LEVEL", 5, 17, (255, 0, 0))
+        self.__maze.draw_text("PRESS X: NEXT LEVEL", 6, 17, (255, 0, 0))
         pg.display.update()
         pg.time.delay(1000)
         self.__maze.change_wall_color(won=False)
@@ -383,7 +389,7 @@ class Game():
     def get_max(self):
         """
         Get the max amount of colums and rows\n
-        :return: int, int
+        :return: int,int
         """
         return self.__maze.get_tiles_horiz_size() - 1, self.__maze.get_tiles_vert_size() - 1
 
@@ -429,10 +435,17 @@ class Game():
         """
         return self.fruitselector
 
+    def get_extreme_mode(self):
+        """
+        If extrememode is true than it will get the extreme mode\n
+        :return self.__extreme_mode:
+        """
+        return self.__extreme_mode
+
     def get_won_counter(self):
         """
-        Get the amount of games that the player has won
-        :return: int
+        Returns the amount of game the player has won\n
+        :return: void
         """
         return self.__won_counter
 
@@ -524,9 +537,10 @@ class Game():
                     if won:
                         self.__won_counter += 1
                         self.__init_game(self.__pacman.get_score())
+                    else:
                         self.__init_game()
 
-    """Draw Methods"""
+    """Draw methods"""
 
     def draw_score(self):
         """
