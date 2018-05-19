@@ -464,13 +464,13 @@ class Game():
         Ghost is caught and increment pacman streak (consecutively eating ghosts gives more points)\n
         :return: void
         """
-        self.__pacman.set_streak(1)  # adds 1 to the streak
+        self.__pacman.set_streak()  # adds 1 to the streak
         self.__ghost_caught = True
 
     def set_lifes(self, lifes):
         """
         Set lifes of pacman for a possible next level of the game\n
-        :return void:
+        :return: void
         """
         self.__lifes = lifes
 

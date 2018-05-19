@@ -109,6 +109,11 @@ class PacMan(Character):
     # As soon as it is possible, therefor we check if pacmans its coordinates  added with the direction it would be change to is not a wall
     # If so it will change the moving direction
     def __direction_waiter(self):
+        """
+        Sets Pacman's direction, this will bind a previously given (overridable) input to Pacman's actual direction
+        whenever it has the chance to, this is to prevent having to give in inputs at the perfect moment.
+        :return: void
+        """
         if not self._moving_between_tiles and self.__change_direction is not None:
             x, y = self._coord.get_x() + self.__change_direction.value[0], self._coord.get_y() + \
                    self.__change_direction.value[1]
@@ -117,8 +122,12 @@ class PacMan(Character):
 
     # Checks if there is a candy object on Pacmans coordinate
     # If so it will delete that Candy object out of the dictionary (So it will not be redrawn)
-    # Also the first time this method gets used it will load the music of eating fruit
     def __eat_candy(self):
+        """
+        Gets the candy positions from the Maze and checks if Pacman's currently on top of one.
+        If so, Pacman will eat the candy and that candy will be removed from the Maze's list
+        :return: void
+        """
         candies = self._game.get_maze().get_candy_dict()
         self.__candies_to_eat = len(candies)
         next_coord = deepcopy(self._coord)
@@ -133,6 +142,11 @@ class PacMan(Character):
             del self._game.get_maze().get_candy_dict()[next_coord]
 
     def __eat_fruit(self):
+        """
+        Checks firstly if Pacman's on the Fruit coordinate, where Fruits will spawn, then it will check
+        if a fruit's currently active. If it is, Pacman will eat the fruit
+        :return: void
+        """
         coordtuple = self._coord.get_x(), self._coord.get_y()
         fruit_coordt = self._game.get_fruit_selector().get_fruit_coord_tuple()
         if (coordtuple[0] == fruit_coordt[0] or coordtuple[0] == fruit_coordt[0] + 1) and coordtuple[1] == fruit_coordt[
@@ -142,36 +156,64 @@ class PacMan(Character):
                 pg.mixer.Channel(1).play(pg.mixer.Sound("res/files/music/pacman-eatfruit/pacman_eatfruit.wav"))
                 self.add_score(selector.get_score())
 
-    # When pacman is moving between tiles, he should still be able to immediately turn around instead of finishing moving to the next tile 1st,
-    # This method will check if an opposite key has been pressed and sets the variable __turnaround
     def __check_turnaround(self):
+        """
+        When pacman is moving between tiles, he should still be able to immediately turn around instead of
+        moving to the next tile first. This method will check if an opposite key has
+        been pressed and sets the variable __turnaround
+        :return: void
+        """
         if self.__change_direction is not None:
             x_direction = self._direction.value[0] + self.__change_direction.value[0]
             y_direction = self._direction.value[1] + self.__change_direction.value[1]
             self.__turnaround = x_direction == 0 and y_direction == 0
-        return None
 
     def add_score(self, value):
+        """
+        Adds the given param to Pacman's current score, this method is usually called whenever Pacman eats an Object
+        :param value: int
+        :return: void
+        """
         self.__score += value
 
     """"Getters"""
 
     def is_super_candy_eaten(self):
+        """
+        Returns whether or not a SuperCandy has been eaten, which is used to force the Ghosts into frightened mode
+        :return: boolean
+        """
         return self.supercandy_eaten
 
     # Returns the amount of lifes left
     def get_lifes(self):
+        """
+        Returns Pacman's current lifes left
+        :return: int
+        """
         return self.__lifes
 
     # Returns the score
     def get_score(self):
+        """
+        Returns Pacman's score
+        :return: int
+        """
         return self.__score
 
     # Return
     def get_coord(self):
+        """
+        Returns a copy of Pacman's coordinate
+        :return: Coordinate
+        """
         return deepcopy(self._coord)
 
     def get_streak(self):
+        """
+        Returns the current ghost-eating streak, that resets when the Ghosts' frightened timer runs out
+        :return: int
+        """
         return self.__streak
 
     """"Setters"""
@@ -180,6 +222,12 @@ class PacMan(Character):
     # If the following coorinate (if you follows the given direction) is a wall
     # It will put the given direction in the change_direction variable (More info in __direction_changer methode)
     def set_direction(self, direction):
+        """
+        This method will try binding the current input to Pacman's direction, when Pacman's able to
+        move in that direction. Otherwise the input is stored into change_direction (see direction_waiter)
+        :param direction: (future) direction Pacman will face
+        :return: void
+        """
         # print("Pacmancoord: " + self._coord.__str__())
         x, y = self._coord.get_x() + direction.x, self._coord.get_y() + direction.y
         if (x, y) not in self.__coord_dict.keys() or self.__coord_dict.get((x, y)).is_wall():
@@ -192,17 +240,27 @@ class PacMan(Character):
             self._direction = direction
             self._moveable = True
 
-    # Setter for pacman lifes, to access the pacmanlifes in the Game class
-    def set_lifes(self, lifes):
-        self.__lifes = lifes
-
-    def set_streak(self, eatstreak):
-        self.__streak += eatstreak
+    def set_streak(self):
+        """
+        Adds 1 to the current ghost-eating streak to increase the score given from eating frightened ghosts
+        :return: void
+        """
+        self.__streak += 1
 
     def reset_streak(self):
+        """
+        Resets Pacman's current ghost-eating streak, this method is called when the frightened
+        timer of the ghosts runs out
+        :return:
+        """
         self.__streak = 0
 
     def decrease_lifes(self):
+        """
+        When Pacman is eaten, this method will decrease Pacman's lives and, if zero, force game over
+        Otherwise you can try again to get a higher score
+        :return: void
+        """
         self.__lifes -= 1
         self._game.set_lifes(self.__lifes)
         if self.__lifes <= 0:
@@ -218,18 +276,32 @@ class PacMan(Character):
 
     # Getter: Returns the image if needs to use for the give direction (And animation)
     def __get_image_direction(self, direction):
+        """
+        Returns the current loaded image for Pacman, utilizing its image dictionary, and the current direction of Pacman
+        :param direction: direction that Pacman is facing
+        :return: image
+        """
         self.__number = (self.__number + 1) % 8
         return pg.image.load(
             self.dict[direction.get_letter()][self.__number]) if direction is not None else pg.image.load(
             "res/pacmandeath/1.png")
 
     def get_candies_to_eat(self):
+        """
+        Returns the amount of candies left on the map for Pacman to eat
+        :return: int
+        """
         return self.__candies_to_eat
 
     """"Initialize methods """
 
     # Initialize the image dictionary
     def __image_dict(self):
+        """
+        Creates and returns an image dictionary for Pacman, containing all it's frame pictures and in
+        every direction possible
+        :return: image dictionary
+        """
         dict = {}
         for letter in "ldru":
             dict[letter] = list()
@@ -241,6 +313,10 @@ class PacMan(Character):
 
     # Does move Pac-Man to original start coordinate and sets the direction  LEFT
     def reset_character(self):
+        """
+        Resets Pacman, this uses the basic functions from the method in Character, also also resets the Direction
+        :return: void
+        """
         super().reset_character()
         self._direction = [Direction.LEFT, Direction.RIGHT][random.randint(0, 1)]
         self.__change_direction = None
