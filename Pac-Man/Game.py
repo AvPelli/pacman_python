@@ -297,7 +297,7 @@ class Game():
         self.__maze.change_wall_color()
         self.__maze.draw_maze()
         self.__maze.draw_text("YOU HAVE WON!", 8, 14, (255, 238, 0))
-        self.__maze.draw_text("PRESS X TO RESTART GAME", 3, 17, (255, 0, 0))
+        self.__maze.draw_text("PRESS X: NEXT LEVEL", 5, 17, (255, 0, 0))
         pg.display.update()
         pg.time.delay(1000)
         self.__maze.change_wall_color(won=False)
