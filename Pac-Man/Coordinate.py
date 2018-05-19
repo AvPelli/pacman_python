@@ -1,8 +1,8 @@
 class Coordinate:
-    # Constructor of Coordinate
+
     def __init__(self, x, y, is_wall=False):
         """
-        Creates Coordinate object, each coordinate also holds a boolean that tells if the coordinate is a wall or not.
+        Creates Coordinate object, each coordinate also holds a boolean that tells if the coordinate is a wall or not.\n
         :param: x (Coordinate): type: int
         :param: y (Coordinate): type: int
         :param: is_wall: type: boolean
@@ -15,7 +15,7 @@ class Coordinate:
 
     def update_coord(self, direction):
         """
-        Update the coordinate with a given direction
+        Update the coordinate with a given direction.\n
         :param direction: type: Direction
         :return:
         """
@@ -26,28 +26,28 @@ class Coordinate:
 
     def is_wall(self):
         """
-        Returns if this coordinate is a wall
+        Returns if this coordinate is a wall.\n
         :return: boolean
         """
         return self.__is_wall
 
     def get_x(self):
         """
-        Returns x value of this coordinate
+        Returns x value of this coordinate.\n
         :return: x Coordinate
         """
         return self.__x
 
     def get_y(self):
         """
-        Returns y value of this coordinate
+        Returns y value of this coordinate.\n
         :return: y Coordinate
         """
         return self.__y
 
     def get_pixel_tuple(self):
         """
-        Returns a tuple of the pixels of this coordinate (Pixel x, Pixel y)
+        Returns a tuple of the pixels of this coordinate (Pixel x, Pixel y).\n
         :return: tuple
         """
         # Formula to go from the coord system to pixel system (x, y) --> (pixel_x, pixel_y)
@@ -56,7 +56,7 @@ class Coordinate:
 
     def get_coord_tuple(self):
         """
-        Returns a tuple of the x, y -value of this coordinate (x, y)
+        Returns a tuple of the x, y -value of this coordinate (x, y).\n
         :return: tuple
         """
         return self.__x, self.__y
@@ -65,7 +65,7 @@ class Coordinate:
 
     def __eq__(self, other):
         """
-        Override the equal method 2 Coordinate objects are the same if x and y of both objects are the same
+        Override the equal method 2 Coordinate objects are the same if x and y of both objects are the same.\n
         :param other: type: Coordinate
         :return: int (boolean)
         """
@@ -75,14 +75,14 @@ class Coordinate:
 
     def __hash__(self) -> int:
         """
-        Override the hashcode this is needed for dicitionaries like the candy dictionary
+        Override the hashcode this is needed for dicitionaries like the candy dictionary.\n
         :return: int
         """
-        return (int)(self.__x * 31 + self.__y * 7 + 1)
+        return int(self.__x * 31 + self.__y * 7 + 1)
 
     def __str__(self) -> str:
         """
-        to string method of Coordinate
+        To string method of Coordinate.\n
         :return: string
         """
         return "Coordinate: X: {x},   Y: {y}".format(x=self.__x, y=self.__y)

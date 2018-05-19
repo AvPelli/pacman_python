@@ -16,7 +16,7 @@ class Direction(Enum):
 
     def __init__(self, x, y):
         """
-        Constructor: x and y value, these values sums up a direction
+        Constructor: x and y value, these values sums up a direction.\n
         :param x: type: int
         :param y: type: int
         """
@@ -27,8 +27,8 @@ class Direction(Enum):
 
     def get_letter(self):
         """
-        Returns the first letter of the direction
-        This method is used for the different movement images for pacman and ghosts
+        Returns the first letter of the direction.\n
+        This method is used for the different movement images for pacman and ghosts.\n
         :return: char
         """
         letters_dict = {Direction.LEFT: "l", Direction.RIGHT: "r", Direction.DOWN: "d", Direction.UP: "u",
@@ -37,8 +37,8 @@ class Direction(Enum):
 
     def get_reverse(self):
         """
-        Returns the reverse direction of this one
-        So Direction.RIGHT returns Direction.LEFT ect
+        Returns the reverse direction of this one\n
+        So Direction.RIGHT returns Direction.LEFT ect.\n
         :return: Direction
         """
         reverse_dict = {Direction.LEFT: Direction.RIGHT, Direction.RIGHT: Direction.LEFT, Direction.DOWN: Direction.UP,

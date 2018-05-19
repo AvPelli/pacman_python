@@ -2,7 +2,7 @@ import pygame as pg
 
 
 class Candy:
-    # Constructor for candy
+
     def __init__(self, game_display, coordinate):
         """
         Constructor of Candy\n
@@ -14,10 +14,9 @@ class Candy:
         self._image = pg.image.load("res/candy/candy {number}.gif".format(number=0))
         self._score = 10
 
-    # Draws the candy on a give coordinate
     def draw(self, coordinate):
         """
-        Draws this object (Candy) on the given coordinate
+        Draws this object (Candy) on the given coordinate.\n
         :param coordinate: type: Coordinate
         :return: void
         """
@@ -28,14 +27,14 @@ class Candy:
 
     def get_coord(self):
         """
-        It returns the coordinate of this candy-object
+        It returns the coordinate of this candy-object.\n
         :return: Coordinate
         """
         return self._coord
 
     def get_score(self):
         """
-        It returns the score the player will get if he eats a Candy Object
+        It returns the score the player will get if he eats a Candy Object.\n
         :return: int
         """
         return self._score
@@ -44,8 +43,8 @@ class Candy:
 
     def __eq__(self, other):
         """
-        Override the equals method
-        2 Candy object are the same if they are located on the same coordinate
+        Override the equals method:\n
+        2 Candy object are the same if they are located on the same coordinate.\n
         :param other: type: Coordinate
         :return: int (boolean)
         """

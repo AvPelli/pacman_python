@@ -1,18 +1,18 @@
 import pygame as pg
 
 
-class MusicPlayer():
+class MusicPlayer:
 
     def __init__(self, path="res/files/music/"):
         """
         Creates a MusicPlayer, which is used by the game to play sounds.\n
-        :param path: The standard path where music files have to be located within the project folder
+        :param path: The standard path where music files have to be located within the project folder.\n
         """
         self.__path = path
 
     def play_music(self, specific_path):
         """
-        To play a sound, the file has to be located within the __path folder in order to be played
+        To play a sound, the file has to be located within the __path folder in order to be played.\n
         :param specific_path: the files' name
         :return: void
         """
@@ -21,7 +21,7 @@ class MusicPlayer():
 
     def play_background_music(self):
         """
-        To play the standard background music of the game
+        To play the standard background music of the game.\n
         :return: void
         """
         if not pg.mixer.Channel(0).get_busy():
@@ -29,7 +29,7 @@ class MusicPlayer():
 
     def stop_background_music(self):
         """
-        To temporally stop the background music, used when Pacman has been eaten by a ghost
+        To temporally stop the background music, used when Pacman has been eaten by a ghost.\n
         :return: void
         """
         pg.mixer.Channel(0).stop()

@@ -15,7 +15,7 @@ resolution = (448, 576)
 clock = pg.time.Clock()
 
 
-class Game():
+class Game:
     """
     This class is the core of the Pac-man game
     """
@@ -84,7 +84,7 @@ class Game():
         self.__maze.set_pacman(self.__pacman)
         # Score
         score = self.__read_highscores()
-        if (len(score) != 0):
+        if len(score) != 0:
             self.__max_digits_score = len(score[0].strip())
         else:
             self.__max_digits_score = 0
@@ -110,16 +110,18 @@ class Game():
         elif self.__gamemode == 7:
             self.__game_won()
 
+    """All different game modes"""
+
     def __start_screen(self):
         """
-        Startscreen mode - game displays startscreen\n
+        Startscreen mode - game displays start screen\n
         :return: void
         """
         startscreen_image = pg.image.load("res/startscreen/startscreen.jpg")
         self.__game_display.blit(startscreen_image, (0, 125))
         # Print highscore on the screen
         score = self.__read_highscores()
-        if (score != 0):
+        if score != 0:
             for i in range(len(score)):
                 text = score[i].strip()
                 self.__maze.draw_text(text, 12 + (self.__max_digits_score - len(text)), 21 + i, (150, 50, 150))
@@ -133,11 +135,11 @@ class Game():
 
     def __ready_screen(self):
         """
-        Setting up the game - press a  KEY to start\n
+        Setting up the game - after the short start music the game will start by itself\n
         :return: void
         """
         # Draw methods, be aware of the sequence!
-        self.__maze.draw_mazewithcandy()
+        self.__maze.draw_maze_with_candy()
         self.__pacman.draw_startpacman()
         self.__maze.draw_text("READY!", 11, 20, (255, 238, 0))
         self.__maze.draw_todisplay()
@@ -145,7 +147,7 @@ class Game():
         self.clock.tick(60)
 
         # Music methods
-        if not (self.__intro_played):
+        if not self.__intro_played:
             self.SONG_END = pg.USEREVENT + 1
             pg.mixer.music.set_endevent(self.SONG_END)
             self.music_player.play_music("pacman-beginning/pacman_beginning.wav")
@@ -159,6 +161,7 @@ class Game():
     def __play_screen(self):
         """
         The playing screen.\n
+        It handles everything while a player is playing the game\n
         :return: void
         """
         self.__game_display.fill(black)
@@ -188,7 +191,7 @@ class Game():
         self.__check_move_events()
         self.__check_quit_events()
 
-        if (self.__pacman_caught):
+        if self.__pacman_caught:
             self.__pacman.decrease_lifes()
             self.__pacman_caught = False
 
@@ -201,27 +204,13 @@ class Game():
             pg.display.update()
             pg.time.delay(200)
 
-    def reset_pacman_streak(self):
-        """
-        Resets pac-man's score\n
-        :return:  void
-        """
-        self.__pacman.reset_streak()
-
     def draw_pacman_death(self, coord):
         """
-        When pac-man dies, it will display a dead animation\n
+        When pacman dies, it will display a dead animation\n
         :param coord: type Coordinate\n
         :return: void
         """
         self.__maze.draw_pacmandeathani(coord)
-
-    def get_candy_amount(self):
-        """
-         Get amount of candy\n
-         :return: int
-        """
-        return self.__maze.get_candy_amount()
 
     def __reset_screen(self):
         """
@@ -279,14 +268,6 @@ class Game():
         # Event check, quit event check first
         self.__check_quit_events()
 
-    def set_gamemode(self, value):
-        """
-        Choose a game mode\n
-        :param value: type: int
-        :return: void
-        """
-        self.__gamemode = value
-
     def __game_won(self):
         """
         The winning screen\n
@@ -317,6 +298,7 @@ class Game():
     def reset_ghosts(self):
         """
         Reset all ghosts to start position\n
+        Some parameters that defines Ghosts will be reloaded to default values\n
         :return: void
         """
         for ghost in self.__ghosts:
@@ -329,13 +311,14 @@ class Game():
         """
         self.fruitselector.update_candies_active()
 
+    """Highscore methods"""
+
     def __save_highscore(self):
         """
         Saves the current score into a txt-file when called\n
         :return: void
         """
-        score = []
-        score.append(self.__pacman.get_score())
+        score = [self.__pacman.get_score()]
         filename = "res/files/highscore.txt"
         try:
             for line in open(filename, "r"):
@@ -389,7 +372,7 @@ class Game():
     def get_max(self):
         """
         Get the max amount of colums and rows\n
-        :return: int,int
+        :return: int, int
         """
         return self.__maze.get_tiles_horiz_size() - 1, self.__maze.get_tiles_vert_size() - 1
 
@@ -449,6 +432,13 @@ class Game():
         """
         return self.__won_counter
 
+    def get_candy_amount(self):
+        """
+         Get amount of candy\n
+         :return: int
+        """
+        return self.__maze.get_candy_amount()
+
     """Setters"""
 
     # Setters that act like events, are triggered in other classes
@@ -474,6 +464,14 @@ class Game():
         """
         self.__lifes = lifes
 
+    def set_gamemode(self, value):
+        """
+        Set a new given gamemode\n
+        :param value: type: int
+        :return: void
+        """
+        self.__gamemode = value
+
     """"Events"""
 
     def __check_quit_events(self):
@@ -494,7 +492,7 @@ class Game():
         for event in pg.event.get(pg.KEYDOWN):
             # Pauze button: p
             if event.key == pg.K_p:
-                self.__pauze = True if self.__pauze == False else False
+                self.__pauze = True if not self.__pauze else False
                 pg.mixer.Channel(0).stop()
             # Sends the direction input to Pacman
             elif event.key == pg.K_LEFT:
@@ -540,12 +538,11 @@ class Game():
                     else:
                         self.__init_game()
 
-
     """Draw methods"""
 
     def draw_score(self):
         """
-        Draw the current hiscore in the top middle of the screen\n
+        Draw the current highscore in the top middle of the screen\n
         :return: void
         """
         score = self.__read_highscores()
@@ -588,6 +585,7 @@ class Game():
             self.__check_quit_events()
 
         pg.quit()
+
 
 game = Game()
 game.run()

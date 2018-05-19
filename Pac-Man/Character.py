@@ -8,7 +8,7 @@ from Direction import Direction
 class Character(ABC):
     def __init__(self, PIXELSIZE, speed, moving_pos, direction, game, coordinate):
         """
-        Creates a Character object, Ghost and Pacman subclasses also use the variables here, so they are protected.
+        Creates a Character object, Ghost and Pacman subclasses also use the variables here, so they are protected.\n
         :param PIXELSIZE: type: int
         :param speed: type: int
         :param moving_pos: type: int
@@ -16,7 +16,7 @@ class Character(ABC):
         :param game:  type: Game
         :param coordinate:  type: Coordinate
         """
-        # protected variables for all the subclasses
+        # Protected variables for all the subclasses
         self._speed = speed
         self._PIXELSIZE = PIXELSIZE
         self._moving_pos = moving_pos
@@ -27,10 +27,12 @@ class Character(ABC):
         self._coord = coordinate
         self.start_coord = deepcopy(coordinate)
 
+    """Draw Method"""
+
     def _draw_character(self, coordinate, image):
         """
-        Draw a Character(image) of the given coordinate on the given game_display
-        Protected method: It can and only will be used in subclasses. Prohibited to be used outside these subclasses
+        Draw a Character(image) of the given coordinate on the given game_display.\n
+        Protected method: It can and only will be used in subclasses. Prohibited to be used outside these subclasses.\n
         :param: coordinate:  type: Coordinate:  where to draw the object
         :param: image: what image to draw
         :return: void
@@ -41,18 +43,20 @@ class Character(ABC):
             yPixels += self._direction.value[1] * self._moving_pos
         self._game.get_game_display().blit(image, (xPixels, yPixels))
 
+    """Move Methods"""
+
     @abstractmethod
     def move(self):
         """
-        Abstract method move, subclasses will have its own implementation of this method
+        Abstract method move, subclasses will have its own implementation of this method.\n
         :return: void
         """
         pass
 
     def _move_between_tiles(self):
         """
-        Method used for character while they move between tiles (Base model of the method)
-        each subclass expands this method
+        Method used for character while they move between tiles (Base model of the method)\n
+        each subclass expands this method.\n
         :return: void
         """
         self._moving_pos += self._speed
@@ -62,9 +66,11 @@ class Character(ABC):
             # Once there, it's coordinate will be updated so it's ready to be checked in the else: part of move
             self._coord.update_coord(self._direction)
 
+    """Hulp Methods"""
+
     def _set_on_opposite_side(self):
         """
-        Set the character on the other side
+        Set the character on the other side.\n
         :return: void
         """
         (maxX, maxY) = self._game.get_max()
@@ -79,8 +85,8 @@ class Character(ABC):
 
     def _calculate_new_coord(self):
         """
-        Calculates the next coordinate also this method checks if it is a "teleporter"
-        which will perform __set_on_opposite_side() in move() method
+        Calculates the next coordinate also this method checks if it is a "teleporter"\n
+        which will perform __set_on_opposite_side() in move() method.\n
         :return: Coordinate, boolean
         """
         (max_x, max_y) = self._game.get_max()
@@ -95,26 +101,18 @@ class Character(ABC):
 
     def reset_character(self):
         """
-        Base model of a method that reset the character to the begin status
+        Base model of a method that reset the character to the begin status.\n
         :return: void
         """
         # Deepcopy, or else the attribute __coord will be a reference to the attribute start_coord
         # This way when pacman gets caught the second time, it will "reset" to the coordinate it already stands on
         self._coord = deepcopy(self.start_coord)
 
-    def set_coord(self, coordinate):
-        """
-        Sets the Character's coordinate, used when resetting characters between levels
-        :param coordinate: what it will be set to
-        :return: void
-        """
-        self._coord = coordinate
-
     """Getters"""
 
     def get_coord(self):
         """
-        Returns the coordinate of the Character
+        Returns the coordinate of the Character.\n
         :return: Coordinate
         """
         # Deepcopy, for elimination of a privacy leak
@@ -122,7 +120,7 @@ class Character(ABC):
 
     def get_direction(self):
         """
-        Returns the direction the character is going in
+        Returns the direction the character is moving in.\n
         :return: Direction
         """
         # Deepcopy, for elimination of a privacy leak
@@ -132,8 +130,16 @@ class Character(ABC):
 
     def set_speed(self, speedvalue):
         """
-        Sets the speed of the character to the given speedvalue
+        Sets the speed of the character to the given speedvalue.\n
         :param speedvalue: type: int
         :return: void
         """
         self._speed = speedvalue
+
+    def set_coord(self, coordinate):
+        """
+        Sets the Character's coordinate, used when resetting characters between levels.\n
+        :param coordinate: what it will be set to
+        :return: void
+        """
+        self._coord = coordinate

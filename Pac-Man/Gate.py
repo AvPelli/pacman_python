@@ -2,7 +2,7 @@ class Gate():
 
     def __init__(self, port1, port2):
         """
-        Constructor of Gate (2 Coordinates are given)
+        Constructor of Gate (2 Coordinates are given).\n
         :param port1: type: Coordinate
         :param port2: type: Coordinate
         """
@@ -11,7 +11,7 @@ class Gate():
 
     def give_other_port(self, port):
         """
-        Gives the other port, if port1 is given as parameter, this method will return port2 and vice versa
+        Gives the other port, if port1 is given as parameter, this method will return port2 and vice versa.\n
         :param port: type: Coordinate
         :return: Coordinate
         """
@@ -21,7 +21,7 @@ class Gate():
 
     def get_coordinates(self):
         """
-        Returns a tuple of coordinates which are part of this Gate
+        Returns a tuple of coordinates which are part of this Gate.\n
         :return: tuple
         """
         return self.__port1, self.__port2
@@ -30,8 +30,8 @@ class Gate():
 
     def __eq__(self, other) -> bool:
         """
-        Override the equals method
-        2 Gates object are the same if they the same 2 Coordinates
+        Override the equals method:\n
+        2 Gates object are the same if they the same 2 Coordinates.\n
         :param other: type: Gate
         :return: boolean
         """
@@ -40,7 +40,7 @@ class Gate():
 
     def __hash__(self) -> int:
         """
-        Override the hashcode
+        Override the hashcode.\n
         :return: int
         """
         return self.__port1 * self.__port2
