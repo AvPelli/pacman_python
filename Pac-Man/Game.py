@@ -41,7 +41,11 @@ class Game():
         """
         # when resetting the game, it is important to know if we have advanced to the next level or not (in that case,
         # the starting screen won't be shown). this is done by checking if we already have a score
-        self.__gamemode = 1 if old_score == 0 else 2
+        if old_score == 0:
+            self.__gamemode=1
+            self.set_lifes(4)
+        else:
+            self.__gamemode=2
         self.__pauze = False
         self.__game_exit = False
         self.__pacman_caught = False

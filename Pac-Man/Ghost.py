@@ -376,7 +376,6 @@ class Ghost(Character):
             self.__image = pg.image.load("res/scores/" + scoreimg)
             self.__score_time = pg.time.get_ticks()
             self._speed = 6
-            print(scoreimg)
 
     def is_frightened(self):
         """
