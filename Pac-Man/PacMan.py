@@ -10,6 +10,19 @@ from SuperCandy import SuperCandy
 class PacMan(Character):
     # Constructor of PacMan
     def __init__(self, game, coordinate, coord_dict, old_score, lifes):
+        """
+        Initializes Pacman.\n
+        Pacman will move through the maze and react to input given (arrow keys) by the user. It will eat the candies
+        of the Game's Maze object while doing so. The Ghosts will try to prevent this from happening by hunting down
+        Pacman. When all the candies have been eaten, Pacman wins.
+        :param game: the game that holds Pacman
+        :param coordinate: Pacman's starting coordinate
+        :param coord_dict: represents the whole maze, tells Pacman which coordinates are walls
+        :param old_score:
+        when a level's finished, a new Pacman will be created and the old ones' score will be given to the new Pacman
+        in order to save the current score
+        :param lifes: similar to old_score, the new Pacman retains the old Pacman's lives
+        """
         # Start variables
         super().__init__(PIXELSIZE=16, speed=2, moving_pos=-8,
                          direction=Direction.RIGHT, game=game,
@@ -36,10 +49,19 @@ class PacMan(Character):
 
     # draw pacman on that coordinate
     def draw_pacman(self):
+        """
+        Draws Pacman
+        :return: void
+        """
         self._game.get_game_display().blit(self.__image, self._coord.get_pixel_tuple())
 
     # Initializes Pacman on give start coordinate
     def draw_startpacman(self, coordinate=None):
+        """
+        When the level has started, this method will draw Pacman between two tiles to appear in the middle
+        :param coordinate: optional, the most-right tile to draw Pacman on
+        :return: void
+        """
         co = coordinate.get_pixel_tuple() if coordinate is not None else self._coord.get_pixel_tuple()
         self._game.get_game_display().blit(self.__image, (co[0] - 8, co[1]))
 
@@ -47,7 +69,12 @@ class PacMan(Character):
 
     # The move method will move Pacman
     def move(self):
-        # If pacman is moving between tiles, it will keep going that way until it reaches the next tile
+        """
+        If pacman is moving between tiles, it will keep going that way until it reaches the next tile.
+        Else this method will check inputs, calculate the coordinate in front of Pacman
+        and check if Pacman can move this way, then it will assert moving_between_tiles again
+        :return: void
+        """
         if self._moving_between_tiles:
             self.__check_turnaround()
             self.__move_between_tiles()
@@ -83,6 +110,12 @@ class PacMan(Character):
 
     # Function that is used while pacman is moving form one coordinate to another
     def __move_between_tiles(self):
+        """
+        This method is used whenever Pacman's moving between 2 tiles in order to make a smooth transition
+        from one coordinate to another. When Pacman has reached the next tile, it will update its coordinate
+        and will set moving_between_tiles to false, in order for the move method to check inputs and whatnot
+        :return: void
+        """
         if not self.__turnaround:
             # Proceed to the next tile
             self.__image = self.__get_image_direction(self._direction)
@@ -251,7 +284,7 @@ class PacMan(Character):
         """
         Resets Pacman's current ghost-eating streak, this method is called when the frightened
         timer of the ghosts runs out
-        :return:
+        :return: void
         """
         self.__streak = 0
 
