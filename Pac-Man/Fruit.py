@@ -2,17 +2,17 @@ import pygame as pg
 
 
 class Fruit:
-    def __init__(self, game_Display, coordinate, fruitselector, fruittype):
+    def __init__(self, game_display, coordinate, fruitselector, fruittype):
         """
         Creates Fruit Object. \n
         A fruit is a special kind of food that can be eaten for extra points, but it only occurs within a specific
         time window on every level. For more information about this, see FruitSelector.
-        :param game_Display: The display to which the fruit object is drawn.
+        :param game_display: The display to which the fruit object is drawn.
         :param coordinate: Where the fruit is drawn
         :param fruitselector: The FruitSelector that manages this Fruit
         :param fruittype: Which kind of fruit this is.
         """
-        self.__game_Display = game_Display
+        self.__game_display = game_display
         self.__image = pg.image.load("res/fruit/" + fruittype + ".png")
         self.__coordinate = coordinate
         self.__fruittype = fruittype
@@ -28,7 +28,7 @@ class Fruit:
         """
         coord_pixels = self.__coordinate.get_pixel_tuple()
         res = coord_pixels[0] + 8, coord_pixels[1]
-        self.__game_Display.blit(self.__image, res)
+        self.__game_display.blit(self.__image, res)
 
     def get_fruit_name(self):
         """
