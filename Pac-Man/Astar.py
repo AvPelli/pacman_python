@@ -15,7 +15,7 @@ class Astar():
         self.transporters = self.get_gates_coords_list(gates)
         self.maze = self.make_maze()
         self.graph = self.make_graph()
-        self.dictionary = {"S": Direction.DOWN, "W": Direction.LEFT, "E": Direction.RIGHT, "N": Direction.UP,
+        self.dictionary = {"D": Direction.DOWN, "L": Direction.LEFT, "R": Direction.RIGHT, "U": Direction.UP,
                            "B": Direction.BLOCK}
         self.reverse_dict = {v: k for k, v in self.dictionary.items()}
         # self.print_maze()
@@ -48,21 +48,21 @@ class Astar():
             if Coordinate(x, y) not in self.transporters:
                 if y < height - 1:
                     if not maze[y + 1][x]:
-                        graph[(x, y)].append(("S", (x, y + 1)))
+                        graph[(x, y)].append(("D", (x, y + 1)))
                     if not maze[y - 1][x] and y - 1 >= 0:
-                        graph[(x, y)].append(("N", (x, y - 1)))
+                        graph[(x, y)].append(("U", (x, y - 1)))
                 if x < width - 1:
                     if not maze[y][x - 1] and x - 1 >= 0:
-                        graph[(x, y)].append(("W", (x - 1, y)))
+                        graph[(x, y)].append(("L", (x - 1, y)))
                     if not maze[y][x + 1]:
-                        graph[(x, y)].append(("E", (x + 1, y)))
+                        graph[(x, y)].append(("R", (x + 1, y)))
             else:
                 if x == 0:
-                    graph[(x, y)].append(("W", (width - 1, y)))
-                    graph[(x, y)].append(("E", (x + 1, y)))
+                    graph[(x, y)].append(("L", (width - 1, y)))
+                    graph[(x, y)].append(("R", (x + 1, y)))
                 else:
-                    graph[(x, y)].append(("W", (x - 1, y)))
-                    graph[(x, y)].append(("E", (0, y)))
+                    graph[(x, y)].append(("L", (x - 1, y)))
+                    graph[(x, y)].append(("R", (0, y)))
         return graph
 
     def test_graph(self):
