@@ -207,8 +207,8 @@ class Ghost(Character):
 
     def __move_between_tiles(self):
         """
-        Proceed to the next tile.
-        Handles movement between 2 tiles, this takes into account the Ghost's speed.
+        Proceed onwards to the next tile.
+        Handles movement between 2 tiles, this takes the Ghost's speed into account.
         :return: void
         """
         super()._move_between_tiles()
@@ -217,7 +217,7 @@ class Ghost(Character):
     def __update_target_tile(self):
         """
         Implements the Ghost's chase behaviour:
-        based on the Ghost's id, a different tile gets chosen as new target tile
+        based on the Ghost's id, a different tile gets chosen as new target tile. The Ghost will then try to reach this tile
         :return: void
         """
         pac_coord = self._game.get_pacman_coord()
@@ -288,12 +288,11 @@ class Ghost(Character):
 
     def check_caught(self):
         """
-        Checks if the Ghost is caught, which means that pacman's coordinate is the same as the Ghost's.
+        Checks if the Ghost is caught, which means that Pacman's coordinate is the same as the Ghost's.
         :return: void
         """
         if self._coord == self._game.get_pacman_coord() and not self.__movestart:
             if not self.__frightened:
-                pg.mixer.Channel(0).stop()
                 self._game.set_pacman_caught()
             else:
                 if not self.__movestart:
@@ -303,32 +302,55 @@ class Ghost(Character):
                     # Make the ghost start moving to the center
                     self.__movestart = True
 
-    def get_coord(self):
-        return self._coord
-
-    def get_normal_speed(self):
-        return self._normal_speed
-
-    def set_coord(self, coord):
-        self._coord = coord
-
     def set_frightened(self, value):
+        """
+        Sets the ghost in frightened mode; when Pacman has eaten a SuperCandy
+        :param value: boolean
+        :return: void
+        """
         self.__frightened = value
 
     def set_speed(self, sp):
+        """
+        Sets the Ghost's actual speed, called when Pacman has eaten a SuperCandy, when the frightened timer has run out,
+        when Pacman has eaten the ghost,...
+        :param sp: double
+        :return: void
+        """
         self._speed = sp
 
     def set_extreme(self, bool):
+        """
+        A hidden feature within the game.
+        Sets whether or not the ghosts should become way smarter and more efficient at hunting Pacman down.
+        Activated by pressing 'E' any time
+        :param bool: boolean
+        :return: void
+        """
         self.__extreme_mode = bool
 
     def check_frightened(self):
+        """
+        If the ghost is frightened, it has to show a different image instead.
+        This method uses frightened_image to set its current image
+        :return: void
+        """
         if self.__frightened:
             self.frightend_image()
 
     def init_start_scatter(self):
+        """
+        Initializes the scatter timer by setting it's start_timer_scatter variable to the current time
+        :return: void
+        """
         self.start_time_scatter = pg.time.get_ticks()
 
     def frightend_image(self):
+        """
+        When Pacman has eaten a SuperCandy, the ghosts have to update their current image to its frightened version.
+        When the frightened timer is almost over, the image will be switch between a blue and a white frightened variant
+        :return: void
+        """
         self.__image = pg.image.load("res/pacmanghost/bluepacman{number}.png".format(number=self.__frightenedimg % 4))
         time_remaining = self.frightened_timer_mod - self.frightened_timer
         if time_remaining < self.frightened_timer_mod / 2:
@@ -341,6 +363,10 @@ class Ghost(Character):
             self.__frightenedimg = self.__frightenedimg + 2
 
     def display_eyes_score(self):
+        """
+        When the Ghost is eaten, this method will set its new current image that has to be shown; the eyes
+        :return: void
+        """
         time_score = pg.time.get_ticks() - self.__score_time
         if time_score > 580:
             directionimg = self._direction.get_letter()
@@ -349,7 +375,7 @@ class Ghost(Character):
 
     def reset_character(self):
         """
-        Resets the Ghost to default values and start coordinate
+        Resets the Ghost to default values and start coordinate, called when the level has finished
         :return: void
         """
         super().reset_character()
@@ -364,9 +390,9 @@ class Ghost(Character):
 
     def set_eaten(self, value, streak=0):
         """
-        Set Ghost to eaten state
-        :param value:
-        :param streak: The streak defines how many points are awarded for eating the Ghost
+        Sets the Ghost to the eaten state, meaning Pacman has just eaten it and awards score to Pacman
+        :param value: Whether or not Ghost has been eaten
+        :param streak:  Defines how many points are awarded for eating the Ghost
         :return: void
         """
         self.__eaten = value
@@ -380,14 +406,14 @@ class Ghost(Character):
 
     def is_frightened(self):
         """
-        Returns True if Ghost is frightened
+        Returns True if Ghost is currently frightened
         :return: boolean
         """
         return self.__frightened
 
     def is_eaten(self):
         """
-        Returns True if Ghost is eaten
+        Returns True if Ghost is eaten by Pacman
         :return: boolean
         """
         return self.__eaten
@@ -398,6 +424,13 @@ class Ghost(Character):
         :return: boolean
         """
         return self.__movestart
+
+    def get_normal_speed(self):
+        """
+        Getter, returns the ghost's normal speed; the speed when it is neither frightened nor eaten by Pacman
+        :return: double
+        """
+        return self._normal_speed
 
     def check_scatter_state(self):
         """

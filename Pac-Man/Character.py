@@ -102,6 +102,14 @@ class Character(ABC):
         # This way when pacman gets caught the second time, it will "reset" to the coordinate it already stands on
         self._coord = deepcopy(self.start_coord)
 
+    def set_coord(self, coordinate):
+        """
+        Sets the Character's coordinate, used when resetting characters between levels
+        :param coordinate: what it will be set to
+        :return: void
+        """
+        self._coord = coordinate
+
     """Getters"""
 
     def get_coord(self):

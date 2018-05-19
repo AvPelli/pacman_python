@@ -11,6 +11,15 @@ class Maze():
     # Constructor of Maze
 
     def __init__(self, game, width, height, tile_size):
+        """
+        Creates a Maze, which draws the actual map and supervises most of the objects in the game.
+        It reads in a standard text file from which it will create the whole map and determines where everything
+        has to be located, by giving everything appropriate Coordinates.
+        :param game: the game that created this maze
+        :param width: maze width (in pixels)
+        :param height: maze height (in pixels)
+        :param tile_size: the length of a rib of the square that defines a tile (in pixels)
+        """
         # Amount of rows en colums
         self.__tiles_horiz_size = 28
         self.__tiles_vert_size = 36
@@ -50,6 +59,10 @@ class Maze():
         self.upcounter = 0
 
     def draw_maze(self):
+        """
+        Draws all the walls of the maze
+        :return: void
+        """
         for row in range(0, self.__tiles_vert_size):
             for col in range(0, self.__tiles_horiz_size):  # = Amount of tiles in 1 row
                 tile_sign = self.__maze[row][col]
@@ -57,6 +70,10 @@ class Maze():
         self.draw_extra()
 
     def draw_extra(self):
+        """
+        Draws all the 'extras', like Pacman's lifes, and it's score
+        :return: void
+        """
         self.draw_lifes()
         self.draw_text("HIGHSCORE", 9, 0, (0, 255, 0))
         #self.draw_grid()
@@ -64,6 +81,10 @@ class Maze():
 
     # Method for drawing the amount of lives pacman has left
     def draw_lifes(self):
+        """
+        Draws Pacman's lifes in the bottom left corner of the screen
+        :return: void
+        """
         width = self.__tile_size * 2
         height = self.__tile_size * (self.__tiles_vert_size - 2)
         lifesimg = pg.image.load("res/tileset/pacman_lifes.png")
@@ -74,10 +95,22 @@ class Maze():
 
     # Draw text with a given coordinate and color(as a tuple). x en y depends on the tile_size
     def draw_text(self, text, x, y, color_rgb=(255, 255, 255)):
+        """
+        Draws any given text onto the screen, requires extra params for location
+        :param text: the text that should be drawn
+        :param x: the starting x-coordinate (in tiles)
+        :param y: the y-coordinate (in tiles)
+        :param color_rgb: in which color (tuple with rgb values) the text should be drawn (standard white)
+        :return: void
+        """
         text_surface_obj = self.font_obj.render(text, False, color_rgb)
         self.__game_display.blit(text_surface_obj, (x * self.__tile_size, y * self.__tile_size - self.fontoffset))
 
     def draw_oneup(self):
+        """
+        Draws the '1UP' text in the top of the screen and makes it switch colors
+        :return: void
+        """
         duration = 60
         if self.upcounter < duration:
             self.oneup = False
@@ -92,6 +125,10 @@ class Maze():
 
     # Method for drawing the score
     def draw_score(self):
+        """
+        Draws Pacman's current score
+        :return: void
+        """
         score = self.__pacman.get_score()
         scorestr = str(self.__pacman.get_score())
         if score < 10:
@@ -103,7 +140,11 @@ class Maze():
 
     # Method for drawing a grid over the maze, handy for debugging ect
     def draw_grid(self):
-        """ Draws a grid to mark the tile borders """
+        """
+        Draws a grid over the whole map, which makes it easy to see every tile/coordinate.
+        Toggled in the draw_extra method
+        :return:
+        """
         # (200, 10, 20): is kleur rood
         # pg.draw.line(self.gameDisplay, (200, 10, 20), (0, self.__tile_size), (self.__width, self.__tile_size))
         for x in range(0, self.__tiles_horiz_size):
@@ -115,6 +156,11 @@ class Maze():
 
     # Draws Pacman his death animation
     def draw_pacmandeathani(self, deadco):
+        """
+        Draws Pacman's death animation on screen and stops the current music
+        :param deadco: the coordinate where pacman has been eaten
+        :return: void
+        """
         imagefolder = "res/pacmandeath/"
         for x in range(1, 12):
             pg.time.delay(100)

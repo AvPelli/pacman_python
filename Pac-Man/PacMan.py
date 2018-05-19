@@ -196,9 +196,6 @@ class PacMan(Character):
     def set_lifes(self, lifes):
         self.__lifes = lifes
 
-    def set_coord(self, coordinate):
-        self._coord = coordinate
-
     def set_streak(self, eatstreak):
         self.__streak += eatstreak
 
@@ -212,6 +209,8 @@ class PacMan(Character):
             self._game.set_gamemode(5)
         else:
             self._game.set_gamemode(4)
+            self._game.music_player.stop_background_music()
+            pg.time.delay(1000)
             self._game.music_player.play_music("pacman-death/pacman_death.wav")
             self._game.draw_pacman_death(self._coord)
 

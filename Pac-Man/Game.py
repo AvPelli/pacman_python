@@ -539,6 +539,8 @@ class Game():
                         self.__init_game(self.__pacman.get_score())
                     else:
                         self.__init_game()
+                    else:
+                        self.__init_game()
 
     """Draw methods"""
 
