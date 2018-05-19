@@ -1,0 +1,620 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Game &#8212; Pac-Man 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Welcome to Pac-Man’s documentation!" href="index.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Pac-Man’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="game">
+<h1>Game<a class="headerlink" href="#game" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Game.Game">
+<em class="property">class </em><code class="descclassname">Game.</code><code class="descname">Game</code><a class="headerlink" href="#Game.Game" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is the core of the Pac-man game</p>
+<dl class="method">
+<dt id="Game.Game._Game__check_beginningmusic_events">
+<code class="descname">_Game__check_beginningmusic_events</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__check_beginningmusic_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if intro song is still playing and starts the game when the song stops</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game._Game__check_move_events">
+<code class="descname">_Game__check_move_events</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__check_move_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks for user input:</p>
+<p>Arrow keys = change direction</p>
+<p>P = Pause game</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game._Game__check_quit_events">
+<code class="descname">_Game__check_quit_events</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__check_quit_events" title="Permalink to this definition">¶</a></dt>
+<dd><p>Provides a check to see if window is closed by the user</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game._Game__check_x_event">
+<code class="descname">_Game__check_x_event</code><span class="sig-paren">(</span><em>reset=False</em>, <em>won=False</em><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__check_x_event" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles the event that happens when “X” is pressed:</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>reset</strong> – True = start a fresh maze</li>
+<li><strong>won</strong> – When the game is won: Keep the current score</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>When the game is lost: Reset score to 0</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game._Game__game_won">
+<code class="descname">_Game__game_won</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__game_won" title="Permalink to this definition">¶</a></dt>
+<dd><p>The winning screen</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game._Game__gamemode_handler">
+<code class="descname">_Game__gamemode_handler</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__gamemode_handler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks which game mode it needs to activate</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game._Game__gameover_screen">
+<code class="descname">_Game__gameover_screen</code><span class="sig-paren">(</span><em>wait=False</em><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__gameover_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>When pac-man loses all his lifes, the game will be over</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>wait</strong> – type:Boolean. If true the screen maze wil blink between gray and blue. By default False</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game._Game__init_game">
+<code class="descname">_Game__init_game</code><span class="sig-paren">(</span><em>old_score=0</em><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__init_game" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialise the game. It can also be used to reset the game!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>old_score</strong> – Remembers the old score of the past level</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game._Game__play_screen">
+<code class="descname">_Game__play_screen</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__play_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>The playing screen.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game._Game__read_highscores">
+<code class="descname">_Game__read_highscores</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__read_highscores" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Choose a game mode</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>waarde</strong> – type: int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game._Game__ready_screen">
+<code class="descname">_Game__ready_screen</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__ready_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setting up the game - press a  KEY to start</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game._Game__reset_highscore">
+<code class="descname">_Game__reset_highscore</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__reset_highscore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clears the highscore file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game._Game__reset_screen">
+<code class="descname">_Game__reset_screen</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__reset_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>When Pac-man gets caught and still has lives left than the screen gets reset</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game._Game__save_highscore">
+<code class="descname">_Game__save_highscore</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__save_highscore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Saves the current score into a txt-file when called</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game._Game__start_screen">
+<code class="descname">_Game__start_screen</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game._Game__start_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Startscreen mode - game displays startscreen</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialises the Pygame module and the pacman game</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Game.Game.__weakref__">
+<code class="descname">__weakref__</code><a class="headerlink" href="#Game.Game.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.draw_pacman_death">
+<code class="descname">draw_pacman_death</code><span class="sig-paren">(</span><em>coord</em><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.draw_pacman_death" title="Permalink to this definition">¶</a></dt>
+<dd><p>When pac-man dies, it will display a dead animation</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>coord</strong> – type Coordinate</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.draw_score">
+<code class="descname">draw_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.draw_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draw the current hiscore in the top middle of the screen</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.get_candy_amount">
+<code class="descname">get_candy_amount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.get_candy_amount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get amount of candy</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.get_fruit_selector">
+<code class="descname">get_fruit_selector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.get_fruit_selector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the fruitselector which handles the fruit spawning</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">FruitSelector</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.get_game_display">
+<code class="descname">get_game_display</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.get_game_display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the game display,which you can draw on</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">self.__game_display</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.get_ghosts">
+<code class="descname">get_ghosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.get_ghosts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the array of Ghosts</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Ghost[]</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.get_max">
+<code class="descname">get_max</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.get_max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the max amount of colums and rows</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">int,int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.get_maze">
+<code class="descname">get_maze</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.get_maze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the maze</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Maze</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.get_pacman">
+<code class="descname">get_pacman</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.get_pacman" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the pac-man object</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Object of PacMan</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.get_pacman_coord">
+<code class="descname">get_pacman_coord</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.get_pacman_coord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the deepcopy of the current pacman coordinate</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Coordinate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.get_pacman_direction">
+<code class="descname">get_pacman_direction</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.get_pacman_direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the deepcopy of the current direction</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Direction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.get_won_counter">
+<code class="descname">get_won_counter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.get_won_counter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the amount of games that the player has won
+:return: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.initialize_timer_scatter">
+<code class="descname">initialize_timer_scatter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.initialize_timer_scatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls init_start_scatter() method in Ghost, which stores current game time and will be used later to check time passed.</p>
+<p>In turn, the time passed is needed to know when to change Ghost’s behaviour (Scatter,Frightened,Normal)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.reset_ghosts">
+<code class="descname">reset_ghosts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.reset_ghosts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reset all ghosts to start position</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.run">
+<code class="descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs the game, uses the gamemode handler and does event checks until the game gets stopped</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.set_gamemode">
+<code class="descname">set_gamemode</code><span class="sig-paren">(</span><em>waarde</em><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.set_gamemode" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div>Choose a game mode</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>waarde</strong> – type: int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.set_ghost_caught">
+<code class="descname">set_ghost_caught</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.set_ghost_caught" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ghost is caught and increment pacman streak (consecutively eating ghosts gives more points)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.set_lifes">
+<code class="descname">set_lifes</code><span class="sig-paren">(</span><em>lifes</em><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.set_lifes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set lifes of pacman for a possible next level of the game</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Return void:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.set_pacman_caught">
+<code class="descname">set_pacman_caught</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.set_pacman_caught" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is true when pacman is caught by a ghost</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Game.Game.update_fruit_selector">
+<code class="descname">update_fruit_selector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Game.Game.update_fruit_selector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrements amount of candies left, which is used to determine when special fruit should appear</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to Pac-Man’s documentation!</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Ga.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to Pac-Man’s documentation!"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Team-9:Aleandro, Qing, Lukas, Roel, Arthur.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+    </div>
+  </body>
+</html>

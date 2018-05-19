@@ -1,0 +1,6 @@
+Game
+====
+.. autoclass:: Game.Game
+   :members:
+   :special-members:
+   :private-members:
