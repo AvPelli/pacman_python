@@ -34,7 +34,7 @@ class Ghost(Character):
         Ghost.ghost_id += 1
         Ghost.ghost_id %= 4
         self._speed = self._normal_speed = (16 - self.__id) / 8.0
-        self.astar = Astar(self._game.get_map().get_gates(), self._game.get_pacman())
+        self.astar = Astar(self._game.get_maze().get_gates(), self._game.get_pacman())
         self._direction = Direction.UP
         self.imagechooser()
         self.__update_target_tile()

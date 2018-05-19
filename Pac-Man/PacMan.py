@@ -31,7 +31,7 @@ class PacMan(Character):
         self.__change_direction = None
 
         self.supercandy_eaten = False
-        self.__candies_to_eat = game.get_map().get_candy_amount()
+        self.__candies_to_eat = game.get_maze().get_candy_amount()
         self.__streak = 0
 
     # draw pacman on that coordinate
@@ -119,7 +119,7 @@ class PacMan(Character):
     # If so it will delete that Candy object out of the dictionary (So it will not be redrawn)
     # Also the first time this method gets used it will load the music of eating fruit
     def __eat_candy(self):
-        candies = self._game.get_map().get_candy_dict()
+        candies = self._game.get_maze().get_candy_dict()
         self.__candies_to_eat = len(candies)
         next_coord = deepcopy(self._coord)
         next_coord.update_coord(self._direction)
@@ -130,7 +130,7 @@ class PacMan(Character):
             self.__score += candy.get_score()
             self._game.update_fruit_selector()
             pg.mixer.Channel(1).play(pg.mixer.Sound("res/files/music/pacman-chomp/pacman-wakawaka.wav"))
-            del self._game.get_map().get_candy_dict()[next_coord]
+            del self._game.get_maze().get_candy_dict()[next_coord]
 
     def __eat_fruit(self):
         coordtuple = self._coord.get_x(), self._coord.get_y()

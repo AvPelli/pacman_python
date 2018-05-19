@@ -33,7 +33,7 @@ class FruitSelector:
         :param level: the current level
         :return: void
         """
-        self.__candies_left = self.__game.get_map().get_candy_amount()
+        self.__candies_left = self.__game.get_maze().get_candy_amount()
         if level == 0:
             self.__fruits = (Fruit(self._game_Display, FruitSelector.fruit_location, self, "Cherry"),
                              Fruit(self._game_Display, FruitSelector.fruit_location, self, "Apple"))
@@ -79,7 +79,7 @@ class FruitSelector:
 
     def fruit_active(self):
         """
-        This method checks if a fruit is currently active(~ drawn) on the map, which
+        This method checks if a fruit is currently active(~ drawn) on the maze, which
         is used by Pacman for collision detection
         :return: boolean
         """

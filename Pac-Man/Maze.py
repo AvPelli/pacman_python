@@ -8,7 +8,7 @@ from SuperCandy import SuperCandy
 
 class Maze():
 
-    # Constructor of Map
+    # Constructor of Maze
 
     def __init__(self, game, width, height, tile_size):
         # Amount of rows en colums
@@ -28,7 +28,7 @@ class Maze():
 
         # Makes the tilemap
         filename = "res/files/maze2.txt"
-        self.__map = [line.split() for line in open(filename, 'r')]
+        self.__maze = [line.split() for line in open(filename, 'r')]
 
         # Item lists/ditcionaries
         self.__coord_dict = {}
@@ -45,14 +45,14 @@ class Maze():
         self.oneup = True
         self.fontoffset = 3
 
-        # Map settings
+        # Maze settings
         self.clock = pg.time.Clock()
         self.upcounter = 0
 
-    def draw_map(self):
+    def draw_maze(self):
         for row in range(0, self.__tiles_vert_size):
             for col in range(0, self.__tiles_horiz_size):  # = Amount of tiles in 1 row
-                tile_sign = self.__map[row][col]
+                tile_sign = self.__maze[row][col]
                 self.__game_display.blit(self.__tiles[tile_sign], (col * self.__tile_size, row * self.__tile_size))
         self.draw_extra()
 
@@ -101,7 +101,7 @@ class Maze():
         self.__game_display.blit(text_surface_obj,
                                  (7 * self.__tile_size - score_size * 16, self.__tile_size - self.fontoffset))
 
-    # Method for drawing a grid over the map, handy for debugging ect
+    # Method for drawing a grid over the maze, handy for debugging ect
     def draw_grid(self):
         """ Draws a grid to mark the tile borders """
         # (200, 10, 20): is kleur rood
@@ -125,20 +125,20 @@ class Maze():
             pg.display.update()
 
     # This method redraws some items like:
-    # All the remaining candy and the map itself
+    # All the remaining candy and the maze itself
     def draw_candy(self):
-        self.draw_map()
+        self.draw_maze()
         for candy in self.__candy_dict.values():
             candy.draw(candy.get_coord())
 
         # self.__game_display.blit(pg.image.load("res/candy/superdot.png"), (216, 320))
 
-    def draw_mapwithcandy(self):
-        self.draw_map()
+    def draw_mazewithcandy(self):
+        self.draw_maze()
         self.draw_candy()
 
     def draw_allsteadyparts(self):
-        self.draw_mapwithcandy()
+        self.draw_mazewithcandy()
         self.draw_score()
         self.draw_oneup()
 
@@ -165,27 +165,27 @@ class Maze():
     # *   Initialise PacMan start coordinate
     # *   Makes a list of coordinates where there are walls
     def __init_items(self):
-        map_noborders = self.__map[3:]
+        maze_noborders = self.__maze[3:]
         self.__gates_dict = {}
         self.gate_list = list()
-        for y in range(0, len(map_noborders)):
-            for x in range(0, len(map_noborders[0])):
+        for y in range(0, len(maze_noborders)):
+            for x in range(0, len(maze_noborders[0])):
                 self.__coord_dict[(x, y)] = Coordinate(x, y)
                 coord = self.__coord_dict.get((x, y))
-                if map_noborders[y][x] == "f":  # Place where candy show be drawn
+                if maze_noborders[y][x] == "f":  # Place where candy show be drawn
                     self.__candy_dict[coord] = (Candy(self.__game_display, coord))
-                elif map_noborders[y][x] == "D":
+                elif maze_noborders[y][x] == "D":
                     self.__candy_dict[coord] = (SuperCandy(self.__game_display, coord))
-                elif map_noborders[y][x] == "P":  # Place where PacMan needs to be located
+                elif maze_noborders[y][x] == "P":  # Place where PacMan needs to be located
                     self.__pacman_coord = coord
-                elif map_noborders[y][x] in "/=.-_\éè\()}{][abcd12345678uijonq":  # All the characters that are walls
+                elif maze_noborders[y][x] in "/=.-_\éè\()}{][abcd12345678uijonq":  # All the characters that are walls
                     del self.__coord_dict[(x, y)]
                     self.__coord_dict[(x, y)] = Coordinate(x, y, True)
-                elif map_noborders[y][x] == 'g':
+                elif maze_noborders[y][x] == 'g':
                     self.__ghosts_coord.append(coord)
-                elif "t" in map_noborders[y][x]:
+                elif "t" in maze_noborders[y][x]:
                     # At a teleporter, add some "fake" walls to the list to make sure pacman doesn't go out of bounds
-                    self.add_gate(map_noborders[y][x], coord)
+                    self.add_gate(maze_noborders[y][x], coord)
 
         self.make_gate_list()
 

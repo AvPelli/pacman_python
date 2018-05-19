@@ -30,7 +30,7 @@ class Astar():
         for line in input:
             line_string = "".join(line).replace(" ", "").replace("\n", "")
             check = line_string.replace("0", "")
-            # Filters whole lines of 0's, so only the real map (walls and walkable places) are into the maze
+            # Filters whole lines of 0's, so only the real maze (walls and walkable places) are into the maze
             if len(check) > 0:
                 maze.append([0 if letter in "f0gPDG" or "t" in letter else 1 for letter in line])
         return maze
