@@ -256,7 +256,7 @@ class Ghost(Character):
         Inky -->    It calculates a vector with information of Blinky and Pacman. It goes to the end of the vector\n
         Clyde -->   If his distance from pacman is > 10  or < 2 his target tile is pacman's tile,\n
                     otherwise it is a random number from -10 --> +10 added to both x en y value of pacman's coordinate\n
-        :return: void
+        :return: Coordinate
         """
         pac_coord = self._game.get_pacman_coord()
         pac_direction = self._game.get_pacman_direction()
@@ -292,7 +292,7 @@ class Ghost(Character):
         The _moving_between_tiles boolean makes the ghost recalculate position to quickly, this function has to slow it down\n
         so the ghost doesnt move back and forth without going in a circle\n
         this is done by checking if manhattan distance to the target tile is < 1.\n
-        :return: void
+        :return: Coordinate
         """
         dictionary = self.ghost_scatter_coord[self.__id]
         self.__target_tile = dictionary.get(self.__scatter_state)

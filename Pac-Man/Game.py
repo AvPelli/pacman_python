@@ -50,15 +50,6 @@ class Game:
         self.__game_exit = False
         self.__pacman_caught = False
         self.__ghost_caught = False
-        self.__next = False
-
-        self.__first_time_loop = True
-        self.start_time_scatter = pg.time.get_ticks()
-        self.scatter_timer = 0
-
-        self.start_time_frightened = 0
-        self.frightened_timer = 0
-        self.frightened_mode = False
 
         # Music settings
         self.music_player = MusicPlayer()
