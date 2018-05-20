@@ -1,5 +1,5 @@
 # Team-9: Pac-Man
-# Stappenplan installatie van het spel
+## Stappenplan installatie van het spel
   - Ga naar <a href=https://github.ugent.be/projectpython18/team-9>team-9</a> en klik op de groene knop "Clone or download". Druk op download ZIP.
   - Pak het gedownloade bestand uit. Klik op de map "team-9" en daarna "Pac-man-exe". Daar vindt U twee bestanden, <strong>gelieve die twee bij elkaar te houden!</strong> Dubbel klik op "Game.exe" en het spel zal verschijnen.
   - Indien U meer wilt weten over de methodes dan verwijzen we u naar de map "Documentatie". Lees het README-bestand daar en open index.html.
@@ -28,6 +28,6 @@
 - [x]   Zoeken naar goede Python GUI oplossing : PyGame
 - [x]   Uitproberen PyGame
 - [X]   Analyse
-- [ ]   Programmeren van Pac-Man
-- [ ]   Grondig testen van de Game
+- [X]   Programmeren van Pac-Man
+- [X]   Grondig testen van de Game
 - [ ]   ...
