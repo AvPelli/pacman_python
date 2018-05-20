@@ -16,7 +16,7 @@ class FruitSelector:
         :param game: The game that holds this FruitSelector, needed for communication
         :param won_counter: The current level, needed to know which fruits to draw
         """
-        self._game_Display = game_display
+        self.__game_Display = game_display
         self.__game = game
         self.__names = {"Cherry": 200, "Apple": 400, "Strawberry": 600, "Orange": 800, "Green Melon": 1000}
         self.__images = {}
@@ -39,7 +39,7 @@ class FruitSelector:
         for fruit in self.__eaten_fruits:
             drawpix = startpix[0] + 32 * i, startpix[1]
             i += 1
-            self._game_Display.blit(fruit, drawpix)
+            self.__game_Display.blit(fruit, drawpix)
 
     """Reset Method"""
 
@@ -52,14 +52,14 @@ class FruitSelector:
         """
         self.__candies_left = self.__game.get_maze().get_candy_amount()
         if level == 0:
-            self.__fruits = (Fruit(self._game_Display, FruitSelector.fruit_location, self, "Cherry"),
-                             Fruit(self._game_Display, FruitSelector.fruit_location, self, "Apple"))
+            self.__fruits = (Fruit(self.__game_Display, FruitSelector.fruit_location, self, "Cherry"),
+                             Fruit(self.__game_Display, FruitSelector.fruit_location, self, "Apple"))
         elif level == 1:
-            self.__fruits = (Fruit(self._game_Display, FruitSelector.fruit_location, self, "Strawberry"),
-                             Fruit(self._game_Display, FruitSelector.fruit_location, self, "Orange"))
+            self.__fruits = (Fruit(self.__game_Display, FruitSelector.fruit_location, self, "Strawberry"),
+                             Fruit(self.__game_Display, FruitSelector.fruit_location, self, "Orange"))
         else:
-            self.__fruits = (Fruit(self._game_Display, FruitSelector.fruit_location, self, "Green Melon"),
-                             Fruit(self._game_Display, FruitSelector.fruit_location, self, "Green Melon"))
+            self.__fruits = (Fruit(self.__game_Display, FruitSelector.fruit_location, self, "Green Melon"),
+                             Fruit(self.__game_Display, FruitSelector.fruit_location, self, "Green Melon"))
 
     """Calculation Methods"""
 
