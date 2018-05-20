@@ -15,7 +15,7 @@ class Astar():
         Constructor of Astar\n
         Gates are used to see if there is a gate/transporter\n
         Pacman is used to use his coordinate if needed\n
-        :param gates: type: Gate
+        :param gates: type: List of Gates
         :param file: type: String
         There is a default file, but it is possible to change it with another file\n
         """
@@ -178,6 +178,8 @@ class Astar():
 
     """Getters"""
 
+    # Some of these "getters" aren't real getters for a attribute but for something else
+    # like getting specific items or data structures ect, ...
     def get_direction(self, start, goal):
         """
         Gives the first direction from the calculated path.\n
