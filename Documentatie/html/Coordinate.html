@@ -1,0 +1,252 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Coordinate &#8212; Pac-Man 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Abstract class Character" href="Character.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Character.html" title="Abstract class Character"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="coordinate">
+<h1>Coordinate<a class="headerlink" href="#coordinate" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Coordinate.Coordinate">
+<em class="property">class </em><code class="descclassname">Coordinate.</code><code class="descname">Coordinate</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>is_wall=False</em><span class="sig-paren">)</span><a class="headerlink" href="#Coordinate.Coordinate" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Coordinate.Coordinate.__eq__">
+<code class="descname">__eq__</code><span class="sig-paren">(</span><em>other</em><span class="sig-paren">)</span><a class="headerlink" href="#Coordinate.Coordinate.__eq__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override the equal method 2 Coordinate objects are the same if x and y of both objects are the same.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>other</strong> – type: Coordinate</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">int (boolean)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Coordinate.Coordinate.__hash__">
+<code class="descname">__hash__</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; int<a class="headerlink" href="#Coordinate.Coordinate.__hash__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override the hashcode this is needed for dicitionaries like the candy dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Coordinate.Coordinate.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>x</em>, <em>y</em>, <em>is_wall=False</em><span class="sig-paren">)</span><a class="headerlink" href="#Coordinate.Coordinate.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates Coordinate object, each coordinate also holds a boolean that tells if the coordinate is a wall or not.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">x (Coordinate): type: int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Param:</th><td class="field-body">y (Coordinate): type: int</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body">is_wall: type: boolean</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Coordinate.Coordinate.__str__">
+<code class="descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; str<a class="headerlink" href="#Coordinate.Coordinate.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>To string method of Coordinate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">string</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Coordinate.Coordinate.__weakref__">
+<code class="descname">__weakref__</code><a class="headerlink" href="#Coordinate.Coordinate.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Coordinate.Coordinate.get_coord_tuple">
+<code class="descname">get_coord_tuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Coordinate.Coordinate.get_coord_tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tuple of the x, y -value of this coordinate (x, y).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Coordinate.Coordinate.get_pixel_tuple">
+<code class="descname">get_pixel_tuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Coordinate.Coordinate.get_pixel_tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tuple of the pixels of this coordinate (Pixel x, Pixel y).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">tuple</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Coordinate.Coordinate.get_x">
+<code class="descname">get_x</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Coordinate.Coordinate.get_x" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns x value of this coordinate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">x Coordinate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Coordinate.Coordinate.get_y">
+<code class="descname">get_y</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Coordinate.Coordinate.get_y" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns y value of this coordinate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">y Coordinate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Coordinate.Coordinate.is_wall">
+<code class="descname">is_wall</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Coordinate.Coordinate.is_wall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns if this coordinate is a wall.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Coordinate.Coordinate.update_coord">
+<code class="descname">update_coord</code><span class="sig-paren">(</span><em>direction</em><span class="sig-paren">)</span><a class="headerlink" href="#Coordinate.Coordinate.update_coord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update the coordinate with a given direction.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>direction</strong> – type: Direction</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Character.html"
+                        title="previous chapter">Abstract class Character</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Coordinate.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Character.html" title="Abstract class Character"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Qing,Aleandro,Lukas,Arthur,Roel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+    </div>
+  </body>
+</html>

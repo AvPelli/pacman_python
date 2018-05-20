@@ -1,0 +1,6 @@
+A* Algorithm
+============
+.. autoclass:: Astar.Astar
+   :members:
+   :special-members:
+   :private-members:

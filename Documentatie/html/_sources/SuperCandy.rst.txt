@@ -1,0 +1,7 @@
+SuperCandy
+==========
+.. autoclass:: SuperCandy.SuperCandy
+   :show-inheritance:
+   :members:
+   :special-members:
+   :private-members:

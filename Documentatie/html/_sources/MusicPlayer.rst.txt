@@ -1,0 +1,6 @@
+MusicPlayer
+===========
+.. autoclass:: MusicPlayer.MusicPlayer
+   :members:
+   :special-members:
+   :private-members:

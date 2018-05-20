@@ -1,0 +1,6 @@
+Maze
+====
+.. autoclass:: Maze.Maze
+   :members:
+   :special-members:
+   :private-members:

@@ -1,0 +1,348 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>A* Algorithm &#8212; Pac-Man 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Candy" href="Candy.html" />
+    <link rel="prev" title="Game" href="Game.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Candy.html" title="Candy"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Game.html" title="Game"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="a-algorithm">
+<h1>A* Algorithm<a class="headerlink" href="#a-algorithm" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Astar.Astar">
+<em class="property">class </em><code class="descclassname">Astar.</code><code class="descname">Astar</code><span class="sig-paren">(</span><em>gates</em>, <em>file='res/files/maze2.txt'</em><span class="sig-paren">)</span><a class="headerlink" href="#Astar.Astar" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Astar.Astar.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>gates</em>, <em>file='res/files/maze2.txt'</em><span class="sig-paren">)</span><a class="headerlink" href="#Astar.Astar.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Constructor of Astar</p>
+<p>Gates are used to see if there is a gate/transporter</p>
+<p>Pacman is used to use his coordinate if needed</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>gates</strong> – type: Gate</li>
+<li><strong>file</strong> – type: String There is a default file, but it is possible to change it with another file</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Astar.Astar.__weakref__">
+<code class="descname">__weakref__</code><a class="headerlink" href="#Astar.Astar.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Astar.Astar.choose_random">
+<code class="descname">choose_random</code><span class="sig-paren">(</span><em>coord</em><span class="sig-paren">)</span><a class="headerlink" href="#Astar.Astar.choose_random" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a random direction (that is possible).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>coord</strong> – type: Coordinate</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Direction</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Astar.Astar.find_path">
+<code class="descname">find_path</code><span class="sig-paren">(</span><em>start_coord</em>, <em>goal_coord</em><span class="sig-paren">)</span><a class="headerlink" href="#Astar.Astar.find_path" title="Permalink to this definition">¶</a></dt>
+<dd><p>A* algorithm:</p>
+<p>Searches for the shortest (smallest cost path) path possible from start_coord to goal_coord.</p>
+<p>Both, start_coord and goal_coord, are objects of the class Coordinate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start_coord</strong> – type: Coordinate</li>
+<li><strong>goal_coord</strong> – type: Coordinate</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">string of smallest cost path</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Astar.Astar.get_closest_tile">
+<code class="descname">get_closest_tile</code><span class="sig-paren">(</span><em>coord</em><span class="sig-paren">)</span><a class="headerlink" href="#Astar.Astar.get_closest_tile" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method calculate a coordinate closed by the given coordinate.</p>
+<p>Only when the given coord is not a part of the graph.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>coord</strong> – type: Coordinate</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Coordinate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Astar.Astar.get_direction">
+<code class="descname">get_direction</code><span class="sig-paren">(</span><em>start</em>, <em>goal</em><span class="sig-paren">)</span><a class="headerlink" href="#Astar.Astar.get_direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives the first direction from the calculated path.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>start</strong> – type: Coordinate</li>
+<li><strong>goal</strong> – type: Coordinate</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Direction</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Astar.Astar.get_gates_coords_list">
+<code class="descname">get_gates_coords_list</code><span class="sig-paren">(</span><em>gates</em><span class="sig-paren">)</span><a class="headerlink" href="#Astar.Astar.get_gates_coords_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives a list of coordinates that are gates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>gates</strong> – type: list of Gates</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">list of Coordinates</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Astar.Astar.get_possible_dir">
+<code class="descname">get_possible_dir</code><span class="sig-paren">(</span><em>coord</em><span class="sig-paren">)</span><a class="headerlink" href="#Astar.Astar.get_possible_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gives an array of the possible directions that a ghost can make in a given coordinate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>coord</strong> – type: Coordinate</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">[] of Directions</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Astar.Astar.heuristic">
+<code class="descname">heuristic</code><span class="sig-paren">(</span><em>cell</em>, <em>goal</em><span class="sig-paren">)</span><a class="headerlink" href="#Astar.Astar.heuristic" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is an heuristic function this returns the minimal cost between cell and goal.</p>
+<p>It also takes the Gates into account, so if it is shorter to take a gate is will check it and return the smallest cost possible to go from cell to goal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cell</strong> – type: tuple</li>
+<li><strong>goal</strong> – type: tuple</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Astar.Astar.make_graph">
+<code class="descname">make_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Astar.Astar.make_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a graph of the maze that was made in the method make_maze.</p>
+<p>It is stored in a dictionary, it maps a tuple of coordinates on an array.</p>
+<p>In this array there are tuples, first element is a direction like L(EFT), U(P) ect …</p>
+<p>second element is the  a tuple of a coordinate in that specific direction.</p>
+<p>The items in the array are only items that Pac-Man can move to, so walls ect are not included in this graph.</p>
+<p>Example {(1,1) : [(‘D’, (1, 2)), (‘R’, (2, 1))]}</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">{}  (Dictionary)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Astar.Astar.make_maze">
+<code class="descname">make_maze</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Astar.Astar.make_maze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes a maze of the given file.</p>
+<p>A 1 stands for a wall or something pacman can’t move through.</p>
+<p>A 0 stands for a place where pacman can walk/move to.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">[][] (2 dimensional array)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Astar.Astar.manhattan_distance">
+<code class="descname">manhattan_distance</code><span class="sig-paren">(</span><em>cell</em>, <em>goal</em><span class="sig-paren">)</span><a class="headerlink" href="#Astar.Astar.manhattan_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function that returns the manhattan distance between cell and goal</p>
+<p>Cell and goal are both tuples like (1,1), NOT objects of the class Coordinate</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>cell</strong> – type: tuple</li>
+<li><strong>goal</strong> – type : tuple</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">int</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Astar.Astar.print_graph">
+<code class="descname">print_graph</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Astar.Astar.print_graph" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test method, it prints the graph.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Astar.Astar.print_maze">
+<code class="descname">print_maze</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Astar.Astar.print_maze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Test method, it prints the maze.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Game.html"
+                        title="previous chapter">Game</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Candy.html"
+                        title="next chapter">Candy</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Astar.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Candy.html" title="Candy"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Game.html" title="Game"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Qing,Aleandro,Lukas,Arthur,Roel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+    </div>
+  </body>
+</html>

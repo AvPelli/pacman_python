@@ -1,0 +1,6 @@
+Fruit
+=====
+.. autoclass:: Fruit.Fruit
+   :members:
+   :special-members:
+   :private-members:

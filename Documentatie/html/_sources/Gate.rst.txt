@@ -1,0 +1,6 @@
+Gate
+=====
+.. autoclass:: Gate.Gate
+   :members:
+   :special-members:
+   :private-members:

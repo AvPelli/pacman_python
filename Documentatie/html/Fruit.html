@@ -1,0 +1,182 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Fruit &#8212; Pac-Man 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Enum Direction" href="Direction.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Direction.html" title="Enum Direction"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="fruit">
+<h1>Fruit<a class="headerlink" href="#fruit" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Fruit.Fruit">
+<em class="property">class </em><code class="descclassname">Fruit.</code><code class="descname">Fruit</code><span class="sig-paren">(</span><em>game_display</em>, <em>coordinate</em>, <em>fruitselector</em>, <em>fruittype</em><span class="sig-paren">)</span><a class="headerlink" href="#Fruit.Fruit" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Fruit.Fruit.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>game_display</em>, <em>coordinate</em>, <em>fruitselector</em>, <em>fruittype</em><span class="sig-paren">)</span><a class="headerlink" href="#Fruit.Fruit.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates Fruit Object.</p>
+<p>A fruit is a special kind of food that can be eaten for extra points, but it only occurs within a specific</p>
+<p>time window on every level. For more information about this, see FruitSelector.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>game_display</strong> – The display to which the fruit object is drawn.</li>
+<li><strong>coordinate</strong> – type: Coordinate: Where the fruit is drawn</li>
+<li><strong>fruitselector</strong> – type: FruitSelector: The FruitSelector that manages this Fruit</li>
+<li><strong>fruittype</strong> – Which kind of fruit this is.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Fruit.Fruit.__weakref__">
+<code class="descname">__weakref__</code><a class="headerlink" href="#Fruit.Fruit.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Fruit.Fruit.draw">
+<code class="descname">draw</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Fruit.Fruit.draw" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method draws the fruit on it’s coordinate. To appear in the middle, 8 extra pixels are added</p>
+<p>to its pixelcoordinate before drawing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Fruit.Fruit.get_eaten">
+<code class="descname">get_eaten</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Fruit.Fruit.get_eaten" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the __eaten boolean which is used by FruitSelector.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Fruit.Fruit.get_fruit_name">
+<code class="descname">get_fruit_name</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Fruit.Fruit.get_fruit_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the fruit type. Needed by FruitSelector to determine its score.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">String</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Fruit.Fruit.get_score">
+<code class="descname">get_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Fruit.Fruit.get_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns its score, this method is only called when Pacman eats the Fruit. Therefore it will also set</p>
+<p>the __eaten boolean.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Direction.html"
+                        title="previous chapter">Enum Direction</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Fruit.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Direction.html" title="Enum Direction"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Qing,Aleandro,Lukas,Arthur,Roel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+    </div>
+  </body>
+</html>

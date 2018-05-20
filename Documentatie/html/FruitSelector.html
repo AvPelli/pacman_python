@@ -1,0 +1,208 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>FruitSelector &#8212; Pac-Man 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="fruitselector">
+<h1>FruitSelector<a class="headerlink" href="#fruitselector" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="FruitSelector.FruitSelector">
+<em class="property">class </em><code class="descclassname">FruitSelector.</code><code class="descname">FruitSelector</code><span class="sig-paren">(</span><em>game_display</em>, <em>game</em>, <em>won_counter</em><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="FruitSelector.FruitSelector.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>game_display</em>, <em>game</em>, <em>won_counter</em><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a FruitSelector.</p>
+<p>It’s function is to determine which fruits it should draw during the current level. It also knows</p>
+<p>when exactly to draw these, and will draw which fruits are already eaten in the bottom right corner of the screen.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>game_display</strong> – The display to which the fruit object is drawn</li>
+<li><strong>game</strong> – The game that holds this FruitSelector, needed for communication</li>
+<li><strong>won_counter</strong> – The current level, needed to know which fruits to draw</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="FruitSelector.FruitSelector.__weakref__">
+<code class="descname">__weakref__</code><a class="headerlink" href="#FruitSelector.FruitSelector.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FruitSelector.FruitSelector.add_eaten_fruit">
+<code class="descname">add_eaten_fruit</code><span class="sig-paren">(</span><em>fruit</em><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.add_eaten_fruit" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method adds a fruit to the eaten_fruit list, so it will be drawn from now on
+:param fruit: the eaten fruit
+:return: void</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FruitSelector.FruitSelector.calc_until_fruit">
+<code class="descname">calc_until_fruit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.calc_until_fruit" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method draws a fruit to the display when specific conditions are met, it simulates a</p>
+<p>time frame in which Pacman can eat the fruit.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="FruitSelector.FruitSelector.draw_eaten_fruits">
+<code class="descname">draw_eaten_fruits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.draw_eaten_fruits" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method draws the, so far, eaten fruits from this level
+:return: void</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FruitSelector.FruitSelector.fruit_active">
+<code class="descname">fruit_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.fruit_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method checks if a fruit is currently active(~ drawn) on the maze, which
+is used by Pacman for collision detection
+:return: boolean</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FruitSelector.FruitSelector.get_fruit_coord_tuple">
+<code class="descname">get_fruit_coord_tuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.get_fruit_coord_tuple" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the fruit location, where it will be drawn
+:return: tuple with coordinates (x,y)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FruitSelector.FruitSelector.get_fruitbonus">
+<code class="descname">get_fruitbonus</code><span class="sig-paren">(</span><em>fruitname</em><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.get_fruitbonus" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the amount of score a certain type of fruit awards when eaten, by looking its fruitname</p>
+<p>up in it’s dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fruitname</strong> – needed to determine how many points this fruit awards</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="FruitSelector.FruitSelector.get_score">
+<code class="descname">get_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.get_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns the score of the eaten fruit to Pacman itself, it calls the get_score() method of the fruits
+themselves, which only returns their true score once (before they are eaten)
+:return: int, the eaten fruit’s score</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="FruitSelector.FruitSelector.reset_per_level">
+<code class="descname">reset_per_level</code><span class="sig-paren">(</span><em>level=0</em><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.reset_per_level" title="Permalink to this definition">¶</a></dt>
+<dd><p>While not needed, this method helps separating some of the __init__code that has it’s own specific function:</p>
+<p>Initializing the fruits to draw.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>level</strong> – the current level</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="FruitSelector.FruitSelector.update_candies_active">
+<code class="descname">update_candies_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.update_candies_active" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method subtract 1 from the active candy amount, is called whenever pacman eats a candy. This variable
+is very important for the FruitSelector, it determines when any fruit will be drawn.
+:return: void</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/FruitSelector.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Qing,Aleandro,Lukas,Arthur,Roel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+    </div>
+  </body>
+</html>

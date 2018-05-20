@@ -1,0 +1,6 @@
+Coordinate
+==========
+.. autoclass:: Coordinate.Coordinate
+   :members:
+   :special-members:
+   :private-members:

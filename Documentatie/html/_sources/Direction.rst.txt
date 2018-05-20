@@ -1,0 +1,7 @@
+Enum-class Direction
+====================
+.. autoclass:: Direction.Direction
+   :members:
+   :special-members:
+   :private-members:
+   :undoc-members:

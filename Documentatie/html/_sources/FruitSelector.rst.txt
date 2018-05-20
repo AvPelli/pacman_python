@@ -1,0 +1,6 @@
+FruitSelector
+=============
+.. autoclass:: FruitSelector.FruitSelector
+   :members:
+   :special-members:
+   :private-members:

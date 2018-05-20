@@ -1,0 +1,515 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Maze &#8212; Pac-Man 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Ghost" href="Ghost.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Ghost.html" title="Ghost"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="maze">
+<h1>Maze<a class="headerlink" href="#maze" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Maze.Maze">
+<em class="property">class </em><code class="descclassname">Maze.</code><code class="descname">Maze</code><span class="sig-paren">(</span><em>game</em>, <em>width</em>, <em>height</em>, <em>tile_size</em><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="Maze.Maze._Maze__init_items">
+<code class="descname">_Maze__init_items</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze._Maze__init_items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes most of the data-structures the Maze will hold, is called in __init__</p>
+<p>It will process the contents of the text file and decode every char into the right object,</p>
+<p>while also filling it’s coord dictionary, which projects every (x,y) tuple onto the coordinate-object</p>
+<p>with that location.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze._Maze__init_tiles">
+<code class="descname">_Maze__init_tiles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze._Maze__init_tiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes a dictionary that projects every character onto the right tile image, is needed for init_tiles.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>game</em>, <em>width</em>, <em>height</em>, <em>tile_size</em><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a Maze, which draws the actual map and supervises most of the objects in the game.</p>
+<p>It reads in a standard text file from which it will create the whole map and determines where everything</p>
+<p>has to be located, by giving everything appropriate Coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>game</strong> – the game that created this maze</li>
+<li><strong>width</strong> – maze width (in pixels)</li>
+<li><strong>height</strong> – maze height (in pixels)</li>
+<li><strong>tile_size</strong> – the length of a rib of the square that defines a tile (in pixels)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="Maze.Maze.__weakref__">
+<code class="descname">__weakref__</code><a class="headerlink" href="#Maze.Maze.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.add_gate">
+<code class="descname">add_gate</code><span class="sig-paren">(</span><em>gate_number</em>, <em>coordinate</em><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.add_gate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add a gate to the right list in the gate dictionary, the dictionary’s used to know which gates work together.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>gate_number</strong> – the gate couple’s ID</li>
+<li><strong>coordinate</strong> – where this gate is on the map</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.change_wall_color">
+<code class="descname">change_wall_color</code><span class="sig-paren">(</span><em>won=True</em><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.change_wall_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Changes the current color in which the walls are drawn, by loading a different image instead</p>
+<p>of the normal blue image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>won</strong> – type: boolean:  use a white variant of the walls</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.draw_allsteadyparts">
+<code class="descname">draw_allsteadyparts</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.draw_allsteadyparts" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws both the maze and all the text by using the other drawing methods.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.draw_candy">
+<code class="descname">draw_candy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.draw_candy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws all candies left on screen by iterating over it’s candy list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.draw_extra">
+<code class="descname">draw_extra</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.draw_extra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws all the ‘extras’, like Pacman’s lifes, and it’s score. Uses the other drawing methods.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.draw_grid">
+<code class="descname">draw_grid</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.draw_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws a grid over the whole map, which makes it easy to see every tile/coordinate.</p>
+<p>Toggled in the draw_extra method (Handy for debugging ect).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.draw_lifes">
+<code class="descname">draw_lifes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.draw_lifes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws Pacman’s lifes in the bottom left corner of the screen.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.draw_maze">
+<code class="descname">draw_maze</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.draw_maze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws all the walls of the maze.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.draw_maze_with_candy">
+<code class="descname">draw_maze_with_candy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.draw_maze_with_candy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws both the walls and the candies, uses the other drawing methods.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.draw_oneup">
+<code class="descname">draw_oneup</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.draw_oneup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the ‘1UP’ text in the top of the screen and makes it switch colors.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.draw_pacmandeathani">
+<code class="descname">draw_pacmandeathani</code><span class="sig-paren">(</span><em>dead_coord</em><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.draw_pacmandeathani" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws Pacman’s death animation on screen.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>dead_coord</strong> – the coordinate where pacman has been eaten</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.draw_score">
+<code class="descname">draw_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.draw_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws Pacman’s current score.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.draw_text">
+<code class="descname">draw_text</code><span class="sig-paren">(</span><em>text</em>, <em>x</em>, <em>y</em>, <em>color_rgb=(255</em>, <em>255</em>, <em>255)</em><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.draw_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws any given text onto the screen, requires extra params for location.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>text</strong> – the text that should be drawn</li>
+<li><strong>x</strong> – the starting x-coordinate (in tiles)</li>
+<li><strong>y</strong> – the y-coordinate (in tiles)</li>
+<li><strong>color_rgb</strong> – in which color (tuple with rgb values) the text should be drawn (standard white)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.draw_todisplay">
+<code class="descname">draw_todisplay</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.draw_todisplay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Updates the current screen, draws everything that has been blit up until now.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.get_candy_amount">
+<code class="descname">get_candy_amount</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.get_candy_amount" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns how many candies are currently left on the map.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.get_candy_dict">
+<code class="descname">get_candy_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.get_candy_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the whole candy dictionary, containing every candy that has not been eaten by now.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">dictionary</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.get_coord_dict">
+<code class="descname">get_coord_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.get_coord_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the coord dictionary, which holds every coordinate of the map.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">{} of Coordinates</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.get_gates">
+<code class="descname">get_gates</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.get_gates" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all gates as a list, not as a dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.get_ghosts_start">
+<code class="descname">get_ghosts_start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.get_ghosts_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the ghosts’ starting coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">list</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.get_pacman_start">
+<code class="descname">get_pacman_start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.get_pacman_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns pacman’s start-coordinate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">coordinate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.get_tiles_horiz_size">
+<code class="descname">get_tiles_horiz_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.get_tiles_horiz_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns how many tiles across (horizontally) the map is.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.get_tiles_vert_size">
+<code class="descname">get_tiles_vert_size</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.get_tiles_vert_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns how many tiles across (vertically) the map is.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.make_gate_list">
+<code class="descname">make_gate_list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.make_gate_list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forms a separate list of the existing gates, rather than having them in separate lists in a dictionary.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Maze.Maze.set_pacman">
+<code class="descname">set_pacman</code><span class="sig-paren">(</span><em>p</em><span class="sig-paren">)</span><a class="headerlink" href="#Maze.Maze.set_pacman" title="Permalink to this definition">¶</a></dt>
+<dd><p>Give the map this Pacman object to track, is used to get this Pacman’s lives and score so it can draw them.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>p</strong> – Pacman</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Ghost.html"
+                        title="previous chapter">Ghost</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Maze.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Ghost.html" title="Ghost"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Qing,Aleandro,Lukas,Arthur,Roel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+    </div>
+  </body>
+</html>

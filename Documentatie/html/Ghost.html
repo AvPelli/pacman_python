@@ -1,0 +1,521 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Ghost &#8212; Pac-Man 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Gate" href="Gate.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Gate.html" title="Gate"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ghost">
+<h1>Ghost<a class="headerlink" href="#ghost" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="Ghost.Ghost">
+<em class="property">class </em><code class="descclassname">Ghost.</code><code class="descname">Ghost</code><span class="sig-paren">(</span><em>game</em>, <em>coordinate</em>, <em>coord_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="Character.html#Character.Character" title="Character.Character"><code class="xref py py-class docutils literal notranslate"><span class="pre">Character.Character</span></code></a></p>
+<dl class="method">
+<dt id="Ghost.Ghost._Ghost__check_neighbours">
+<code class="descname">_Ghost__check_neighbours</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost._Ghost__check_neighbours" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks the surrounding tiles to see if there are any walls and returns their coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">tuple (int,int)</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost._Ghost__move_between_tiles">
+<code class="descname">_Ghost__move_between_tiles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost._Ghost__move_between_tiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Proceed onwards to the next tile.</p>
+<p>Handles movement between 2 tiles, this takes the Ghost’s speed into account.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost._Ghost__update_target_tile">
+<code class="descname">_Ghost__update_target_tile</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost._Ghost__update_target_tile" title="Permalink to this definition">¶</a></dt>
+<dd><p>Implements the Ghost’s chase behaviour:</p>
+<p>based on the Ghost’s id, a different tile gets chosen as new target tile. The Ghost will then try to reach this tile</p>
+<p>Ghost –&gt;   Target tile</p>
+<p>Blinky –&gt;  Pacman’s tile</p>
+<p>Pinky –&gt;   If possible 4 tiles ahead of Pacman in his moving direction</p>
+<p>Inky –&gt;    It calculates a vector with information of Blinky and Pacman. It goes to the end of the vector</p>
+<p>Clyde –&gt;   If his distance from pacman is &gt; 10  or &lt; 2 his target tile is pacman’s tile,</p>
+<blockquote>
+<div>otherwise it is a random number from -10 –&gt; +10 added to both x en y value of pacman’s coordinate</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost._Ghost__update_target_tile_scatter">
+<code class="descname">_Ghost__update_target_tile_scatter</code><span class="sig-paren">(</span><em>next_coord</em><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost._Ghost__update_target_tile_scatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>The _moving_between_tiles boolean makes the ghost recalculate position to quickly, this function has to slow it down</p>
+<p>so the ghost doesnt move back and forth without going in a circle</p>
+<p>this is done by checking if manhattan distance to the target tile is &lt; 1.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>game</em>, <em>coordinate</em>, <em>coord_dict</em><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates Ghost object.</p>
+<p>Each ghost has a unique id, boolean values for each state (frightened/eaten/scatter),</p>
+<p>its own pathfinder (Astar algorithm) and scatter coordinates.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>game</strong> – The game object that runs the Ghost</li>
+<li><strong>coordinate</strong> – The startcoordinate of the Ghost</li>
+<li><strong>coord_dict</strong> – Dictionary that maps tuple -&gt; Coordinate, this dictionary contains information about walls</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost._draw_character">
+<code class="descname">_draw_character</code><span class="sig-paren">(</span><em>coordinate</em>, <em>image</em><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost._draw_character" title="Permalink to this definition">¶</a></dt>
+<dd><p>Ghost gets drawn on coordinate, the image is dependent on the state of the Ghost
+:param coordinate: Coordinate where Ghost should be drawn
+:param image: Visual display of the Ghost
+:return: void</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.check_caught">
+<code class="descname">check_caught</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.check_caught" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if the Ghost is caught, which means that Pacman’s coordinate is the same as the Ghost’s.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.check_frightened">
+<code class="descname">check_frightened</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.check_frightened" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the ghost is frightened, it has to show a different image instead.</p>
+<p>This method uses frightened_image to set its current image.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.check_scatter_state">
+<code class="descname">check_scatter_state</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.check_scatter_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles which coordinate in the scatter dictionary the Ghost will move to first</p>
+<p>It will always go to the closest scatter coordinate possible.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.display_eyes_score">
+<code class="descname">display_eyes_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.display_eyes_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>When the Ghost is eaten, this method will set its new current image that has to be shown; the eyes.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.frightend_image">
+<code class="descname">frightend_image</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.frightend_image" title="Permalink to this definition">¶</a></dt>
+<dd><p>When Pacman has eaten a SuperCandy, the ghosts have to update their current image to its frightened version.</p>
+<p>When the frightened timer is almost over, the image will be switch between a blue and a white frightened variant.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.frightened">
+<code class="descname">frightened</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.frightened" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles how the Ghost moves in frightened state</p>
+<p>In this state Ghost’s speed is decreased and moves randomly.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.get_movestart">
+<code class="descname">get_movestart</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.get_movestart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if the Ghost has to move back to start position.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.get_normal_speed">
+<code class="descname">get_normal_speed</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.get_normal_speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Getter, returns the ghost’s normal speed; the speed when it is neither frightened nor eaten by Pacman.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">double</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.image_chooser">
+<code class="descname">image_chooser</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.image_chooser" title="Permalink to this definition">¶</a></dt>
+<dd><p>Chooses the appropriate image for each ghost, based on the ghost’s id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.init_start_scatter">
+<code class="descname">init_start_scatter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.init_start_scatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes the scatter timer by setting it’s start_timer_scatter variable to the current time.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.is_eaten">
+<code class="descname">is_eaten</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.is_eaten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if Ghost is eaten by Pacman.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.is_frightened">
+<code class="descname">is_frightened</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.is_frightened" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns True if Ghost is currently frightened.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.move">
+<code class="descname">move</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles how the Ghost moves in its normal state</p>
+<p>In extreme mode the Ghosts can move direction at any time, instead of only switching directions at intersections or turns.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.move_selector">
+<code class="descname">move_selector</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.move_selector" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles how the Ghost moves, this is different for each state (Scatter,Frightened,Eaten/Chase)</p>
+<p>This method uses the timers for each state to switch between states.</p>
+<p>In extreme mode the ghosts can only perform Chase and Frightened mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.move_to_start">
+<code class="descname">move_to_start</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.move_to_start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles Ghost movement to starting position, for example after being eaten</p>
+<p>Note: Unlike scatter(), frightened() and move(); move_to_start() doesn’t have to check for “jump”</p>
+<p>because the shortest path to start never requires going through the sides of the game (aka the gates).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.reset_character">
+<code class="descname">reset_character</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.reset_character" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets the Ghost to default values and start coordinate, called when the level has finished.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.scatter">
+<code class="descname">scatter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.scatter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handles how the Ghost moves in scatter state</p>
+<p>Each Ghost loops through its respective scatter coordinates which form a circle in a specific corner of the Maze
+:return: void</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.set_eaten">
+<code class="descname">set_eaten</code><span class="sig-paren">(</span><em>value</em>, <em>streak=0</em><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.set_eaten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the Ghost to the eaten state, meaning Pacman has just eaten it and awards score to Pacman.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>value</strong> – Whether or not Ghost has been eaten</li>
+<li><strong>streak</strong> – Defines how many points are awarded for eating the Ghost</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">void</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.set_extreme">
+<code class="descname">set_extreme</code><span class="sig-paren">(</span><em>boolean</em><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.set_extreme" title="Permalink to this definition">¶</a></dt>
+<dd><p>A hidden feature within the game.</p>
+<p>Sets whether or not the ghosts should become way smarter and more efficient at hunting Pacman down.</p>
+<p>Activated by pressing ‘E’ in the start of the game.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>boolean</strong> – boolean</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.set_frightened">
+<code class="descname">set_frightened</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.set_frightened" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the ghost in frightened mode; when Pacman has eaten a SuperCandy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> – type: boolean</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.set_speed">
+<code class="descname">set_speed</code><span class="sig-paren">(</span><em>speed</em><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.set_speed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the Ghost’s actual speed, called when Pacman has eaten a SuperCandy, when the frightened timer has run out,</p>
+<p>when Pacman has eaten the ghost,…</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>speed</strong> – type: double</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="Ghost.Ghost.start_timer_frightend">
+<code class="descname">start_timer_frightend</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#Ghost.Ghost.start_timer_frightend" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the timer for frightened mode by saving current gametime and checking time difference later on.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Gate.html"
+                        title="previous chapter">Gate</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Ghost.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Gate.html" title="Gate"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Qing,Aleandro,Lukas,Arthur,Roel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+    </div>
+  </body>
+</html>

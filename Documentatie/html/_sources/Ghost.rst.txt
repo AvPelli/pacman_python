@@ -1,0 +1,7 @@
+Ghost
+=====
+.. autoclass:: Ghost.Ghost
+   :show-inheritance:
+   :members:
+   :special-members:
+   :private-members:

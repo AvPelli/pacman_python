@@ -1,0 +1,7 @@
+Pac-Man
+=======
+.. autoclass:: PacMan.PacMan
+   :show-inheritance:
+   :members:
+   :special-members:
+   :private-members:

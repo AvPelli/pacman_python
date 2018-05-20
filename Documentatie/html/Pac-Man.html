@@ -1,0 +1,414 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Pac-Man &#8212; Pac-Man 1.0 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="MusicPlayer" href="MusicPlayer.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="MusicPlayer.html" title="MusicPlayer"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pac-man">
+<h1>Pac-Man<a class="headerlink" href="#pac-man" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="PacMan.PacMan">
+<em class="property">class </em><code class="descclassname">PacMan.</code><code class="descname">PacMan</code><span class="sig-paren">(</span><em>game</em>, <em>coordinate</em>, <em>coord_dict</em>, <em>old_score</em>, <em>lifes</em><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="Character.html#Character.Character" title="Character.Character"><code class="xref py py-class docutils literal notranslate"><span class="pre">Character.Character</span></code></a></p>
+<dl class="method">
+<dt id="PacMan.PacMan._PacMan__check_turnaround">
+<code class="descname">_PacMan__check_turnaround</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan._PacMan__check_turnaround" title="Permalink to this definition">¶</a></dt>
+<dd><p>When pacman is moving between tiles, he should still be able to immediately turn around instead of</p>
+<p>moving to the next tile first. This method will check if an opposite key has</p>
+<p>been pressed and sets the variable __turnaround.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan._PacMan__direction_waiter">
+<code class="descname">_PacMan__direction_waiter</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan._PacMan__direction_waiter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets Pacman’s direction, this will bind a previously given (overridable) input to Pacman’s actual direction</p>
+<p>whenever it has the chance to, this is to prevent having to give in inputs at the perfect moment.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan._PacMan__eat_candy">
+<code class="descname">_PacMan__eat_candy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan._PacMan__eat_candy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Gets the candy positions from the Maze and checks if Pacman’s currently on top of one.</p>
+<p>If so, Pacman will eat the candy and that candy will be removed from the Maze’s list.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan._PacMan__eat_fruit">
+<code class="descname">_PacMan__eat_fruit</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan._PacMan__eat_fruit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks firstly if Pacman’s on the Fruit coordinate, where Fruits will spawn, then it will check.</p>
+<p>if a fruit’s currently active. If it is, Pacman will eat the fruit.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan._PacMan__get_image_direction">
+<code class="descname">_PacMan__get_image_direction</code><span class="sig-paren">(</span><em>direction</em><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan._PacMan__get_image_direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current loaded image for Pacman, utilizing its image dictionary, and the current direction of Pacman
+:param direction: direction that Pacman is facing
+:return: image</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan._PacMan__image_dict">
+<code class="descname">_PacMan__image_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan._PacMan__image_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and returns an image dictionary for Pacman, containing all it’s frame pictures and in
+every direction possible
+:return: image dictionary</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan._PacMan__move_between_tiles">
+<code class="descname">_PacMan__move_between_tiles</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan._PacMan__move_between_tiles" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is used whenever Pacman’s moving between 2 tiles in order to make a smooth transition</p>
+<p>from one coordinate to another. When Pacman has reached the next tile, it will update its coordinate</p>
+<p>and will set moving_between_tiles to false, in order for the move method to check inputs and whatnot.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.__init__">
+<code class="descname">__init__</code><span class="sig-paren">(</span><em>game</em>, <em>coordinate</em>, <em>coord_dict</em>, <em>old_score</em>, <em>lifes</em><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initializes Pacman.</p>
+<p>Pacman will move through the maze and react to input given (arrow keys) by the user. It will eat the candies</p>
+<p>of the Game’s Maze object while doing so. The Ghosts will try to prevent this from happening by hunting down</p>
+<p>Pacman. When all the candies have been eaten, Pacman wins.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>game</strong> – the game that holds Pacman</li>
+<li><strong>coordinate</strong> – type: Coordinate: Pacman’s starting coordinate</li>
+<li><strong>coord_dict</strong> – type: {}: represents the whole maze, tells Pacman which coordinates are walls</li>
+<li><strong>old_score</strong> – type: int. When a level’s finished, a new Pacman will be created and the old ones’ score will be given to the new Pacman in order to save the current score.</li>
+<li><strong>lifes</strong> – type: int:  similar to old_score, the new Pacman retains the old Pacman’s lives</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.add_score">
+<code class="descname">add_score</code><span class="sig-paren">(</span><em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.add_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds the given param to Pacman’s current score, this method is usually called whenever Pacman eats an Object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>value</strong> – int</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.decrease_lifes">
+<code class="descname">decrease_lifes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.decrease_lifes" title="Permalink to this definition">¶</a></dt>
+<dd><p>When Pacman is eaten, this method will decrease Pacman’s lives and, if zero, force game over
+Otherwise you can try again to get a higher score
+:return: void</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.draw_pacman">
+<code class="descname">draw_pacman</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.draw_pacman" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws Pacman his coordinate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.draw_startpacman">
+<code class="descname">draw_startpacman</code><span class="sig-paren">(</span><em>coordinate=None</em><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.draw_startpacman" title="Permalink to this definition">¶</a></dt>
+<dd><p>When the level has started, this method will draw Pacman between two tiles to appear in the middle.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>coordinate</strong> – optional, the most-right tile to draw Pacman on</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.get_candies_to_eat">
+<code class="descname">get_candies_to_eat</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.get_candies_to_eat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the amount of candies left on the map for Pacman to eat
+:return: int</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.get_coord">
+<code class="descname">get_coord</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.get_coord" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a copy of Pacman’s coordinate.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Coordinate</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.get_lifes">
+<code class="descname">get_lifes</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.get_lifes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Pacman’s current lifes left.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.get_score">
+<code class="descname">get_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.get_score" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns Pacman’s score.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.get_streak">
+<code class="descname">get_streak</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.get_streak" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current ghost-eating streak, that resets when the Ghosts’ frightened timer runs out.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">int</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.is_super_candy_eaten">
+<code class="descname">is_super_candy_eaten</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.is_super_candy_eaten" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns whether or not a SuperCandy has been eaten, which is used to force the Ghosts into frightened mode.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">boolean</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.move">
+<code class="descname">move</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.move" title="Permalink to this definition">¶</a></dt>
+<dd><p>If pacman is moving between tiles, it will keep going that way until it reaches the next tile.</p>
+<p>Else this method will check inputs, calculate the coordinate in front of Pacman</p>
+<p>and check if Pacman can move this way, then it will assert moving_between_tiles again</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.reset_character">
+<code class="descname">reset_character</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.reset_character" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets Pacman, this uses the basic functions from the method in Character, also also resets the Direction
+:return: void</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.reset_streak">
+<code class="descname">reset_streak</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.reset_streak" title="Permalink to this definition">¶</a></dt>
+<dd><p>Resets Pacman’s current ghost-eating streak, this method is called when the frightened</p>
+<p>timer of the ghosts runs out.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.set_direction">
+<code class="descname">set_direction</code><span class="sig-paren">(</span><em>direction</em><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.set_direction" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will try binding the current input to Pacman’s direction, when Pacman’s able to</p>
+<p>move in that direction. Otherwise the input is stored into change_direction (see direction_waiter).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>direction</strong> – (future) direction Pacman will face</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="PacMan.PacMan.set_streak">
+<code class="descname">set_streak</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#PacMan.PacMan.set_streak" title="Permalink to this definition">¶</a></dt>
+<dd><p>Adds 1 to the current ghost-eating streak to increase the score given from eating frightened ghosts.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="MusicPlayer.html"
+                        title="previous chapter">MusicPlayer</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/Pac-Man.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="MusicPlayer.html" title="MusicPlayer"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Pac-Man 1.0 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, Qing,Aleandro,Lukas,Arthur,Roel.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.4.
+    </div>
+  </body>
+</html>

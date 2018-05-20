@@ -1,0 +1,6 @@
+Candy
+=====
+.. autoclass:: Candy.Candy
+   :members:
+   :special-members:
+   :private-members:

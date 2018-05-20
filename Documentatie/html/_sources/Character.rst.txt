@@ -1,0 +1,6 @@
+Abstract class Character
+========================
+.. autoclass:: Character.Character
+   :members:
+   :special-members:
+   :private-members:
