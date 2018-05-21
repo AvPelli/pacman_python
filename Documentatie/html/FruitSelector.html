@@ -57,18 +57,21 @@
 </table>
 </dd></dl>
 
-<dl class="attribute">
-<dt id="FruitSelector.FruitSelector.__weakref__">
-<code class="descname">__weakref__</code><a class="headerlink" href="#FruitSelector.FruitSelector.__weakref__" title="Permalink to this definition">¶</a></dt>
-<dd><p>list of weak references to the object (if defined)</p>
-</dd></dl>
 
 <dl class="method">
 <dt id="FruitSelector.FruitSelector.add_eaten_fruit">
 <code class="descname">add_eaten_fruit</code><span class="sig-paren">(</span><em>fruit</em><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.add_eaten_fruit" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method adds a fruit to the eaten_fruit list, so it will be drawn from now on
-:param fruit: the eaten fruit
-:return: void</p>
+    <dd><p>This method adds a fruit to the eaten_fruit list, so it will be drawn from now on</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>fruit</strong> –The eaten fruit</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -89,23 +92,44 @@
 <dl class="method">
 <dt id="FruitSelector.FruitSelector.draw_eaten_fruits">
 <code class="descname">draw_eaten_fruits</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.draw_eaten_fruits" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method draws the, so far, eaten fruits from this level
-:return: void</p>
+    <dd><p>This method draws the, so far, eaten fruits from this level</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="FruitSelector.FruitSelector.fruit_active">
 <code class="descname">fruit_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.fruit_active" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method checks if a fruit is currently active(~ drawn) on the maze, which
-is used by Pacman for collision detection
-:return: boolean</p>
+    is used by Pacman for collision detection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">Boolean</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
 <dt id="FruitSelector.FruitSelector.get_fruit_coord_tuple">
 <code class="descname">get_fruit_coord_tuple</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.get_fruit_coord_tuple" title="Permalink to this definition">¶</a></dt>
-<dd><p>This method returns the fruit location, where it will be drawn
-:return: tuple with coordinates (x,y)</p>
+    <dd><p>This method returns the fruit location, where it will be drawn</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">tuple with coordinates (x,y)</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -129,8 +153,15 @@ is used by Pacman for collision detection
 <dt id="FruitSelector.FruitSelector.get_score">
 <code class="descname">get_score</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.get_score" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method returns the score of the eaten fruit to Pacman itself, it calls the get_score() method of the fruits
-themselves, which only returns their true score once (before they are eaten)
-:return: int, the eaten fruit’s score</p>
+    themselves, which only returns their true score once (before they are eaten)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">int, the eaten fruit score</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -154,8 +185,15 @@ themselves, which only returns their true score once (before they are eaten)
 <dt id="FruitSelector.FruitSelector.update_candies_active">
 <code class="descname">update_candies_active</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#FruitSelector.FruitSelector.update_candies_active" title="Permalink to this definition">¶</a></dt>
 <dd><p>This method subtract 1 from the active candy amount, is called whenever pacman eats a candy. This variable
-is very important for the FruitSelector, it determines when any fruit will be drawn.
-:return: void</p>
+    is very important for the FruitSelector, it determines when any fruit will be drawn.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">void</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
