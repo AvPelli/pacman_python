@@ -40,3 +40,9 @@ Datum,Start,Einde,Duur,Plaats,Omschrijving
 7/05/2018 ,23:00,23:30,0:30,Kot   ,Aanpassen kleine bug + images
 12/05/2018,0:00 ,2:00 ,2:00,Thuis ,Bug vinden en fix van red ghost + bug in graph gefixt  + scatter slimmer gemaakt ( scatter_state)
 12/05/2018,10:30,12:30,2:00,Thuis ,Fixen van oogjes + score van ghost en scatter methode beter gemaakt door nieuwe betere coordinaten te kiezen (ook meerdere) + Easter egg geadd en wat code verbeterd
+13/05/2018,20:00,0:00 ,4:00,Kot   ,Code voor demo schrijven + maken van deel demo video
+14/05/2018,13:30,17:45,4:15,Campus,Demo's geven en luisteren naar demo's
+19/05/2018,15:00,21:00,6:00,Thuis ,Fixen van code + schrijven veel commentaar
+20/05/2018,16:00,22:00,6:00,Thuis ,Verbeteren en updaten van diagrammen + kijken naar verslag
+21/05/2018,14:00,17:00,3:00,Thuis ,Verslag schrijven A*                                                                                                                                                ,Ghosts,Scatter,Frightened,Bewegingsmodi ect
+22/05/2018,13:00,17:00,4:00,Campus,Verslag afwerken
