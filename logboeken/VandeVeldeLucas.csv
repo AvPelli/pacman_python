@@ -17,8 +17,8 @@ Datum,Start,Einde,Uren,Plaats,Omschrijving
 16/03/2018,8:50,10:50,2:00,Thuis,Zoeken naar bestaande tilesets en of.txt map files van Pac-Man/ start aanmaken eigen tileset
 17/03/2018,12:10,18:00,5:50,Thuis,Code om map/tiles te laden/ aanmaken tileset en bijbehorende .txt file
 17/03/2018,20:00,22:00,2:00,Thus,Afwerken tilemap en tileset/ github proberen linken met pycharm
-19/03/2018,15:45,17:30,1:45,Campus,Bespreken en overleg implementatie pacman + UML
-26/03/2018,15:45,17:30,1:45,Campus,Diagrammen + levens implementeren
+19/03/2018,15:45,17:45,2:00,Campus,Bespreken en overleg implementatie pacman + UML
+26/03/2018,13:30,17:45,4:15,Campus,Diagrammen + levens implementeren
 30/03/2018,17:00,19:00,2:00,Thuis,Map layout aanpassen
 7/04/2018,8:30,12:45,4:15,Thuis,Gamemodes implementeren in game klasse/ draw methodes/ muziek toevoegen en layout map aanpassen
 7/04/2018,15:45,18:45,3:00,Thuis,Vervolg vorige
@@ -28,10 +28,14 @@ Datum,Start,Einde,Uren,Plaats,Omschrijving
 21/04/2018,19:10,19:45,0:35,Thuis,Analyseren code in A*klasse van Aleandro
 21/04/2018,19:45,20:45,1:00,Thuis,Nieuwe pacman tileset zoeken + verschalen/knippen afbeeldingen voor deathanimatie
 21/04/2018,22:00,23:30,1:30,Thuis,Gameover deel 1 maken + problemen hiermee proberen oplossen
-24/04/2018,15:45,18:45,3:00,Campus,Aanmaken klasse SuperFood/ afbeeldingen superfood en frightened ghosts/ start implementatie frightened mode
-24/04/2018,19:15,20:15,1:00,Thuis,Random laten bewegen ghosts/ implementatie frightened mode ghost
-24/04/2018,20:30,21:45,1:15,Thuis,implementatie frightened mode ghost
-24/04/2018,23:05,23:59,0:54,Thuis,implementatie frightened mode ghost
+23/04/2018,13:30,17:45,4:15,Campus,Aanmaken klasse SuperFood/ afbeeldingen superfood en frightened ghosts/ start implementatie frightened mode
+23/04/2018,19:15,20:15,1:00,Thuis,Random laten bewegen ghosts/ implementatie frightened mode ghost
+23/04/2018,20:30,21:45,1:15,Thuis,implementatie frightened mode ghost
+23/04/2018,23:05,23:59,0:54,Thuis,implementatie frightened mode ghost
 4/05/2018,9:00,12:00,3:00,Thuis, frightened update/	score animatie/ ghosts bewegen nu terug normaal na start/ score afbeeldingen bewerken
-4/05/2018,13:10,13:45,00:35,Thuis, de ghosts veranderen naar ogen bij het terugkeren naar hun startplaats(nadat ze opgegeten zijn)
-6/05/2018,20:30,21:45,1:15,Thuis, start code opruimen deel draw methodes
+4/05/2018,13:10,13:45,00:35,Thuis,de ghosts veranderen naar ogen bij het terugkeren naar hun startplaats(nadat ze opgegeten zijn)
+6/05/2018,20:30,21:45,1:15,Thuis,start code opruimen deel draw methodes
+7/05/2018,13:30,17:45,4:15,Campus,Aanmaken/deel schrijven van de klasse fruitselector en fruit
+14/05/18,13:30,17:00,3:30,Campus,Demonstratie project
+20/05/18,13:00,16:15,3:15,Thuis,Verslag schrijven+presentatie tekst voorbereiden
+22/05/18,13:15,18:00,4:45,Thuis,Afwerken verslag
